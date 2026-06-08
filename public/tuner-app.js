@@ -15,11 +15,26 @@
     "Jazz","Country","National","Oldies","Folk","Documentary","Alarm Test","Alarm"
   ];
 
+  // Tuning lock threshold (MHz) - RDS only decodes when within this offset.
+  const RDS_LOCK_BW = 0.05;
+
   let currentFreq = CFG.defaultFrequency;
   let icecast = {};
   let muted = false;
+  let forcedMono = false;
   let psIndex = 0;
   let snrHistory = [];
+
+  // Per-tune RDS state machine.
+  let lockedStation = null;        // station object currently locked
+  let lockedAtMs = 0;              // timestamp when we locked
+  let rdsShownPS = false;
+  let rdsShownTX = false;
+  let rtCurrent = "";              // currently displayed (rt0)
+  let rtPrevious = "";             // previous (rt1)
+  let rtTargetRaw = "";            // full text we're typing toward
+  let rtTypedLen = 0;              // chars revealed
+  let rtFirstLoad = true;          // true until first RT for this station finishes
 
   // ---- static config -> DOM ----
   document.title = `${CFG.tunerName} - FM-DX Webserver`;
@@ -67,14 +82,14 @@
     });
     return { station: best, offset: best ? freq - best.freq : 0 };
   }
-  function signalDbf(st, off) {
+  function baseSignal(st, off) {
     if (!st) return CFG.noiseFloorDbf;
     const bw = CFG.audibleBandwidth;
     const k = Math.exp(-Math.pow(off / (bw / 2), 2) * 2);
     return CFG.noiseFloorDbf + (st.signal - CFG.noiseFloorDbf) * k;
   }
 
-  // ---- audio (WebAudio: stream -> filters -> distortion -> out, + noise) ----
+  // ---- audio ----
   let audio, ac, srcNode, gainNode, biquadLow, biquadHigh, distortion, noiseGain, currentMount = null;
   function makeCurve(amount) {
     const n = 1024, c = new Float32Array(n), deg = Math.PI / 180;
@@ -96,7 +111,6 @@
     distortion = ac.createWaveShaper(); distortion.curve = makeCurve(0);
     gainNode = ac.createGain();
     srcNode.connect(biquadHigh).connect(biquadLow).connect(distortion).connect(gainNode).connect(ac.destination);
-    // static noise
     const bs = 2 * ac.sampleRate;
     const nb = ac.createBuffer(1, bs, ac.sampleRate);
     const d = nb.getChannelData(0);
@@ -127,7 +141,7 @@
     noiseGain.gain.value = muted ? 0 : clamp((1 - quality) * 0.35 + offR * 0.3, 0, 0.6);
   }
 
-  // ---- PS / RT ----
+  // ---- helpers ----
   function resolveTokens(tpl, src) {
     if (!tpl) return "";
     let t = tpl;
@@ -140,25 +154,111 @@
   }
   const pad8 = (s) => (s + "        ").slice(0, 8);
   const cap64 = (s) => s.length > 64 ? s.slice(0, 64) : s;
+  function piIsNull(pi) {
+    const p = (pi || "").toUpperCase();
+    return !p || p === "0000" || p === "FFFF";
+  }
+  function hasRDS(st) {
+    return !!(st && !st.rdsDisabled && !piIsNull(st.pi));
+  }
+  function renderFlag(flag) {
+    if (!flag) return "";
+    if (/^https?:\/\//i.test(flag) || flag.startsWith("/")) {
+      return `<img class="custom-flag" src="${flag}" alt="">`;
+    }
+    const code = String(flag).toLowerCase();
+    return `<i class="flag-sm flag-sm-${code}"></i>`;
+  }
 
+  // ---- RDS field helpers ----
+  function clearRDS() {
+    $("#data-pi").textContent = "----";
+    const ps = $("#data-ps"); if (ps) ps.textContent = "        ";
+    const r0 = $("#data-rt0 span"), r1 = $("#data-rt1 span");
+    if (r0) r0.textContent = ""; if (r1) r1.textContent = "";
+    $$(".data-pty").forEach((e) => (e.textContent = ""));
+    $$(".data-ms").forEach((el) => {
+      el.innerHTML = `<span class="opacity-half">M</span><span class="opacity-half">S</span>`;
+    });
+    $$(".data-tp span").forEach((e) => (e.className = "opacity-half"));
+    $$(".data-ta span").forEach((e) => (e.className = "opacity-half"));
+    $$(".data-flag").forEach((e) => (e.innerHTML = ""));
+    const afList = $("#af-list ul"); if (afList) afList.innerHTML = "";
+  }
+  function clearTX() {
+    const ids = ["#data-station-name","#data-station-city","#data-station-itu",
+                 "#data-station-erp","#data-station-pol","#data-station-distance","#data-station-azimuth"];
+    ids.forEach((id) => { const e = $(id); if (e) e.textContent = ""; });
+  }
+  function showPSPIMS(st, src) {
+    $("#data-pi").textContent = (st.pi || "----").toUpperCase();
+    $$(".data-pty").forEach((e) => (e.textContent = PTY[st.pty] || ""));
+    $$(".data-tp span").forEach((e) => (e.className = st.tp ? "opacity-full" : "opacity-half"));
+    $$(".data-ta span").forEach((e) => (e.className = st.ta ? "opacity-full" : "opacity-half"));
+    $$(".data-ms").forEach((el) => {
+      const ms = (st.ms || "M").toUpperCase();
+      el.innerHTML =
+        `<span class="${ms === 'M' ? 'opacity-full' : 'opacity-half'}">M</span>` +
+        `<span class="${ms === 'S' ? 'opacity-full' : 'opacity-half'}">S</span>`;
+    });
+    $$(".data-flag").forEach((e) => (e.innerHTML = renderFlag(st.flag)));
+    const afList = $("#af-list ul");
+    if (afList) afList.innerHTML = (st.af || []).map((f) => `<li><a>${fmt3(f)}</a></li>`).join("");
+    tickPS(st, src);
+  }
+  function showTX(st) {
+    const s = st.station || {};
+    const setT = (id, v) => { const e = $(id); if (e) e.textContent = v; };
+    setT("#data-station-name", s.name || "");
+    setT("#data-station-city", s.city || "");
+    setT("#data-station-itu", s.itu || "");
+    setT("#data-station-erp", s.erp ?? "");
+    setT("#data-station-pol", s.pol || "");
+    setT("#data-station-distance", (s.distance ?? "") + " km");
+    setT("#data-station-azimuth", (s.azimuth ?? "") + "°");
+  }
+
+  // ---- PS rotation (every ~1.2s) ----
   function tickPS(st, src) {
     const el = $("#data-ps");
-    if (!el) return;
-    if (!st) { el.textContent = "        "; return; }
-    const raw = resolveTokens(st.ps, src) || pad8(st.station?.name || "");
+    if (!el || !st) return;
+    const raw = resolveTokens(st.ps, src) || (st.station?.name || "");
     if (raw.length <= 8) { el.textContent = pad8(raw); return; }
     const chunks = [];
     for (let i = 0; i < raw.length; i += 8) chunks.push(pad8(raw.slice(i, i + 8)));
     psIndex = (psIndex + 1) % chunks.length;
     el.textContent = chunks[psIndex];
   }
-  function tickRT(st, src) {
+
+  // ---- RT typing ----
+  function startNewRT(text) {
+    if (text === rtTargetRaw) return;
+    if (rtCurrent && !rtFirstLoad) {
+      rtPrevious = rtCurrent;
+    } else if (rtCurrent && rtFirstLoad) {
+      // first complete RT just finished; further updates move it to rt1
+      rtPrevious = rtCurrent;
+    }
+    rtTargetRaw = text;
+    rtTypedLen = 0;
+    rtCurrent = "";
+    paintRT();
+  }
+  function paintRT() {
     const r0 = $("#data-rt0 span"), r1 = $("#data-rt1 span");
-    if (!r0) return;
-    if (!st) { r0.textContent = ""; if (r1) r1.textContent = ""; return; }
-    const raw = cap64(resolveTokens(st.rt, src));
-    r0.textContent = raw.slice(0, 32);
-    if (r1) r1.textContent = raw.slice(32, 64);
+    if (r0) r0.textContent = rtCurrent;
+    if (r1) r1.textContent = rtFirstLoad ? "" : rtPrevious;
+  }
+  function rtTypeStep() {
+    if (!lockedStation) return;
+    if (rtTypedLen >= rtTargetRaw.length) {
+      if (rtCurrent === rtTargetRaw && rtTargetRaw.length > 0) rtFirstLoad = false;
+      return;
+    }
+    rtTypedLen = Math.min(rtTargetRaw.length, rtTypedLen + 2);
+    rtCurrent = rtTargetRaw.slice(0, rtTypedLen);
+    paintRT();
+    if (rtTypedLen >= rtTargetRaw.length) rtFirstLoad = false;
   }
 
   // ---- SNR canvas ----
@@ -168,7 +268,10 @@
     const dpr = window.devicePixelRatio || 1;
     const w = c.clientWidth, h = c.clientHeight;
     if (!w || !h) return;
-    if (c.width !== w * dpr) { c.width = w * dpr; c.height = h * dpr; }
+    if (c.width !== Math.round(w * dpr) || c.height !== Math.round(h * dpr)) {
+      c.width = Math.round(w * dpr);
+      c.height = Math.round(h * dpr);
+    }
     const ctx = c.getContext("2d");
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, w, h);
@@ -189,11 +292,16 @@
     ctx.stroke();
   }
 
-  // ---- main tick ----
-  function paintNow() {
+  // ---- main per-frame paint (signal + stream + RDS state machine) ----
+  function paint() {
     const { station, offset } = stationForFreq(currentFreq);
-    const inRange = station && Math.abs(offset) <= CFG.audibleBandwidth;
-    const sig = signalDbf(station, offset);
+    const audible = station && Math.abs(offset) <= CFG.audibleBandwidth;
+    const onFreq = station && Math.abs(offset) <= RDS_LOCK_BW;
+
+    // signal with small continuous jitter
+    const base = baseSignal(station, offset);
+    const jitter = (Math.random() - 0.5) * (audible ? 1.6 : 3.0);
+    const sig = Math.max(0, base + jitter);
 
     $("#data-frequency").textContent = fmt3(currentFreq);
     const ci = $("#commandinput");
@@ -211,60 +319,69 @@
     if (snrHistory.length > 240) snrHistory.shift();
     drawSNR();
 
-    const src = inRange && station ? icecast[station.mount] : null;
-    if (inRange && station) {
-      $("#data-pi").textContent = station.pi || "----";
-      $$(".data-pty").forEach((e) => (e.textContent = PTY[station.pty] || ""));
-      $$(".data-tp span").forEach((e) => (e.className = station.tp ? "opacity-full" : "opacity-half"));
-      $$(".data-ta span").forEach((e) => (e.className = station.ta ? "opacity-full" : "opacity-half"));
-      $$(".data-ms").forEach((el) => {
-        const ms = (station.ms || "M").toUpperCase();
-        el.innerHTML =
-          `<span class="${ms === 'M' ? 'opacity-full' : 'opacity-half'}">M</span>` +
-          `<span class="${ms === 'S' ? 'opacity-full' : 'opacity-half'}">S</span>`;
-      });
-      $$(".data-st").forEach((el) => (el.style.display = station.stereo ? "block" : "none"));
-      const afList = $("#af-list ul");
-      if (afList) afList.innerHTML = (station.af || []).map((f) => `<li><a>${fmt3(f)}</a></li>`).join("") || "<li><a>—</a></li>";
-      const s = station.station || {};
-      const setT = (id, v) => { const e = $(id); if (e) e.textContent = v; };
-      setT("#data-station-name", s.name || "");
-      setT("#data-station-city", s.city || "");
-      setT("#data-station-itu", s.itu || "");
-      setT("#data-station-erp", s.erp ?? "");
-      setT("#data-station-pol", s.pol || "");
-      setT("#data-station-distance", (s.distance ?? "") + " km");
-      setT("#data-station-azimuth", (s.azimuth ?? "") + "°");
-      setStream(station.mount);
-    } else {
-      $("#data-pi").textContent = "----";
-      $$(".data-pty").forEach((e) => (e.textContent = ""));
-      const afList = $("#af-list ul");
-      if (afList) afList.innerHTML = "";
-      setStream(null);
-    }
-    applyAudioModel(sig, offset, !!(inRange && station));
-  }
+    // Stream + audio
+    if (audible && station) setStream(station.mount); else setStream(null);
+    applyAudioModel(sig, offset, !!audible);
 
-  function rdsTick() {
-    const { station, offset } = stationForFreq(currentFreq);
-    const inRange = station && Math.abs(offset) <= CFG.audibleBandwidth;
-    if (!inRange) { const el = $("#data-ps"); if (el) el.textContent = "        "; return; }
-    tickPS(station, icecast[station.mount]);
-  }
-  function rtTick() {
-    const { station, offset } = stationForFreq(currentFreq);
-    const inRange = station && Math.abs(offset) <= CFG.audibleBandwidth;
-    if (!inRange) return;
-    tickRT(station, icecast[station.mount]);
+    // Stereo indicator (gated by forcedMono + station's stereo flag + lock)
+    const isStereo = !!(onFreq && station && station.stereo && !forcedMono && hasRDS(station));
+    $$(".data-st").forEach((el) => (el.style.display = isStereo ? "block" : "none"));
+
+    // ---- RDS lock state machine ----
+    if (!onFreq || !hasRDS(station)) {
+      // unlock
+      if (lockedStation) {
+        lockedStation = null;
+        rdsShownPS = false; rdsShownTX = false;
+        rtCurrent = ""; rtPrevious = ""; rtTargetRaw = ""; rtTypedLen = 0;
+        rtFirstLoad = true;
+        clearRDS(); clearTX();
+      }
+      return;
+    }
+
+    if (lockedStation !== station) {
+      // new lock
+      lockedStation = station;
+      lockedAtMs = performance.now();
+      rdsShownPS = false; rdsShownTX = false;
+      rtCurrent = ""; rtPrevious = ""; rtTargetRaw = ""; rtTypedLen = 0;
+      rtFirstLoad = true;
+      clearRDS(); clearTX();
+      psIndex = 0;
+    }
+
+    const dt = performance.now() - lockedAtMs;
+    const src = icecast[station.mount];
+
+    // PS / PI / MS / flag / PTY / AF appear almost instantly (~250ms)
+    if (!rdsShownPS && dt > 250) {
+      rdsShownPS = true;
+      showPSPIMS(station, src);
+    } else if (rdsShownPS) {
+      // keep PS rotating in its own tick; refresh static fields cheap
+      $$(".data-flag").forEach((e) => { if (!e.firstChild) e.innerHTML = renderFlag(station.flag); });
+    }
+
+    // TX info comes in after a few seconds
+    if (!rdsShownTX && dt > 4500) {
+      rdsShownTX = true;
+      showTX(station);
+    }
+
+    // RT starts after ~900ms with typing
+    if (dt > 900) {
+      const target = cap64(resolveTokens(station.rt, src));
+      if (target && target !== rtTargetRaw) startNewRT(target);
+      if (rtTypedLen < rtTargetRaw.length) rtTypeStep();
+    }
   }
 
   // ---- tuning ----
   function tuneTo(f) {
     currentFreq = clamp(Math.round(f * 1000) / 1000, CFG.tuningMin, CFG.tuningMax);
-    psIndex = 0;
     $("#data-signal-highest").textContent = "0.0";
-    paintNow(); rdsTick(); rtTick();
+    paint();
   }
   $("#freq-up")?.addEventListener("click", () => tuneTo(currentFreq + CFG.tuningStep));
   $("#freq-down")?.addEventListener("click", () => tuneTo(currentFreq - CFG.tuningStep));
@@ -289,14 +406,28 @@
       muted = !muted;
       const icon = playBtn.querySelector("i");
       if (icon) icon.className = muted ? "fa-solid fa-play fa-lg" : "fa-solid fa-stop fa-lg";
-      paintNow();
     });
   }
   const vol = $("#volumeSlider");
   if (vol) vol.addEventListener("input", () => { if (gainNode) gainNode.gain.value = muted ? 0 : parseFloat(vol.value); });
 
+  // Stereo/mono toggle (event delegation; both desktop and mobile share the class)
+  document.addEventListener("click", (e) => {
+    const t = e.target.closest(".stereo-container");
+    if (!t) return;
+    forcedMono = !forcedMono;
+    // Force downmix by zeroing one channel via mono filter approximation:
+    // ramp lowpass when forcedMono = true is too lossy; instead, we just
+    // collapse stereo via a ChannelMerger trick using gain on a splitter.
+    // For simplicity, we just reflect the UI state; the demo stream itself
+    // is fed through a single mediaElementSource so it's already mixed.
+    paint();
+  });
+
+  // ---- timers ----
   tuneTo(CFG.defaultFrequency);
-  setInterval(paintNow, 1000);
-  setInterval(rdsTick, 1200);
-  setInterval(rtTick, 7000);
+  setInterval(paint, 250);          // signal jitter + RDS state machine
+  setInterval(() => {                // PS rotation
+    if (lockedStation && rdsShownPS) tickPS(lockedStation, icecast[lockedStation.mount]);
+  }, 1200);
 })();

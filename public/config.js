@@ -37,6 +37,15 @@ window.TUNER_CONFIG = {
   //                      %SERVER% = Icecast "server_name"
   //                      (ALLCAPS)...%ICEMD%... = uppercase the result
   //   pi       : RDS PI code (4 hex chars), e.g. "F597"
+  //              Special values "0000" or "FFFF" mean "no RDS" - the
+  //              receiver will not lock RDS/TX info for the station.
+  //   rdsDisabled : if true, the station is treated as having no RDS
+  //              (no PS / RT / PTY / TX info). Audio still plays.
+  //   flag     : optional custom flag for the panel under PTY.
+  //              Either an image URL ("https://.../flag.png" or
+  //              "/flags/myflag.svg") or an ISO-2 code string
+  //              (e.g. "US", "IE") to use the built-in flag sprite.
+  //              Omit / null to hide the flag entirely.
   //   pty      : Program TYPE (0..31), e.g. 10 (Pop Music)
   //   af       : Alternate Frequencies list, e.g. [102.5, 105.0]
   //   tp / ta  : Traffic Programme / Traffic Announcement flags
