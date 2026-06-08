@@ -43,7 +43,8 @@
 
   // Audio
   let ac = null, masterGain = null, noiseGain = null;
-  const pool = new Map(); // mount -> { audio, source, lp, ws, gain }
+  const pool = new Map(); // mount -> { audio, source, hp, lp, ws, splitter, merger, monoGain, stereoL, stereoR, gain }
+  const AUDIO_DELAY_S = 0.35;
 
   // ---------- helpers ----------
   function resolveTokens(tpl, src) {
