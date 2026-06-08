@@ -293,7 +293,7 @@
       if (rtBuf) rtPrevious = rtBuf;
       if (rtTargetRaw) rtFirstLoad = false;
       rtTargetRaw = newTarget;
-      const segCount = Math.ceil(rtTargetRaw.length / 4);
+      const segCount = Math.ceil(rtTargetRaw.length / 8);
       rtSegFilled = new Array(segCount).fill(false);
       rtBuf = "";
       paintRT();
@@ -302,10 +302,10 @@
       for (let i = 0; i < rtSegFilled.length; i++) {
         if (!rtSegFilled[i]) {
           rtSegFilled[i] = true;
-          const chars = rtTargetRaw.slice(i*4, i*4+4);
+          const chars = rtTargetRaw.slice(i*8, i*8+8);
           // pad rtBuf to needed length
-          while (rtBuf.length < i*4) rtBuf += " ";
-          rtBuf = rtBuf.slice(0, i*4) + chars + rtBuf.slice(i*4 + chars.length);
+          while (rtBuf.length < i*8) rtBuf += " ";
+          rtBuf = rtBuf.slice(0, i*8) + chars + rtBuf.slice(i*8 + chars.length);
           paintRT();
           break;
         }
