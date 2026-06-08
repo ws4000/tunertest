@@ -18,8 +18,8 @@
    Slightly squish the PS panel from the left by giving the button container
    a tighter width. */
 .panel-10.h-100 > .playbutton {
-  width: 72px;
-  height: 72px;
+  width: 90px;
+  height: 90px;
   aspect-ratio: 1 / 1;
   display: inline-flex;
   align-items: center;

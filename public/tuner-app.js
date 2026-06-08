@@ -28,6 +28,8 @@
   let lockedStation = null;
   let lockedAtMs = 0;
   let groupTick = 0;
+  let piShown = false;
+  let stereoPilotMs = 0; // timestamp when stereo can be reported (after 400ms)
   let psFilled = [false,false,false,false]; // 4 pairs of 2 chars
   let psBuf = "        ";
   let rtTargetRaw = "";
@@ -41,7 +43,8 @@
 
   // Audio
   let ac = null, masterGain = null, noiseGain = null;
-  const pool = new Map(); // mount -> { audio, source, lp, ws, gain }
+  const pool = new Map(); // mount -> { audio, source, hp, lp, ws, splitter, merger, monoGain, stereoL, stereoR, gain }
+  const AUDIO_DELAY_S = 0.35;
 
   // ---------- helpers ----------
   function resolveTokens(tpl, src) {
@@ -171,8 +174,27 @@
     const hp = ac.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 30;
     const ws = ac.createWaveShaper(); ws.curve = makeCurve(0);
     const gain = ac.createGain(); gain.gain.value = 0;
-    source.connect(hp).connect(lp).connect(ws).connect(gain).connect(masterGain);
-    const node = { audio, source, hp, lp, ws, gain };
+    // Mono-collapse chain: splitter -> merger (both channels = (L+R)/2 via gains).
+    const splitter = ac.createChannelSplitter(2);
+    const merger = ac.createChannelMerger(2);
+    const monoL = ac.createGain(); monoL.gain.value = 0.5;
+    const monoR = ac.createGain(); monoR.gain.value = 0.5;
+    splitter.connect(monoL, 0); splitter.connect(monoR, 1);
+    monoL.connect(merger, 0, 0); monoR.connect(merger, 0, 0);
+    monoL.connect(merger, 0, 1); monoR.connect(merger, 0, 1);
+    // Stereo passthrough gain
+    const stereoGain = ac.createGain(); stereoGain.gain.value = 1;
+    const monoGain = ac.createGain(); monoGain.gain.value = 0;
+    // Audio delay to simulate stream buffering latency
+    const delay = ac.createDelay(2.0); delay.delayTime.value = AUDIO_DELAY_S;
+    source.connect(hp).connect(lp).connect(ws);
+    ws.connect(stereoGain);     // stereo path (passthrough)
+    ws.connect(splitter);        // mono path
+    merger.connect(monoGain);
+    stereoGain.connect(delay);
+    monoGain.connect(delay);
+    delay.connect(gain).connect(masterGain);
+    const node = { audio, source, hp, lp, ws, gain, stereoGain, monoGain, delay };
     pool.set(mount, node);
     return node;
   }
@@ -180,7 +202,7 @@
     for (const [m, n] of pool) {
       if (keep.has(m)) continue;
       try { n.audio.pause(); n.audio.removeAttribute("src"); n.audio.load(); } catch(e){}
-      try { n.source.disconnect(); n.hp?.disconnect(); n.lp.disconnect(); n.ws.disconnect(); n.gain.disconnect(); } catch(e){}
+      try { n.source.disconnect(); n.hp?.disconnect(); n.lp.disconnect(); n.ws.disconnect(); n.gain.disconnect(); n.stereoGain?.disconnect(); n.monoGain?.disconnect(); n.delay?.disconnect(); } catch(e){}
       pool.delete(m);
     }
   }
@@ -190,12 +212,19 @@
     const inside = currentStation && Math.abs(offset) <= bw;
     const quality = clamp((sig - CFG.noiseFloorDbf) / 50, 0, 1);
     const offR = currentStation ? clamp(Math.abs(offset) / bw, 0, 1) : 1;
+    const now = performance.now();
+    const pilotLocked = !!(lockedStation && now >= stereoPilotMs);
+    const stereoActive = !!(inside && currentStation && currentStation.stereo && !forcedMono && pilotLocked && currentStation === lockedStation);
     for (const [mount, n] of pool) {
       const isCurrent = inside && mount === currentStation.mount;
       if (isCurrent) {
         n.ws.curve = makeCurve(offR * 60);
         n.lp.frequency.value = clamp(15000 - offR * 11000 - (1 - quality) * 6000, 1500, 15000);
         n.gain.gain.value = muted ? 0 : (1 - offR * 0.6) * (0.4 + quality * 0.6);
+        if (n.stereoGain && n.monoGain) {
+          n.stereoGain.gain.value = stereoActive ? 1 : 0;
+          n.monoGain.gain.value = stereoActive ? 0 : 1;
+        }
       } else {
         n.gain.gain.value = 0;
       }
@@ -415,14 +444,18 @@
     }
 
     // stereo indicator
-    const isStereo = !!(onFreq && station && station.stereo && !forcedMono && hasRDS(station));
-    $$(".data-st").forEach((el) => (el.style.display = isStereo ? "block" : "none"));
+    const pilotLocked = !!(lockedStation && performance.now() >= stereoPilotMs);
+    const isStereo = !!(onFreq && station && station.stereo && !forcedMono && hasRDS(station) && pilotLocked && lockedStation === station);
+    // circle1 always visible (mono icon); shift it 4px right when mono.
+    $$(".data-st.circle1").forEach((el) => { el.style.display = "block"; el.style.left = isStereo ? "0px" : "4px"; });
+    // circle2 only visible when stereo (creates the two-intersecting-circles look).
+    $$(".data-st.circle2").forEach((el) => (el.style.display = isStereo ? "block" : "none"));
 
     // RDS lock state machine
     if (!onFreq || !hasRDS(station)) {
       if (lockedStation) {
         lockedStation = null;
-        rdsBasicShown = false; rdsTxShown = false;
+        rdsBasicShown = false; rdsTxShown = false; piShown = false;
         psFilled = [false,false,false,false]; psBuf = "        ";
         rtTargetRaw = ""; rtBuf = ""; rtPrevious = ""; rtSegFilled = []; rtFirstLoad = true;
         afShownCount = 0; psRotIndex = 0; groupTick = 0;
@@ -433,11 +466,16 @@
     if (lockedStation !== station) {
       lockedStation = station;
       lockedAtMs = performance.now();
-      rdsBasicShown = false; rdsTxShown = false;
+      stereoPilotMs = lockedAtMs + 400; // pilot detection delay
+      rdsBasicShown = false; rdsTxShown = false; piShown = false;
       psFilled = [false,false,false,false]; psBuf = "        ";
       rtTargetRaw = ""; rtBuf = ""; rtPrevious = ""; rtSegFilled = []; rtFirstLoad = true;
       afShownCount = 0; psRotIndex = 0; groupTick = 0;
       clearRDS(); clearTX();
+      // Show PI nearly instantly (within one paint tick) — real tuners decode
+      // the PI block before any other RDS data.
+      $("#data-pi").textContent = (station.pi || "----").toUpperCase();
+      piShown = true;
     }
   }
 
