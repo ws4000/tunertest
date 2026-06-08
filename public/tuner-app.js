@@ -174,8 +174,27 @@
     const hp = ac.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 30;
     const ws = ac.createWaveShaper(); ws.curve = makeCurve(0);
     const gain = ac.createGain(); gain.gain.value = 0;
-    source.connect(hp).connect(lp).connect(ws).connect(gain).connect(masterGain);
-    const node = { audio, source, hp, lp, ws, gain };
+    // Mono-collapse chain: splitter -> merger (both channels = (L+R)/2 via gains).
+    const splitter = ac.createChannelSplitter(2);
+    const merger = ac.createChannelMerger(2);
+    const monoL = ac.createGain(); monoL.gain.value = 0.5;
+    const monoR = ac.createGain(); monoR.gain.value = 0.5;
+    splitter.connect(monoL, 0); splitter.connect(monoR, 1);
+    monoL.connect(merger, 0, 0); monoR.connect(merger, 0, 0);
+    monoL.connect(merger, 0, 1); monoR.connect(merger, 0, 1);
+    // Stereo passthrough gain
+    const stereoGain = ac.createGain(); stereoGain.gain.value = 1;
+    const monoGain = ac.createGain(); monoGain.gain.value = 0;
+    // Audio delay to simulate stream buffering latency
+    const delay = ac.createDelay(2.0); delay.delayTime.value = AUDIO_DELAY_S;
+    source.connect(hp).connect(lp).connect(ws);
+    ws.connect(stereoGain);     // stereo path (passthrough)
+    ws.connect(splitter);        // mono path
+    merger.connect(monoGain);
+    stereoGain.connect(delay);
+    monoGain.connect(delay);
+    delay.connect(gain).connect(masterGain);
+    const node = { audio, source, hp, lp, ws, gain, stereoGain, monoGain, delay };
     pool.set(mount, node);
     return node;
   }
@@ -183,7 +202,7 @@
     for (const [m, n] of pool) {
       if (keep.has(m)) continue;
       try { n.audio.pause(); n.audio.removeAttribute("src"); n.audio.load(); } catch(e){}
-      try { n.source.disconnect(); n.hp?.disconnect(); n.lp.disconnect(); n.ws.disconnect(); n.gain.disconnect(); } catch(e){}
+      try { n.source.disconnect(); n.hp?.disconnect(); n.lp.disconnect(); n.ws.disconnect(); n.gain.disconnect(); n.stereoGain?.disconnect(); n.monoGain?.disconnect(); n.delay?.disconnect(); } catch(e){}
       pool.delete(m);
     }
   }
