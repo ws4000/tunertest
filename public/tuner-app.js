@@ -13,7 +13,7 @@
   ];
 
   const RDS_LOCK_BW = 0.05;
-  const GROUP_MS = 88;
+  const GROUP_MS = 600;
   const NEIGHBOR_COUNT = 2;
 
   let CFG = null;
@@ -202,6 +202,8 @@
     $$(".data-ta span").forEach((e) => (e.className = "opacity-half"));
     $$(".data-flag").forEach((e) => (e.innerHTML = ""));
     const afList = $("#af-list ul"); if (afList) afList.innerHTML = "";
+    const logo = $("#station-logo");
+    if (logo) { logo.removeAttribute("src"); logo.style.display = "none"; }
   }
   function clearTX() {
     ["#data-station-name","#data-station-city","#data-station-itu","#data-station-erp","#data-station-pol","#data-station-distance","#data-station-azimuth"]
@@ -219,6 +221,11 @@
         `<span class="${ms === 'S' ? 'opacity-full' : 'opacity-half'}">S</span>`;
     });
     $$(".data-flag").forEach((e) => (e.innerHTML = renderFlag(st.flag)));
+    const logo = $("#station-logo");
+    if (logo) {
+      if (st.logo) { logo.src = st.logo; logo.style.display = "block"; }
+      else { logo.removeAttribute("src"); logo.style.display = "none"; }
+    }
   }
   function paintPS() {
     const el = $("#data-ps"); if (!el) return;
@@ -293,7 +300,7 @@
       if (rtBuf) rtPrevious = rtBuf;
       if (rtTargetRaw) rtFirstLoad = false;
       rtTargetRaw = newTarget;
-      const segCount = Math.ceil(rtTargetRaw.length / 4);
+      const segCount = Math.ceil(rtTargetRaw.length / 8);
       rtSegFilled = new Array(segCount).fill(false);
       rtBuf = "";
       paintRT();
@@ -302,10 +309,10 @@
       for (let i = 0; i < rtSegFilled.length; i++) {
         if (!rtSegFilled[i]) {
           rtSegFilled[i] = true;
-          const chars = rtTargetRaw.slice(i*4, i*4+4);
+          const chars = rtTargetRaw.slice(i*8, i*8+8);
           // pad rtBuf to needed length
-          while (rtBuf.length < i*4) rtBuf += " ";
-          rtBuf = rtBuf.slice(0, i*4) + chars + rtBuf.slice(i*4 + chars.length);
+          while (rtBuf.length < i*8) rtBuf += " ";
+          rtBuf = rtBuf.slice(0, i*8) + chars + rtBuf.slice(i*8 + chars.length);
           paintRT();
           break;
         }
@@ -483,8 +490,12 @@
       muted = !muted;
       const icon = playBtn.querySelector("i");
       if (icon) icon.className = muted ? "fa-solid fa-play fa-lg" : "fa-solid fa-stop fa-lg";
-      // also seed neighbor pool on first click
+      // Seed neighbor pool and explicitly play each audio element within
+      // the user gesture so browsers reliably allow playback.
       neighbors(currentFreq).forEach((s) => ensureStation(s.mount));
+      for (const [, n] of pool) {
+        try { const p = n.audio.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+      }
     });
     const vol = $("#volumeSlider");
     if (vol) vol.addEventListener("input", () => { if (masterGain) masterGain.gain.value = parseFloat(vol.value); });
