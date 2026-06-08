@@ -490,8 +490,12 @@
       muted = !muted;
       const icon = playBtn.querySelector("i");
       if (icon) icon.className = muted ? "fa-solid fa-play fa-lg" : "fa-solid fa-stop fa-lg";
-      // also seed neighbor pool on first click
+      // Seed neighbor pool and explicitly play each audio element within
+      // the user gesture so browsers reliably allow playback.
       neighbors(currentFreq).forEach((s) => ensureStation(s.mount));
+      for (const [, n] of pool) {
+        try { const p = n.audio.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+      }
     });
     const vol = $("#volumeSlider");
     if (vol) vol.addEventListener("input", () => { if (masterGain) masterGain.gain.value = parseFloat(vol.value); });
