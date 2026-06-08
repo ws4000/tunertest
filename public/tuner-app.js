@@ -444,14 +444,18 @@
     }
 
     // stereo indicator
-    const isStereo = !!(onFreq && station && station.stereo && !forcedMono && hasRDS(station));
-    $$(".data-st").forEach((el) => (el.style.display = isStereo ? "block" : "none"));
+    const pilotLocked = !!(lockedStation && performance.now() >= stereoPilotMs);
+    const isStereo = !!(onFreq && station && station.stereo && !forcedMono && hasRDS(station) && pilotLocked && lockedStation === station);
+    // circle1 always visible (mono icon); shift it 4px right when mono.
+    $$(".data-st.circle1").forEach((el) => { el.style.display = "block"; el.style.left = isStereo ? "0px" : "4px"; });
+    // circle2 only visible when stereo (creates the two-intersecting-circles look).
+    $$(".data-st.circle2").forEach((el) => (el.style.display = isStereo ? "block" : "none"));
 
     // RDS lock state machine
     if (!onFreq || !hasRDS(station)) {
       if (lockedStation) {
         lockedStation = null;
-        rdsBasicShown = false; rdsTxShown = false;
+        rdsBasicShown = false; rdsTxShown = false; piShown = false;
         psFilled = [false,false,false,false]; psBuf = "        ";
         rtTargetRaw = ""; rtBuf = ""; rtPrevious = ""; rtSegFilled = []; rtFirstLoad = true;
         afShownCount = 0; psRotIndex = 0; groupTick = 0;
@@ -462,11 +466,16 @@
     if (lockedStation !== station) {
       lockedStation = station;
       lockedAtMs = performance.now();
-      rdsBasicShown = false; rdsTxShown = false;
+      stereoPilotMs = lockedAtMs + 400; // pilot detection delay
+      rdsBasicShown = false; rdsTxShown = false; piShown = false;
       psFilled = [false,false,false,false]; psBuf = "        ";
       rtTargetRaw = ""; rtBuf = ""; rtPrevious = ""; rtSegFilled = []; rtFirstLoad = true;
       afShownCount = 0; psRotIndex = 0; groupTick = 0;
       clearRDS(); clearTX();
+      // Show PI nearly instantly (within one paint tick) — real tuners decode
+      // the PI block before any other RDS data.
+      $("#data-pi").textContent = (station.pi || "----").toUpperCase();
+      piShown = true;
     }
   }
 
