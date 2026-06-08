@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import indexHtml from "../index.html?raw";
+import adminHtml from "../admin.html?raw";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/admin")({
   server: {
     handlers: {
       GET: async () =>
-        new Response(indexHtml, {
+        new Response(adminHtml, {
           headers: { "Content-Type": "text/html; charset=utf-8" },
         }),
     },

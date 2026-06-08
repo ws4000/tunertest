@@ -9,10 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as ReceiverRouteImport } from './routes/$receiver'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiIcecastRouteImport } from './routes/api/icecast'
 import { Route as ApiStreamSplatRouteImport } from './routes/api/stream.$'
 
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReceiverRoute = ReceiverRouteImport.update({
+  id: '/$receiver',
+  path: '/$receiver',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,36 +43,64 @@ const ApiStreamSplatRoute = ApiStreamSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$receiver': typeof ReceiverRoute
+  '/admin': typeof AdminRoute
   '/api/icecast': typeof ApiIcecastRoute
   '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$receiver': typeof ReceiverRoute
+  '/admin': typeof AdminRoute
   '/api/icecast': typeof ApiIcecastRoute
   '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$receiver': typeof ReceiverRoute
+  '/admin': typeof AdminRoute
   '/api/icecast': typeof ApiIcecastRoute
   '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/icecast' | '/api/stream/$'
+  fullPaths: '/' | '/$receiver' | '/admin' | '/api/icecast' | '/api/stream/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/icecast' | '/api/stream/$'
-  id: '__root__' | '/' | '/api/icecast' | '/api/stream/$'
+  to: '/' | '/$receiver' | '/admin' | '/api/icecast' | '/api/stream/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/$receiver'
+    | '/admin'
+    | '/api/icecast'
+    | '/api/stream/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ReceiverRoute: typeof ReceiverRoute
+  AdminRoute: typeof AdminRoute
   ApiIcecastRoute: typeof ApiIcecastRoute
   ApiStreamSplatRoute: typeof ApiStreamSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$receiver': {
+      id: '/$receiver'
+      path: '/$receiver'
+      fullPath: '/$receiver'
+      preLoaderRoute: typeof ReceiverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +127,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ReceiverRoute: ReceiverRoute,
+  AdminRoute: AdminRoute,
   ApiIcecastRoute: ApiIcecastRoute,
   ApiStreamSplatRoute: ApiStreamSplatRoute,
 }
