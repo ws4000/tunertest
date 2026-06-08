@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiIcecastRouteImport } from './routes/api/icecast'
+import { Route as ApiStreamSplatRouteImport } from './routes/api/stream.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const ApiIcecastRoute = ApiIcecastRouteImport.update({
   path: '/api/icecast',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiStreamSplatRoute = ApiStreamSplatRouteImport.update({
+  id: '/api/stream/$',
+  path: '/api/stream/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/icecast': typeof ApiIcecastRoute
+  '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/icecast': typeof ApiIcecastRoute
+  '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/icecast': typeof ApiIcecastRoute
+  '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/icecast'
+  fullPaths: '/' | '/api/icecast' | '/api/stream/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/icecast'
-  id: '__root__' | '/' | '/api/icecast'
+  to: '/' | '/api/icecast' | '/api/stream/$'
+  id: '__root__' | '/' | '/api/icecast' | '/api/stream/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiIcecastRoute: typeof ApiIcecastRoute
+  ApiStreamSplatRoute: typeof ApiStreamSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiIcecastRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/stream/$': {
+      id: '/api/stream/$'
+      path: '/api/stream/$'
+      fullPath: '/api/stream/$'
+      preLoaderRoute: typeof ApiStreamSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiIcecastRoute: ApiIcecastRoute,
+  ApiStreamSplatRoute: ApiStreamSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
