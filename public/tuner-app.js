@@ -13,7 +13,7 @@
   ];
 
   const RDS_LOCK_BW = 0.05;
-  const GROUP_MS = 88;
+  const GROUP_MS = 600;
   const NEIGHBOR_COUNT = 2;
 
   let CFG = null;
