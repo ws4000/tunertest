@@ -129,15 +129,29 @@
     masterGain = ac.createGain();
     masterGain.gain.value = parseFloat(($("#volumeSlider")?.value) ?? "1");
     masterGain.connect(ac.destination);
-    // noise generator
+    // noise generator — pink-ish noise band-limited 30 Hz – 15 kHz to mimic
+    // real FM static (balanced, not treble-heavy).
     const bs = 2 * ac.sampleRate;
     const nb = ac.createBuffer(1, bs, ac.sampleRate);
     const d = nb.getChannelData(0);
-    for (let i = 0; i < bs; i++) d[i] = Math.random() * 2 - 1;
+    // Voss-McCartney pink noise
+    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+    for (let i = 0; i < bs; i++) {
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      d[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+      b6 = white * 0.115926;
+    }
     const nNode = ac.createBufferSource(); nNode.buffer = nb; nNode.loop = true;
-    const nHP = ac.createBiquadFilter(); nHP.type = "highpass"; nHP.frequency.value = 800;
+    const nHP = ac.createBiquadFilter(); nHP.type = "highpass"; nHP.frequency.value = 30;
+    const nLP = ac.createBiquadFilter(); nLP.type = "lowpass"; nLP.frequency.value = 15000;
     noiseGain = ac.createGain(); noiseGain.gain.value = 0;
-    nNode.connect(nHP).connect(noiseGain).connect(masterGain);
+    nNode.connect(nHP).connect(nLP).connect(noiseGain).connect(masterGain);
     nNode.start();
   }
   function ensureStation(mount) {
@@ -154,10 +168,11 @@
       source = ac.createMediaElementSource(audio);
     } catch (e) { return null; }
     const lp = ac.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 15000;
+    const hp = ac.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 30;
     const ws = ac.createWaveShaper(); ws.curve = makeCurve(0);
     const gain = ac.createGain(); gain.gain.value = 0;
-    source.connect(lp).connect(ws).connect(gain).connect(masterGain);
-    const node = { audio, source, lp, ws, gain };
+    source.connect(hp).connect(lp).connect(ws).connect(gain).connect(masterGain);
+    const node = { audio, source, hp, lp, ws, gain };
     pool.set(mount, node);
     return node;
   }
@@ -165,7 +180,7 @@
     for (const [m, n] of pool) {
       if (keep.has(m)) continue;
       try { n.audio.pause(); n.audio.removeAttribute("src"); n.audio.load(); } catch(e){}
-      try { n.source.disconnect(); n.lp.disconnect(); n.ws.disconnect(); n.gain.disconnect(); } catch(e){}
+      try { n.source.disconnect(); n.hp?.disconnect(); n.lp.disconnect(); n.ws.disconnect(); n.gain.disconnect(); } catch(e){}
       pool.delete(m);
     }
   }
