@@ -212,12 +212,19 @@
     const inside = currentStation && Math.abs(offset) <= bw;
     const quality = clamp((sig - CFG.noiseFloorDbf) / 50, 0, 1);
     const offR = currentStation ? clamp(Math.abs(offset) / bw, 0, 1) : 1;
+    const now = performance.now();
+    const pilotLocked = !!(lockedStation && now >= stereoPilotMs);
+    const stereoActive = !!(inside && currentStation && currentStation.stereo && !forcedMono && pilotLocked && currentStation === lockedStation);
     for (const [mount, n] of pool) {
       const isCurrent = inside && mount === currentStation.mount;
       if (isCurrent) {
         n.ws.curve = makeCurve(offR * 60);
         n.lp.frequency.value = clamp(15000 - offR * 11000 - (1 - quality) * 6000, 1500, 15000);
         n.gain.gain.value = muted ? 0 : (1 - offR * 0.6) * (0.4 + quality * 0.6);
+        if (n.stereoGain && n.monoGain) {
+          n.stereoGain.gain.value = stereoActive ? 1 : 0;
+          n.monoGain.gain.value = stereoActive ? 0 : 1;
+        }
       } else {
         n.gain.gain.value = 0;
       }
