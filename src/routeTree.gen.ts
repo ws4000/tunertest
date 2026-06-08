@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiIcecastRouteImport } from './routes/api/icecast'
+import { Route as ApiStreamSplatRouteImport } from './routes/api/stream.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiIcecastRoute = ApiIcecastRouteImport.update({
+  id: '/api/icecast',
+  path: '/api/icecast',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStreamSplatRoute = ApiStreamSplatRouteImport.update({
+  id: '/api/stream/$',
+  path: '/api/stream/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/icecast': typeof ApiIcecastRoute
+  '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/icecast': typeof ApiIcecastRoute
+  '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/icecast': typeof ApiIcecastRoute
+  '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/api/icecast' | '/api/stream/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/icecast' | '/api/stream/$'
+  id: '__root__' | '/' | '/api/icecast' | '/api/stream/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiIcecastRoute: typeof ApiIcecastRoute
+  ApiStreamSplatRoute: typeof ApiStreamSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +68,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/icecast': {
+      id: '/api/icecast'
+      path: '/api/icecast'
+      fullPath: '/api/icecast'
+      preLoaderRoute: typeof ApiIcecastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/stream/$': {
+      id: '/api/stream/$'
+      path: '/api/stream/$'
+      fullPath: '/api/stream/$'
+      preLoaderRoute: typeof ApiStreamSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiIcecastRoute: ApiIcecastRoute,
+  ApiStreamSplatRoute: ApiStreamSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
