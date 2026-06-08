@@ -1,0 +1,4 @@
+/* Extra styles to clean up unused UI for the fake tuner */
+.chatbutton, .users-online-container { display: none !important; }
+#data-ps { white-space: pre; font-variant-numeric: tabular-nums; }
+#signal-canvas { background: rgba(0,0,0,0.15); }
