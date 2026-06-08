@@ -28,6 +28,8 @@
   let lockedStation = null;
   let lockedAtMs = 0;
   let groupTick = 0;
+  let piShown = false;
+  let stereoPilotMs = 0; // timestamp when stereo can be reported (after 400ms)
   let psFilled = [false,false,false,false]; // 4 pairs of 2 chars
   let psBuf = "        ";
   let rtTargetRaw = "";
