@@ -14,6 +14,19 @@
 /* Hide cEQ / iMS buttons but preserve their layout footprint. */
 .button-eq, .button-ims { visibility: hidden; }
 
+/* Play button: keep it square so it doesn't stretch into a tall rectangle.
+   Slightly squish the PS panel from the left by giving the button container
+   a tighter width. */
+.panel-10.h-100 > .playbutton {
+  width: 72px;
+  height: 72px;
+  aspect-ratio: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
 /* RT: each div is one full line, no wrap/split. */
 #data-rt0, #data-rt1 {
   font-size: 14px;
