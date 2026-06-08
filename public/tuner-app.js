@@ -221,6 +221,11 @@
         `<span class="${ms === 'S' ? 'opacity-full' : 'opacity-half'}">S</span>`;
     });
     $$(".data-flag").forEach((e) => (e.innerHTML = renderFlag(st.flag)));
+    const logo = $("#station-logo");
+    if (logo) {
+      if (st.logo) { logo.src = st.logo; logo.style.display = "block"; }
+      else { logo.removeAttribute("src"); logo.style.display = "none"; }
+    }
   }
   function paintPS() {
     const el = $("#data-ps"); if (!el) return;
