@@ -202,6 +202,8 @@
     $$(".data-ta span").forEach((e) => (e.className = "opacity-half"));
     $$(".data-flag").forEach((e) => (e.innerHTML = ""));
     const afList = $("#af-list ul"); if (afList) afList.innerHTML = "";
+    const logo = $("#station-logo");
+    if (logo) { logo.removeAttribute("src"); logo.style.display = "none"; }
   }
   function clearTX() {
     ["#data-station-name","#data-station-city","#data-station-itu","#data-station-erp","#data-station-pol","#data-station-distance","#data-station-azimuth"]
