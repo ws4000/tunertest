@@ -11,9 +11,13 @@ export const Route = createFileRoute("/api/stream/$")({
         const range = request.headers.get("range");
         const headers: Record<string, string> = { "User-Agent": "Mozilla/5.0 (FakeTuner)" };
         if (range) headers["Range"] = range;
-        const res = await fetch(upstream, { headers });
+        const res = await fetch(upstream, {
+          headers,
+          cache: "no-store",
+          redirect: "follow",
+        });
         const outHeaders = new Headers();
-        const passThrough = ["content-type", "content-length", "accept-ranges", "content-range", "icy-name", "icy-genre", "icy-br"];
+        const passThrough = ["content-type", "content-length", "accept-ranges", "content-range", "icy-name", "icy-genre", "icy-br", "transfer-encoding", "icy-metaint"];
         for (const h of passThrough) {
           const v = res.headers.get(h);
           if (v) outHeaders.set(h, v);
@@ -21,6 +25,7 @@ export const Route = createFileRoute("/api/stream/$")({
         if (!outHeaders.has("content-type")) outHeaders.set("content-type", "audio/mpeg");
         outHeaders.set("Access-Control-Allow-Origin", "*");
         outHeaders.set("Cache-Control", "no-store");
+        outHeaders.set("Connection", "keep-alive");
         return new Response(res.body, { status: res.status, headers: outHeaders });
       },
     },

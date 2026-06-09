@@ -16,6 +16,9 @@
         "defaultFrequency": 102.7,
         "noiseFloorDbf": 8,
         "audibleBandwidth": 0.2,
+        "customFlags": {
+          "ORL": "https://weimcwiki.weizkule.xyz/lib/exe/fetch.php?cache=&media=ocostan.png"
+        },
         "stations": [
           {
             "freq": 92.9,
