@@ -14,7 +14,7 @@
         "tuningStep": 0.1,
         "defaultFrequency": 99.9,
         "noiseFloorDbf": 8,
-        "audibleBandwidth": 0.3,
+        "audibleBandwidth": 0.2,
         "audioDelayMs": 800,
         "rdsMode": "rbds",
         "dynamicPsMode": "groups",
