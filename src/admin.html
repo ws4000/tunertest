@@ -63,6 +63,23 @@
     Each station supports: freq, mount, pi, pty, af, ps, rt, tp, ta, ms, stereo,
     signal, station{}, optional flag, rdsDisabled.
   </div>
+  <div class="help" style="margin-top:10px">
+    <strong>New global config options:</strong>
+    <code>audioDelayMs</code> (stream latency, default 800),
+    <code>rdsMode</code> ("rds" or "rbds" — different PTY tables),
+    <code>ptyOverrides</code> ({"0":"None","10":"Pop"} to rename),
+    <code>dynamicPsMode</code> ("groups" | "scroll" | "static", default "groups"),
+    <code>groupsHoldGroups</code> (default 4),
+    <code>scrollStopStartMs</code>, <code>scrollStopEndMs</code>, <code>scrollSpeedMs</code>.
+    <br>
+    <strong>New per-station options:</strong>
+    <code>logo</code> (URL),
+    <code>volume</code> (default 1.0; >1 drives the WaveShaper for an overmodulating-station feel),
+    <code>audibleBandwidth</code> (overrides the global value for this station),
+    <code>eq</code> (array of <code>{freq, gain, q}</code> parametric peaking bands),
+    <code>dynamicPsMode</code>, <code>scrollStopStartMs</code>, <code>scrollStopEndMs</code>,
+    <code>scrollSpeedMs</code>, <code>groupsHoldGroups</code>.
+  </div>
 </div>
 
 <script>

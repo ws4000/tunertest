@@ -15,6 +15,13 @@
         "defaultFrequency": 99.9,
         "noiseFloorDbf": 8,
         "audibleBandwidth": 0.3,
+        "audioDelayMs": 800,
+        "rdsMode": "rbds",
+        "dynamicPsMode": "groups",
+        "groupsHoldGroups": 4,
+        "scrollStopStartMs": 1500,
+        "scrollStopEndMs": 1500,
+        "scrollSpeedMs": 300,
         "stations": [
           { "freq": 92.5, "mount": "kxka", "pi": "92A5", "pty": 10, "af": [98.7], "ps": "KXKA", "rt": "%ICEMD% on (ALLCAPS)%SERVER%", "tp": false, "ta": false, "ms": "M", "stereo": true, "signal": 58, "station": { "name": "KXKA", "city": "Keysota", "itu": "USA", "erp": 25, "pol": "M", "distance": 14, "azimuth": 90 } },
           { "freq": 92.9, "mount": "mix929springton", "pi": "9290", "pty": 10, "af": [104.3], "ps": "MIX 92.9", "rt": "Mix 92.9 Springton - Now Playing: %ICEMD%", "tp": false, "ta": false, "ms": "M", "stereo": true, "signal": 64, "station": { "name": "Mix 92.9", "city": "Springton", "itu": "USA", "erp": 50, "pol": "M", "distance": 22, "azimuth": 145 } },
