@@ -201,7 +201,7 @@
             "ms": "M",
             "stereo": true,
             "signal": 83,
-            "logo": "",
+            "logo": "https://i.soupco.net/u/zDwzSL.png",
             "station": {
               "name": "OBUL-FM",
               "city": "Springton",
@@ -249,6 +249,7 @@
             "ms": "M",
             "stereo": true,
             "signal": 98,
+            "logo": "https://weimcwiki.weizkule.xyz/lib/exe/fetch.php?cache=&media=oauz.png",
             "station": {
               "name": "OAUZ-FM",
               "city": "Springton",
@@ -296,6 +297,7 @@
             "ms": "M",
             "stereo": true,
             "signal": 98,
+            "logo": "https://i.soupco.net/u/uJpHZJ.png",
             "station": {
               "name": "OZAO-FM",
               "city": "Springton",
