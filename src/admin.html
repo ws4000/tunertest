@@ -58,10 +58,13 @@
   <textarea id="editor" spellcheck="false"></textarea>
   <div class="help">
     Each receiver has: <code>slug</code> (URL path), <code>name</code>, <code>location</code>,
+    optional <code>mc</code>: <code>{"x":0,"z":0}</code> world coordinates for the dot on the world map,
     and a <code>config</code> with the same fields as before
     (tunerName, tuningMin/Max, stations[], presets[], etc.).
     Each station supports: freq, mount, pi, pty, af, ps, rt, tp, ta, ms, stereo,
     signal, station{}, optional flag, rdsDisabled.
+    <br><code>mount</code> can be either an Icecast mount name (served from radio.soupco.net:8443)
+    OR a full <code>http(s)://</code> stream URL for any other server.
   </div>
   <div class="help" style="margin-top:10px">
     <strong>New global config options:</strong>
