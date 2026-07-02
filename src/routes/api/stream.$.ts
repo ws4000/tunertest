@@ -7,7 +7,14 @@ export const Route = createFileRoute("/api/stream/$")({
     handlers: {
       GET: async ({ params, request }) => {
         const mount = params._splat ?? "";
-        const upstream = `${ICECAST_BASE}/${mount}`;
+        // Allow arbitrary upstream stream URLs by URL-encoding the full URL
+        // as the mount path. Anything not starting with http(s):// is treated
+        // as a mount on the default Icecast server for back-compat.
+        let decoded = mount;
+        try { decoded = decodeURIComponent(mount); } catch (e) {}
+        const upstream = /^https?:\/\//i.test(decoded)
+          ? decoded
+          : `${ICECAST_BASE}/${mount}`;
         const range = request.headers.get("range");
         const headers: Record<string, string> = { "User-Agent": "Mozilla/5.0 (FakeTuner)" };
         if (range) headers["Range"] = range;
