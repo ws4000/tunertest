@@ -4,11 +4,28 @@
 <meta charset="utf-8">
 <title>FM-DX Webserver — Receivers</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <style>
   body { background:#0c1c1b; color:#fff; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin:0; padding:40px 20px; }
-  .wrap { max-width: 720px; margin: 0 auto; }
+  .wrap { max-width: 1080px; margin: 0 auto; }
   h1 { font-weight: 300; letter-spacing: 1px; margin: 0 0 8px; }
   .sub { color:#8ea7a5; margin-bottom: 28px; font-size: 14px; }
+  #map { height: 520px; width: 100%; background:#050d0d; border:1px solid rgba(104,247,238,0.18); border-radius:6px; margin-bottom: 28px; }
+  .leaflet-container { background:#050d0d; }
+  .leaflet-tuner-marker {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #58f76a; border: 2px solid #0c1c1b;
+    box-shadow: 0 0 8px rgba(88,247,106,0.7);
+    cursor: pointer;
+  }
+  .leaflet-tuner-marker:hover { background:#68f7ee; box-shadow: 0 0 12px rgba(104,247,238,0.9); }
+  .leaflet-tooltip.tuner-tip {
+    background:#1a1a1a; color:#fff; border:1px solid rgba(255,255,255,0.2);
+    border-radius: 14px; padding: 4px 10px; font-size: 13px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+  .leaflet-tooltip.tuner-tip::before { display:none; }
   a.card {
     display:block; padding:16px 18px; margin-bottom:10px;
     background: rgba(255,255,255,0.04); border:1px solid rgba(104,247,238,0.18);
@@ -28,6 +45,7 @@
 <div class="wrap">
   <h1>FM-DX Webserver</h1>
   <div class="sub">Available receivers</div>
+  <div id="map"></div>
   <div id="list"></div>
   <a class="admin-link" href="/admin">⚙ Admin panel</a>
 </div>
@@ -54,6 +72,50 @@
       </div>
     </a>
   `).join("");
+
+  // ---------- World map (Dynmap-backed Leaflet) ----------
+  // Dynmap flat tiles are 128px covering 32 world blocks (4 px/block).
+  // We align Leaflet native zoom = 2, so 1 Leaflet tile == 1 dynmap tile.
+  // latLng = (-worldZ, worldX). Zoom-out prefixes each level with an 'z'.
+  const NATIVE_ZOOM = 2;
+  const DynmapLayer = L.TileLayer.extend({
+    getTileUrl(c) {
+      const zoomOut = Math.max(0, NATIVE_ZOOM - c.z);
+      const zPrefix = "z".repeat(zoomOut);
+      const dtx = c.x;
+      const dty = -c.y - 1;
+      const regX = Math.floor(dtx / 32) * 32;
+      const regY = Math.floor(dty / 32) * 32;
+      return `https://weimctxmap.weizkule.xyz/tiles/world/flat/${regX}_${regY}/${zPrefix}flat_${dtx}_${dty}.jpg`;
+    },
+  });
+  const map = L.map("map", {
+    crs: L.CRS.Simple,
+    minZoom: -3,
+    maxZoom: 4,
+    zoomControl: true,
+    attributionControl: false,
+  });
+  new DynmapLayer("", { tileSize: 128, minZoom: -3, maxZoom: 4, noWrap: true }).addTo(map);
+
+  const pts = receivers.filter(r => r.mc && typeof r.mc.x === "number" && typeof r.mc.z === "number");
+  const toLatLng = (r) => L.latLng(-r.mc.z, r.mc.x);
+  pts.forEach(r => {
+    const icon = L.divIcon({ className: "leaflet-tuner-marker", iconSize: [14, 14] });
+    const m = L.marker(toLatLng(r), { icon }).addTo(map);
+    m.bindTooltip((r.name || r.slug).replace(/</g,"&lt;"), {
+      direction: "top", offset: [0, -8], className: "tuner-tip", opacity: 1,
+    });
+    m.on("click", () => { window.location.href = "/" + encodeURIComponent(r.slug); });
+  });
+
+  if (pts.length === 1) {
+    map.setView(toLatLng(pts[0]), 2);
+  } else if (pts.length > 1) {
+    map.fitBounds(L.latLngBounds(pts.map(toLatLng)).pad(0.4));
+  } else {
+    map.setView([5333, 2102], 0);
+  }
 })();
 </script>
 </body>
