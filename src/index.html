@@ -81,12 +81,13 @@
   const DynmapLayer = L.TileLayer.extend({
     getTileUrl(c) {
       const zoomOut = Math.max(0, NATIVE_ZOOM - c.z);
-      const zPrefix = "z".repeat(zoomOut);
-      const dtx = c.x;
-      const dty = -c.y - 1;
-      const regX = Math.floor(dtx / 32) * 32;
-      const regY = Math.floor(dty / 32) * 32;
-      return `https://weimctxmap.weizkule.xyz/tiles/world/flat/${regX}_${regY}/${zPrefix}flat_${dtx}_${dty}.jpg`;
+      const scale = 1 << zoomOut; // 2^zoomOut
+      const dtx = c.x * scale;
+      const dty = (-c.y - 1) * scale;
+      const regX = Math.floor(dtx / 32);
+      const regY = Math.floor(dty / 32);
+      const prefix = zoomOut > 0 ? "z".repeat(zoomOut) + "_" : "";
+      return `https://weimctxmap.weizkule.xyz/tiles/world/flat/${regX}_${regY}/${prefix}${dtx}_${dty}.jpg`;
     },
   });
   const map = L.map("map", {
