@@ -4,6 +4,7 @@
       "slug": "springton",
       "name": "Springton FM-DX Tuner",
       "location": "Springton, Orland",
+      "mc": { "x": 2102, "z": -5333 },
       "config": {
         "tunerName": "Springton FM-DX Tuner",
         "tunerDescription": "Tuner located on Tunset Peak.",

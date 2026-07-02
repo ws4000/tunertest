@@ -371,7 +371,9 @@
       // at the element level is fine — WebAudio still gets the samples.
       audio.style.display = "none";
       try { document.body.appendChild(audio); } catch (e) {}
-      audio.src = `/api/stream/${mount}`;
+      audio.src = /^https?:\/\//i.test(mount)
+        ? `/api/stream/${encodeURIComponent(mount)}`
+        : `/api/stream/${mount}`;
       try { audio.load(); } catch (e) {}
       // Buffer-recovery. NEVER call audio.load() — that fully resets the
       // MediaElement and creates an audible cut-out. We also never seek
@@ -403,7 +405,9 @@
         try {
           // Force the browser to drop the dead socket and open a new one
           // by re-assigning src (cheaper than .load() + .play()).
-          const src = `/api/stream/${mount}?t=${now}`;
+          const src = /^https?:\/\//i.test(mount)
+            ? `/api/stream/${encodeURIComponent(mount)}?t=${now}`
+            : `/api/stream/${mount}?t=${now}`;
           audio.src = src;
           waitingSince = now;
           const p = audio.play(); if (p && p.catch) p.catch(() => {});
