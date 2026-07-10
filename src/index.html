@@ -83,7 +83,7 @@
       const zoomOut = Math.max(0, NATIVE_ZOOM - c.z);
       const scale = 1 << zoomOut; // 2^zoomOut
       const dtx = c.x * scale;
-      const dty = -c.y * scale - scale;
+      const dty = (-c.y - 1) * scale;
       const regX = Math.floor(dtx / 32);
       const regY = Math.floor(dty / 32);
       const prefix = zoomOut > 0 ? "z".repeat(zoomOut) + "_" : "";
