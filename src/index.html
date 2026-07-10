@@ -83,15 +83,22 @@
       const zoomOut = Math.max(0, NATIVE_ZOOM - c.z);
       const scale = 1 << zoomOut; // 2^zoomOut
       const dtx = c.x * scale;
-      const dty = (-c.y - 1) * scale;
+      const dty = -c.y * scale;
       const regX = Math.floor(dtx / 32);
       const regY = Math.floor(dty / 32);
       const prefix = zoomOut > 0 ? "z".repeat(zoomOut) + "_" : "";
       return `https://weimctxmap.weizkule.xyz/tiles/world/flat/${regX}_${regY}/${prefix}${dtx}_${dty}.jpg`;
     },
   });
+  // Dynmap zoom-out tile filenames are multiples of `scale`, but each tile's
+  // top edge sits 32 worldZ blocks north of what Leaflet's tile grid would
+  // pick with a plain CRS.Simple. Shift the CRS Y by 32 blocks so Leaflet's
+  // tile grid aligns with dynmap's at every zoom level.
+  const DynmapCRS = L.extend({}, L.CRS.Simple, {
+    transformation: new L.Transformation(1, 0, -1, 32),
+  });
   const map = L.map("map", {
-    crs: L.CRS.Simple,
+    crs: DynmapCRS,
     minZoom: -3,
     maxZoom: 4,
     zoomControl: true,
