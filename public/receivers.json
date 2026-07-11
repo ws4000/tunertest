@@ -4,7 +4,10 @@
       "slug": "springton",
       "name": "Springton FM-DX Tuner",
       "location": "Springton, Orland",
-      "mc": { "x": 2102, "z": -5333 },
+      "mc": {
+        "x": 3097,
+        "z": -3372
+      },
       "config": {
         "tunerName": "Springton FM-DX Tuner",
         "tunerDescription": "Tuner located on Tunset Peak.",
@@ -363,6 +366,269 @@
           100.1,
           102.7
         ]
+      }
+    },
+    {
+      "slug": "doetinlingen",
+      "name": "Doetinlingen",
+      "location": "Doetinlingen",
+      "mc": {
+        "x": -2803,
+        "z": -8165
+      },
+      "config": {
+        "tunerName": "Doetinlingen",
+        "tunerDescription": "Doetinlingen",
+        "tunerDevice": "Virtual TEF668x",
+        "ownerContact": "weizkule",
+        "rdsMode": "rds",
+        "tuningMin": 65.9,
+        "tuningMax": 108,
+        "tuningStep": 0.1,
+        "defaultFrequency": 87.6,
+        "noiseFloorDbf": 8,
+        "audibleBandwidth": 0.2,
+        "audioDelayMs": 800,
+        "stations": [
+          {
+            "freq": 87.6,
+            "ps": "* VOLT *87.6 FM",
+            "rt": "VOLT RADIO",
+            "pi": "87ED",
+            "pty": 28,
+            "tp": true,
+            "ta": false,
+            "ms": "S",
+            "stereo": true,
+            "station": {
+              "name": "Volt Radio",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "pol": "V",
+              "distance": 10,
+              "azimuth": 288,
+              "erp": 0.5
+            },
+            "mount": "https://radio.soupco.net:8443/volt",
+            "logo": "https://i.soupco.net/u/8JdQwN.png",
+            "volume": 100,
+            "signal": 75
+          },
+          {
+            "freq": 88,
+            "ps": "100% SPㅤ",
+            "rt": "%ICEMD%",
+            "pi": "8228",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "100% SP",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 2,
+              "pol": "V",
+              "distance": 13,
+              "azimuth": 274
+            },
+            "mount": "https://29103.live.streamtheworld.com/100PNL_MP3_SC",
+            "signal": 85,
+            "volume": 100,
+            "logo": "https://uploads.weizkule.xyz/u/f6HSj7.png"
+          },
+          {
+            "freq": 88.7,
+            "ps": "SPO P1",
+            "rt": "SPO P1",
+            "pi": "8201",
+            "pty": 9,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 63,
+            "station": {
+              "name": "SPO P1",
+              "city": "Rottingem Zendmast",
+              "itu": "SP",
+              "erp": 97,
+              "pol": "H",
+              "distance": 48,
+              "azimuth": 154
+            },
+            "mount": "https://icecast.omroep.nl/radio1-bb-mp3",
+            "volume": 100
+          },
+          {
+            "freq": 90,
+            "ps": "SPO P2",
+            "rt": "SPO P2",
+            "pi": "8202",
+            "pty": 14,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 63,
+            "station": {
+              "name": "SPO P2",
+              "city": "Rottingem Zendmast",
+              "itu": "SP",
+              "erp": 97,
+              "pol": "H",
+              "distance": 48,
+              "azimuth": 154
+            },
+            "mount": "https://icecast.npocloud.nl/radio4-eigentijdsfb-mp3",
+            "volume": 100
+          },
+          {
+            "freq": 97.6,
+            "ps": "RTO R1",
+            "rt": "RTO Radio 1 -> %ICEMD%",
+            "pi": "8E10",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "RTO Radio 1 [F]",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 5,
+              "pol": "V",
+              "distance": 13,
+              "azimuth": 273
+            },
+            "mount": "https://radio.soupco.net:8443/rtor1",
+            "volume": 100,
+            "logo": "https://i.soupco.net/u/Bd7FQU.png",
+            "signal": 93
+          },
+          {
+            "freq": 90,
+            "ps": "RTO R2",
+            "rt": "RTO Radio 2 -> %ICEMD%",
+            "pi": "8E11",
+            "pty": 27,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 85,
+            "station": {
+              "name": "RTO Radio 2 [F]",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 2,
+              "pol": "V",
+              "distance": 13,
+              "azimuth": 273
+            },
+            "mount": "https://radio.soupco.net:8443/rtor2",
+            "logo": "https://i.soupco.net/u/NoR7lq.png",
+            "volume": 100
+          },
+          {
+            "freq": 99.7,
+            "ps": "SPO P3",
+            "rt": "SPO P3",
+            "pi": "8203",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 63,
+            "station": {
+              "name": "SPO P3",
+              "city": "Rottingem Zendmast",
+              "itu": "SP",
+              "erp": 97,
+              "pol": "H",
+              "distance": 48,
+              "azimuth": 154
+            },
+            "mount": "https://icecast.omroep.nl/3fm-bb-mp3",
+            "volume": 100
+          },
+          {
+            "freq": 96.6,
+            "ps": "PEPPER",
+            "rt": "Add some pepper to your life",
+            "pi": "88B5",
+            "pty": 15,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 80,
+            "station": {
+              "name": "Pepper 96,6",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 1,
+              "pol": "V",
+              "distance": 5,
+              "azimuth": 169
+            },
+            "mount": "https://netradio.live24.gr/pepper9660",
+            "logo": "https://tef.noobish.eu/logos/GRC/310C_PEPPER966.png",
+            "volume": 100
+          },
+          {
+            "freq": 98.2,
+            "ps": "ㅤHOBOEㅤㅤ",
+            "rt": "HOBOE",
+            "pi": "82C3",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 93,
+            "station": {
+              "name": "Novoye Radio Sveland",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 5,
+              "pol": "V",
+              "distance": 13,
+              "azimuth": 273
+            },
+            "mount": "https://icecast-newradio.cdnvideo.ru/newradio3",
+            "logo": "https://tef.noobish.eu/logos/RUS/3173_NOVOYERADIO.png",
+            "volume": 100
+          },
+          {
+            "freq": 100.2,
+            "ps": "TOPradio",
+            "rt": "",
+            "pi": "82DF",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 72,
+            "station": {
+              "name": "TOPradio",
+              "city": "Bolsvorden Hill",
+              "itu": "SP",
+              "erp": 10,
+              "pol": "C",
+              "distance": 25,
+              "azimuth": 76
+            },
+            "mount": "https://live.advailo.com/topradio/live/playlist.m3u8",
+            "logo": "https://tef.noobish.eu/logos/LVA/924A.png",
+            "volume": 100
+          }
+        ],
+        "presets": []
       }
     }
   ]
