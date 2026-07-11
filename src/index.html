@@ -7,48 +7,102 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <style>
-  body { background:#0c1c1b; color:#fff; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin:0; padding:40px 20px; }
-  .wrap { max-width: 1080px; margin: 0 auto; }
-  h1 { font-weight: 300; letter-spacing: 1px; margin: 0 0 8px; }
-  .sub { color:#8ea7a5; margin-bottom: 28px; font-size: 14px; }
-  #map { height: 520px; width: 100%; background:#050d0d; border:1px solid rgba(104,247,238,0.18); border-radius:6px; margin-bottom: 28px; }
+  html, body { margin:0; padding:0; height:100%; background:#0c1c1b; color:#fff;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; overflow:hidden; }
+  #map { position:absolute; inset:0; background:#050d0d; }
   .leaflet-container { background:#050d0d; }
-  .leaflet-tuner-marker {
-    width: 14px; height: 14px; border-radius: 50%;
-    background: #58f76a; border: 2px solid #0c1c1b;
-    box-shadow: 0 0 8px rgba(88,247,106,0.7);
-    cursor: pointer;
-  }
+  .leaflet-tuner-marker { width:14px; height:14px; border-radius:50%;
+    background:#58f76a; border:2px solid #0c1c1b;
+    box-shadow: 0 0 8px rgba(88,247,106,0.7); cursor:pointer; }
   .leaflet-tuner-marker:hover { background:#68f7ee; box-shadow: 0 0 12px rgba(104,247,238,0.9); }
-  .leaflet-tooltip.tuner-tip {
-    background:#1a1a1a; color:#fff; border:1px solid rgba(255,255,255,0.2);
-    border-radius: 14px; padding: 4px 10px; font-size: 13px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  }
+  .leaflet-tooltip.tuner-tip { background:#1a1a1a; color:#fff;
+    border:1px solid rgba(255,255,255,0.2); border-radius:14px;
+    padding:4px 10px; font-size:13px; box-shadow:0 2px 6px rgba(0,0,0,0.5); }
   .leaflet-tooltip.tuner-tip::before { display:none; }
-  a.card {
-    display:block; padding:16px 18px; margin-bottom:10px;
-    background: rgba(255,255,255,0.04); border:1px solid rgba(104,247,238,0.18);
-    border-radius:6px; text-decoration:none; color:#fff;
-    transition: background .15s, border-color .15s;
+
+  /* Bottom-left title chip */
+  .brand { position:absolute; left:16px; bottom:16px; z-index:600;
+    background: rgba(12,28,27,0.85); border:1px solid rgba(104,247,238,0.25);
+    border-radius:10px; padding:10px 16px; display:flex; align-items:center;
+    gap:14px; backdrop-filter: blur(6px); }
+  .brand .title { font-weight:300; letter-spacing:1px; font-size:15px; }
+  .brand .dot { color:#68f7ee; }
+  .brand .stats { display:flex; gap:14px; font-size:11px; color:#8ea7a5; }
+  .brand .stats b { display:block; color:#68f7ee; font-size:15px; font-weight:500; }
+  .brand a.admin { color:#68f7ee; font-size:12px; text-decoration:none;
+    border:1px solid #68f7ee; padding:4px 10px; border-radius:14px; }
+  .brand a.admin:hover { background:#68f7ee; color:#0c1c1b; }
+
+  /* Right sidebar */
+  #sidebar { position:absolute; top:0; right:0; height:100%; width:360px;
+    background: linear-gradient(180deg, rgba(12,28,27,0.97), rgba(6,16,15,0.97));
+    border-left:1px solid rgba(104,247,238,0.18); z-index:700;
+    display:flex; flex-direction:column; transition: transform .28s ease; }
+  #sidebar.collapsed { transform: translateX(360px); }
+  .sb-head { padding:20px 18px 12px; display:flex; justify-content:flex-end; }
+  .sb-head .logo { width:44px; height:44px; border-radius:50%;
+    border:2px solid #68f7ee; display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 14px rgba(104,247,238,0.4); }
+  .sb-head .logo::after { content:""; width:14px; height:14px; border-radius:50%;
+    background:#68f7ee; box-shadow: 0 0 8px #68f7ee; }
+  .sb-search { padding: 4px 14px 12px; }
+  .sb-search input { width:100%; box-sizing:border-box; padding:8px 12px;
+    background: rgba(255,255,255,0.05); color:#fff;
+    border:1px solid rgba(255,255,255,0.1); border-radius:4px; font-size:13px; }
+  .sb-search input::placeholder { color:#5e7876; }
+  .sb-list { flex:1; overflow-y:auto; padding: 4px 8px 8px; }
+  .sb-item { display:flex; align-items:center; gap:12px; padding:12px 10px;
+    border-radius:6px; cursor:pointer; color:inherit; text-decoration:none;
+    border-bottom:1px solid rgba(255,255,255,0.04); }
+  .sb-item:hover { background: rgba(104,247,238,0.08); }
+  .sb-item .flag { width:28px; height:20px; flex:none; border-radius:2px;
+    background:#143534; display:flex; align-items:center; justify-content:center;
+    font-size:10px; color:#68f7ee; border:1px solid rgba(104,247,238,0.25); }
+  .sb-item .info { min-width:0; flex:1; }
+  .sb-item .n { font-size:14px; font-weight:500; white-space:nowrap;
+    overflow:hidden; text-overflow:ellipsis; }
+  .sb-item .l { font-size:12px; color:#8ea7a5; white-space:nowrap;
+    overflow:hidden; text-overflow:ellipsis; }
+  .sb-empty { padding:24px; text-align:center; color:#8ea7a5; font-size:13px; }
+  .sb-foot { padding: 12px 16px 14px; border-top:1px solid rgba(255,255,255,0.06);
+    display:flex; justify-content:space-around; text-align:center; font-size:11px;
+    color:#8ea7a5; }
+  .sb-foot b { display:block; color:#68f7ee; font-size:16px; font-weight:500; }
+
+  /* Collapse toggle */
+  #toggle { position:absolute; top:50%; right:360px; transform: translateY(-50%);
+    z-index:800; width:28px; height:64px; background: rgba(12,28,27,0.95);
+    border:1px solid rgba(104,247,238,0.25); border-right:none;
+    border-radius: 6px 0 0 6px; color:#68f7ee; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+    transition: right .28s ease; }
+  #sidebar.collapsed ~ #toggle { right: 0; }
+  #toggle:hover { background: rgba(104,247,238,0.15); }
+
+  @media (max-width: 640px) {
+    #sidebar { width: 84vw; }
+    #sidebar.collapsed { transform: translateX(84vw); }
+    #toggle { right: 84vw; }
   }
-  a.card:hover { background: rgba(104,247,238,0.08); border-color:#68f7ee; }
-  .card .name { font-size: 18px; }
-  .card .meta { font-size: 13px; color:#8ea7a5; margin-top: 4px; }
-  .card .slug { color:#68f7ee; font-family: "Roboto Mono", monospace; font-size: 12px; }
-  .admin-link { display:inline-block; margin-top: 24px; color:#68f7ee; font-size:13px; text-decoration:none; }
-  .admin-link:hover { text-decoration: underline; }
-  .empty { padding: 30px; text-align:center; color:#8ea7a5; border:1px dashed rgba(255,255,255,0.15); border-radius:6px; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>FM-DX Webserver</h1>
-  <div class="sub">Available receivers</div>
-  <div id="map"></div>
-  <div id="list"></div>
-  <a class="admin-link" href="/admin">⚙ Admin panel</a>
+<div id="map"></div>
+
+<div class="brand">
+  <div class="title">FM-DX Webserver <span class="dot">•</span> Receivers</div>
+  <div class="stats"><div><b id="stat-count">0</b>Available</div></div>
+  <a class="admin" href="/admin">⚙ Admin</a>
 </div>
+
+<aside id="sidebar">
+  <div class="sb-head"><div class="logo"></div></div>
+  <div class="sb-search"><input id="q" type="search" placeholder="Search…" autocomplete="off"></div>
+  <div id="list" class="sb-list"></div>
+  <div class="sb-foot"><div><b id="foot-count">0</b>Available</div></div>
+</aside>
+<button id="toggle" title="Toggle receivers panel">›</button>
+
 <script>
 (async () => {
   const def = await fetch("/receivers.json").then(r => r.json()).catch(() => ({receivers:[]}));
@@ -57,31 +111,55 @@
     const ov = JSON.parse(localStorage.getItem("receivers_override") || "null");
     if (ov && Array.isArray(ov.receivers)) receivers = ov.receivers;
   } catch (e) {}
-  const list = document.getElementById("list");
-  if (!receivers.length) {
-    list.innerHTML = '<div class="empty">No receivers configured. Visit <a href="/admin" style="color:#68f7ee">/admin</a> to add one.</div>';
-    return;
+
+  const listEl = document.getElementById("list");
+  const qEl = document.getElementById("q");
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  function render(filter) {
+    const f = (filter || "").toLowerCase().trim();
+    const rows = receivers.filter(r => !f ||
+      (r.name||"").toLowerCase().includes(f) ||
+      (r.location||"").toLowerCase().includes(f) ||
+      (r.slug||"").toLowerCase().includes(f));
+    document.getElementById("stat-count").textContent = receivers.length;
+    document.getElementById("foot-count").textContent = receivers.length;
+    if (!rows.length) {
+      listEl.innerHTML = '<div class="sb-empty">No receivers.<br><a href="/admin" style="color:#68f7ee">Open admin →</a></div>';
+      return;
+    }
+    listEl.innerHTML = rows.map(r => {
+      const stations = r.config?.stations?.length ? ` · ${r.config.stations.length} stations` : "";
+      return `<a class="sb-item" href="/${encodeURIComponent(r.slug)}">
+        <div class="flag">FM</div>
+        <div class="info">
+          <div class="n">${esc(r.name || r.slug)}</div>
+          <div class="l">${esc(r.location || "")}${stations}</div>
+        </div>
+      </a>`;
+    }).join("");
   }
-  list.innerHTML = receivers.map(r => `
-    <a class="card" href="/${encodeURIComponent(r.slug)}">
-      <div class="name">${(r.name || r.slug).replace(/</g,"&lt;")}</div>
-      <div class="meta">
-        ${(r.location || "").replace(/</g,"&lt;")}
-        ${r.config?.stations?.length ? ` · ${r.config.stations.length} stations` : ""}
-        · <span class="slug">/${r.slug}</span>
-      </div>
-    </a>
-  `).join("");
+  render("");
+  qEl.addEventListener("input", () => render(qEl.value));
+
+  // Sidebar collapse
+  const sb = document.getElementById("sidebar");
+  const tog = document.getElementById("toggle");
+  const setCollapsed = (v) => {
+    sb.classList.toggle("collapsed", v);
+    tog.textContent = v ? "‹" : "›";
+    localStorage.setItem("receivers_sidebar_collapsed", v ? "1" : "0");
+    setTimeout(() => map.invalidateSize(), 300);
+  };
+  tog.addEventListener("click", () => setCollapsed(!sb.classList.contains("collapsed")));
 
   // ---------- World map (Dynmap-backed Leaflet) ----------
-  // Dynmap flat tiles are 128px covering 32 world blocks (4 px/block).
-  // We align Leaflet native zoom = 2, so 1 Leaflet tile == 1 dynmap tile.
-  // latLng = (-worldZ, worldX). Zoom-out prefixes each level with an 'z'.
   const NATIVE_ZOOM = 2;
   const DynmapLayer = L.TileLayer.extend({
     getTileUrl(c) {
       const zoomOut = Math.max(0, NATIVE_ZOOM - c.z);
-      const scale = 1 << zoomOut; // 2^zoomOut
+      const scale = 1 << zoomOut;
       const dtx = c.x * scale;
       const dty = -c.y * scale;
       const regX = Math.floor(dtx / 32);
@@ -90,40 +168,31 @@
       return `https://weimctxmap.weizkule.xyz/tiles/world/flat/${regX}_${regY}/${prefix}${dtx}_${dty}.jpg`;
     },
   });
-  // Dynmap zoom-out tile filenames are multiples of `scale`, but each tile's
-  // top edge sits 32 worldZ blocks north of what Leaflet's tile grid would
-  // pick with a plain CRS.Simple. Shift the CRS Y by 32 blocks so Leaflet's
-  // tile grid aligns with dynmap's at every zoom level.
   const DynmapCRS = L.extend({}, L.CRS.Simple, {
     transformation: new L.Transformation(1, 0, -1, 32),
   });
   const map = L.map("map", {
-    crs: DynmapCRS,
-    minZoom: -3,
-    maxZoom: 4,
-    zoomControl: true,
-    attributionControl: false,
+    crs: DynmapCRS, minZoom:-3, maxZoom:4,
+    zoomControl:true, attributionControl:false,
   });
-  new DynmapLayer("", { tileSize: 128, minZoom: -3, maxZoom: 4, noWrap: true }).addTo(map);
+  new DynmapLayer("", { tileSize:128, minZoom:-3, maxZoom:4, noWrap:true }).addTo(map);
 
   const pts = receivers.filter(r => r.mc && typeof r.mc.x === "number" && typeof r.mc.z === "number");
   const toLatLng = (r) => L.latLng(-r.mc.z, r.mc.x);
   pts.forEach(r => {
-    const icon = L.divIcon({ className: "leaflet-tuner-marker", iconSize: [14, 14] });
+    const icon = L.divIcon({ className:"leaflet-tuner-marker", iconSize:[14,14] });
     const m = L.marker(toLatLng(r), { icon }).addTo(map);
-    m.bindTooltip((r.name || r.slug).replace(/</g,"&lt;"), {
-      direction: "top", offset: [0, -8], className: "tuner-tip", opacity: 1,
-    });
+    m.bindTooltip(esc(r.name || r.slug), {
+      direction:"top", offset:[0,-8], className:"tuner-tip", opacity:1 });
     m.on("click", () => { window.location.href = "/" + encodeURIComponent(r.slug); });
   });
+  if (pts.length === 1) map.setView(toLatLng(pts[0]), 2);
+  else if (pts.length > 1) map.fitBounds(L.latLngBounds(pts.map(toLatLng)).pad(0.4));
+  else map.setView([5333, 2102], 0);
 
-  if (pts.length === 1) {
-    map.setView(toLatLng(pts[0]), 2);
-  } else if (pts.length > 1) {
-    map.fitBounds(L.latLngBounds(pts.map(toLatLng)).pad(0.4));
-  } else {
-    map.setView([5333, 2102], 0);
-  }
+  // Initial collapse state
+  const initCollapsed = localStorage.getItem("receivers_sidebar_collapsed") === "1";
+  setCollapsed(initCollapsed);
 })();
 </script>
 </body>
