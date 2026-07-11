@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Admin — FM-DX Webserver</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<style>
+  * { box-sizing: border-box; }
+  body { background:#0c1c1b; color:#fff; font-family: system-ui, sans-serif; margin:0; padding:0; }
+  a { color:#68f7ee; }
+  .topbar { display:flex; align-items:center; gap:12px; padding:12px 20px;
+    border-bottom:1px solid rgba(104,247,238,0.18); background:#081513; }
+  .topbar h1 { margin:0; font-weight:300; font-size:18px; letter-spacing:1px; flex:1; }
+  .back { font-size:13px; text-decoration:none; }
+  button, .btn {
+    background:#143534; color:#68f7ee; border:1px solid #68f7ee;
+    padding:6px 12px; border-radius:4px; cursor:pointer; font-size:13px;
+    font-family: inherit; }
+  button:hover { background:#1c4a48; }
+  button.primary { background:#68f7ee; color:#0c1c1b; font-weight:600; }
+  button.danger { color:#ff8a8a; border-color:#ff8a8a; }
+  button.ghost { background:transparent; border-color:rgba(255,255,255,0.2); color:#cfeae8; }
+  button.sm { padding:3px 8px; font-size:12px; }
+  input, select, textarea {
+    background:#06100f; color:#cfeae8; border:1px solid rgba(255,255,255,0.15);
+    border-radius:4px; padding:6px 8px; font-family: inherit; font-size:13px; }
+  input:focus, select:focus, textarea:focus { outline:none; border-color:#68f7ee; }
+  .status { font-size:12px; }
+  .ok { color:#68f7ee; } .err { color:#ff8a8a; }
+
+  .layout { display:flex; height: calc(100vh - 51px); }
+  .side { width: 260px; border-right:1px solid rgba(104,247,238,0.18);
+    background:#081513; display:flex; flex-direction:column; }
+  .side-head { padding:12px; display:flex; gap:6px; }
+  .side-list { flex:1; overflow-y:auto; }
+  .rec-item { padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.05);
+    cursor:pointer; display:flex; justify-content:space-between; gap:6px; }
+  .rec-item:hover { background: rgba(104,247,238,0.06); }
+  .rec-item.active { background: rgba(104,247,238,0.12); border-left:3px solid #68f7ee; padding-left:11px; }
+  .rec-item .rn { font-size:14px; }
+  .rec-item .rs { font-size:11px; color:#8ea7a5; font-family:"Roboto Mono", monospace; }
+
+  .main { flex:1; overflow-y:auto; padding:20px; }
+  .empty-hint { color:#8ea7a5; text-align:center; padding:60px 20px; }
+
+  .card { background: rgba(255,255,255,0.03); border:1px solid rgba(104,247,238,0.15);
+    border-radius:6px; padding:14px; margin-bottom:14px; }
+  .card h3 { margin:0 0 10px; font-weight:500; font-size:14px; color:#68f7ee;
+    text-transform:uppercase; letter-spacing:1px; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; }
+  .field { display:flex; flex-direction:column; gap:4px; }
+  .field label { font-size:11px; color:#8ea7a5; text-transform:uppercase; letter-spacing:0.5px; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .split { display:flex; gap:8px; }
+  .split > * { flex:1; }
+
+  /* Map picker */
+  #picker { height: 280px; border:1px solid rgba(104,247,238,0.18); border-radius:4px; margin-top:8px; }
+  .leaflet-container { background:#050d0d; }
+  .picker-marker { width:14px; height:14px; border-radius:50%;
+    background:#58f76a; border:2px solid #0c1c1b;
+    box-shadow: 0 0 8px rgba(88,247,106,0.7); }
+  .picker-hint { font-size:12px; color:#8ea7a5; margin-top:6px; }
+
+  /* Stations table */
+  .stations-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .station { border:1px solid rgba(255,255,255,0.08); border-radius:4px;
+    margin-bottom:8px; background: rgba(0,0,0,0.2); }
+  .station-summary { display:flex; align-items:center; gap:12px; padding:8px 12px;
+    cursor:pointer; }
+  .station-summary:hover { background: rgba(104,247,238,0.05); }
+  .station-summary .freq { font-family:"Roboto Mono", monospace; color:#68f7ee;
+    font-size:15px; font-weight:600; min-width: 60px; }
+  .station-summary .ps { font-family:"Roboto Mono", monospace; font-size:13px;
+    background:#000; color:#ffb347; padding:2px 6px; border-radius:2px; min-width:82px; text-align:center; }
+  .station-summary .stname { flex:1; font-size:13px; color:#cfeae8;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .station-summary .caret { color:#68f7ee; font-size:12px; }
+  .station-body { padding: 10px 14px 14px; border-top:1px solid rgba(255,255,255,0.06);
+    display:none; }
+  .station.open .station-body { display:block; }
+  .station.open .caret { transform: rotate(90deg); }
+  .station-body .grid { margin-bottom:10px; }
+  .subhead { font-size:11px; color:#68f7ee; text-transform:uppercase;
+    letter-spacing:1px; margin: 12px 0 6px; }
+  .checkboxes { display:flex; flex-wrap:wrap; gap:12px; }
+  .checkboxes label { font-size:12px; color:#cfeae8; display:flex; align-items:center; gap:6px; }
+  .presets { display:flex; flex-wrap:wrap; gap:6px; }
+  .preset-chip { display:flex; align-items:center; gap:4px;
+    padding:3px 8px; background:#143534; border:1px solid rgba(104,247,238,0.3);
+    border-radius:12px; font-size:12px; color:#68f7ee; font-family:"Roboto Mono", monospace; }
+  .preset-chip button { padding:0; background:transparent; border:none; color:#ff8a8a; cursor:pointer; font-size:14px; }
+
+  /* Raw JSON drawer */
+  details.raw { margin-top:20px; }
+  details.raw summary { cursor:pointer; color:#8ea7a5; font-size:13px; padding:6px 0; }
+  details.raw textarea { width:100%; min-height:400px; font-family:"Roboto Mono", monospace; font-size:12px; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back" href="/">←</a>
+  <h1>Admin panel</h1>
+  <span class="status" id="status"></span>
+  <button id="save" class="primary">💾 Save</button>
+  <button id="download">⬇ Export JSON</button>
+  <button id="upload-btn" class="ghost">⬆ Import</button>
+  <input type="file" id="upload" accept="application/json" style="display:none">
+  <button id="reset" class="ghost">↺ Reset to file</button>
+</div>
+
+<div class="layout">
+  <div class="side">
+    <div class="side-head">
+      <button id="add-receiver" class="primary" style="flex:1">+ Add receiver</button>
+    </div>
+    <div class="side-list" id="rec-list"></div>
+  </div>
+  <div class="main" id="main"></div>
+</div>
+
+<script>
+// ============ State ============
+let data = { receivers: [] };
+let fileDefault = null;
+let activeIdx = -1;
+let pickerMap = null;
+let pickerMarker = null;
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c =>
+  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const setStatus = (msg, ok=true) => {
+  const el = $("status"); el.textContent = msg;
+  el.className = "status " + (ok ? "ok" : "err");
+  if (ok) setTimeout(() => { el.textContent = ""; }, 2500);
+};
+
+function load() {
+  try {
+    const ov = JSON.parse(localStorage.getItem("receivers_override") || "null");
+    if (ov && Array.isArray(ov.receivers)) { data = ov; return; }
+  } catch (e) {}
+  data = JSON.parse(JSON.stringify(fileDefault));
+}
+function persist(silent) {
+  localStorage.setItem("receivers_override", JSON.stringify(data));
+  if (!silent) setStatus("Saved.");
+}
+function slugify(s) {
+  return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "tuner";
+}
+
+// ============ Sidebar ============
+function renderSidebar() {
+  const list = $("rec-list");
+  if (!data.receivers.length) {
+    list.innerHTML = '<div style="padding:20px;color:#8ea7a5;text-align:center;font-size:12px">No receivers yet.</div>';
+    return;
+  }
+  list.innerHTML = data.receivers.map((r, i) => `
+    <div class="rec-item ${i===activeIdx?"active":""}" data-i="${i}">
+      <div>
+        <div class="rn">${esc(r.name || r.slug)}</div>
+        <div class="rs">/${esc(r.slug)}</div>
+      </div>
+      <button class="danger sm" data-del="${i}" title="Delete">✕</button>
+    </div>`).join("");
+  list.querySelectorAll(".rec-item").forEach(el => {
+    el.addEventListener("click", (e) => {
+      if (e.target.dataset.del != null) return;
+      activeIdx = parseInt(el.dataset.i, 10);
+      renderSidebar(); renderMain();
+    });
+  });
+  list.querySelectorAll("[data-del]").forEach(b => {
+    b.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const i = parseInt(b.dataset.del, 10);
+      if (!confirm(`Delete receiver "${data.receivers[i].name || data.receivers[i].slug}"?`)) return;
+      data.receivers.splice(i, 1);
+      if (activeIdx >= data.receivers.length) activeIdx = data.receivers.length - 1;
+      persist(true); renderSidebar(); renderMain();
+    });
+  });
+}
+
+// ============ Main editor ============
+function renderMain() {
+  const main = $("main");
+  if (activeIdx < 0 || !data.receivers[activeIdx]) {
+    main.innerHTML = `<div class="empty-hint">
+      <div style="font-size:16px;margin-bottom:8px">No receiver selected</div>
+      <div style="font-size:13px">Pick one on the left or click <b>+ Add receiver</b>.</div>
+    </div>`;
+    pickerMap = null;
+    return;
+  }
+  const r = data.receivers[activeIdx];
+  r.config = r.config || {};
+  r.config.stations = r.config.stations || [];
+  r.config.presets = r.config.presets || [];
+  r.mc = r.mc || { x: 0, z: 0 };
+
+  main.innerHTML = `
+    <div class="card">
+      <h3>Receiver</h3>
+      <div class="grid">
+        <div class="field"><label>Name</label><input id="f-name" value="${esc(r.name || "")}"></div>
+        <div class="field"><label>Slug (URL path)</label><input id="f-slug" value="${esc(r.slug || "")}"></div>
+        <div class="field"><label>Location</label><input id="f-loc" value="${esc(r.location || "")}"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Tuner config</h3>
+      <div class="grid">
+        <div class="field"><label>Tuner name</label><input id="c-tunerName" value="${esc(r.config.tunerName || "")}"></div>
+        <div class="field"><label>Tuner device</label><input id="c-tunerDevice" value="${esc(r.config.tunerDevice || "")}"></div>
+        <div class="field"><label>Owner contact</label><input id="c-ownerContact" value="${esc(r.config.ownerContact || "")}"></div>
+        <div class="field"><label>RDS mode</label>
+          <select id="c-rdsMode">
+            <option value="rds"${r.config.rdsMode==="rds"?" selected":""}>RDS (Europe)</option>
+            <option value="rbds"${r.config.rdsMode==="rbds"?" selected":""}>RBDS (Americas)</option>
+          </select>
+        </div>
+        <div class="field"><label>Tuning min (MHz)</label><input id="c-tuningMin" type="number" step="0.1" value="${r.config.tuningMin ?? 87.5}"></div>
+        <div class="field"><label>Tuning max (MHz)</label><input id="c-tuningMax" type="number" step="0.1" value="${r.config.tuningMax ?? 108}"></div>
+        <div class="field"><label>Tuning step (MHz)</label><input id="c-tuningStep" type="number" step="0.01" value="${r.config.tuningStep ?? 0.1}"></div>
+        <div class="field"><label>Default freq (MHz)</label><input id="c-defaultFrequency" type="number" step="0.1" value="${r.config.defaultFrequency ?? 100}"></div>
+        <div class="field"><label>Noise floor (dBf)</label><input id="c-noiseFloorDbf" type="number" step="1" value="${r.config.noiseFloorDbf ?? 8}"></div>
+        <div class="field"><label>Audible bandwidth</label><input id="c-audibleBandwidth" type="number" step="0.01" value="${r.config.audibleBandwidth ?? 0.2}"></div>
+        <div class="field"><label>Audio delay (ms)</label><input id="c-audioDelayMs" type="number" step="10" value="${r.config.audioDelayMs ?? 800}"></div>
+      </div>
+      <div class="field" style="margin-top:10px">
+        <label>Tuner description</label>
+        <textarea id="c-tunerDescription" rows="2">${esc(r.config.tunerDescription || "")}</textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Map position (world coords)</h3>
+      <div class="grid" style="grid-template-columns: repeat(2, 1fr) auto;">
+        <div class="field"><label>X</label><input id="mc-x" type="number" step="1" value="${r.mc.x ?? 0}"></div>
+        <div class="field"><label>Z</label><input id="mc-z" type="number" step="1" value="${r.mc.z ?? 0}"></div>
+        <div class="field"><label>&nbsp;</label><button id="mc-clear" class="ghost">Clear</button></div>
+      </div>
+      <div id="picker"></div>
+      <div class="picker-hint">Click anywhere on the map to place this receiver's dot. Drag the marker to move it.</div>
+    </div>
+
+    <div class="card">
+      <div class="stations-head">
+        <h3 style="margin:0">Stations (${r.config.stations.length})</h3>
+        <button id="add-station" class="primary sm">+ Add station</button>
+      </div>
+      <div id="stations"></div>
+    </div>
+
+    <div class="card">
+      <h3>Presets (MHz)</h3>
+      <div class="presets" id="presets"></div>
+      <div class="row" style="margin-top:8px">
+        <input id="preset-new" type="number" step="0.1" placeholder="e.g. 102.7" style="width:120px">
+        <button id="preset-add" class="sm">+ Add preset</button>
+      </div>
+    </div>
+
+    <details class="raw">
+      <summary>Advanced: edit raw JSON for this receiver</summary>
+      <textarea id="raw-json">${esc(JSON.stringify(r, null, 2))}</textarea>
+      <div class="row" style="margin-top:8px">
+        <button id="raw-apply" class="sm">Apply raw JSON</button>
+      </div>
+    </details>
+  `;
+
+  bindReceiverInputs(r);
+  renderStations(r);
+  renderPresets(r);
+  initPicker(r);
+}
+
+function bindReceiverInputs(r) {
+  const bindStr = (id, path) => $(id).addEventListener("input", (e) => {
+    setPath(r, path, e.target.value); persist(true);
+    if (path === "name" || path === "slug") renderSidebar();
+  });
+  const bindNum = (id, path, dflt) => $(id).addEventListener("input", (e) => {
+    const v = e.target.value === "" ? dflt : parseFloat(e.target.value);
+    setPath(r, path, v); persist(true);
+  });
+  bindStr("f-name", "name");
+  bindStr("f-slug", "slug");
+  bindStr("f-loc", "location");
+  bindStr("c-tunerName", "config.tunerName");
+  bindStr("c-tunerDevice", "config.tunerDevice");
+  bindStr("c-ownerContact", "config.ownerContact");
+  bindStr("c-tunerDescription", "config.tunerDescription");
+  $("c-rdsMode").addEventListener("change", (e) => { r.config.rdsMode = e.target.value; persist(true); });
+  bindNum("c-tuningMin", "config.tuningMin", 87.5);
+  bindNum("c-tuningMax", "config.tuningMax", 108);
+  bindNum("c-tuningStep", "config.tuningStep", 0.1);
+  bindNum("c-defaultFrequency", "config.defaultFrequency", 100);
+  bindNum("c-noiseFloorDbf", "config.noiseFloorDbf", 8);
+  bindNum("c-audibleBandwidth", "config.audibleBandwidth", 0.2);
+  bindNum("c-audioDelayMs", "config.audioDelayMs", 800);
+
+  $("mc-x").addEventListener("input", (e) => { r.mc.x = parseFloat(e.target.value)||0; syncPicker(r); persist(true); });
+  $("mc-z").addEventListener("input", (e) => { r.mc.z = parseFloat(e.target.value)||0; syncPicker(r); persist(true); });
+  $("mc-clear").addEventListener("click", () => {
+    delete r.mc; persist(true); renderMain();
+  });
+
+  $("add-station").addEventListener("click", () => {
+    r.config.stations.push({
+      freq: 100.0, ps: "        ", rt: "", pi: "0000", pty: 0,
+      tp: false, ta: false, ms: "M", stereo: true, signal: 80,
+      station: { name: "", city: "", itu: "", erp: 1, pol: "M", distance: 0, azimuth: 0 }
+    });
+    persist(true); renderMain();
+  });
+
+  $("raw-apply").addEventListener("click", () => {
+    try {
+      const parsed = JSON.parse($("raw-json").value);
+      data.receivers[activeIdx] = parsed;
+      persist(); renderSidebar(); renderMain();
+    } catch (e) { setStatus("Invalid JSON: " + e.message, false); }
+  });
+}
+
+function setPath(obj, path, value) {
+  const parts = path.split(".");
+  let o = obj;
+  for (let i = 0; i < parts.length - 1; i++) {
+    o[parts[i]] = o[parts[i]] || {};
+    o = o[parts[i]];
+  }
+  o[parts[parts.length - 1]] = value;
+}
+
+// ============ Stations ============
+function renderStations(r) {
+  const el = $("stations");
+  if (!r.config.stations.length) {
+    el.innerHTML = '<div style="color:#8ea7a5;font-size:13px;padding:8px">No stations yet.</div>';
+    return;
+  }
+  el.innerHTML = r.config.stations.map((s, i) => `
+    <div class="station" data-i="${i}">
+      <div class="station-summary">
+        <span class="caret">▶</span>
+        <span class="freq">${(s.freq ?? 0).toFixed(1)}</span>
+        <span class="ps">${esc((s.ps || "        ").padEnd(8).slice(0,8))}</span>
+        <span class="stname">${esc(s.station?.name || "")} <span style="color:#8ea7a5">${esc(s.station?.city ? "· "+s.station.city : "")}</span></span>
+        <button class="ghost sm" data-dup="${i}" title="Duplicate">⧉</button>
+        <button class="danger sm" data-rm="${i}" title="Delete">✕</button>
+      </div>
+      <div class="station-body">${stationForm(s, i)}</div>
+    </div>
+  `).join("");
+
+  el.querySelectorAll(".station-summary").forEach(sum => {
+    sum.addEventListener("click", (e) => {
+      if (e.target.dataset.rm != null || e.target.dataset.dup != null) return;
+      sum.parentElement.classList.toggle("open");
+    });
+  });
+  el.querySelectorAll("[data-rm]").forEach(b => b.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const i = parseInt(b.dataset.rm, 10);
+    if (!confirm(`Delete station at ${r.config.stations[i].freq} MHz?`)) return;
+    r.config.stations.splice(i, 1); persist(true); renderMain();
+  }));
+  el.querySelectorAll("[data-dup]").forEach(b => b.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const i = parseInt(b.dataset.dup, 10);
+    r.config.stations.splice(i+1, 0, JSON.parse(JSON.stringify(r.config.stations[i])));
+    persist(true); renderMain();
+  }));
+
+  r.config.stations.forEach((s, i) => bindStationInputs(r, s, i));
+}
+
+function stationForm(s, i) {
+  s.station = s.station || {};
+  return `
+    <div class="subhead">Broadcast</div>
+    <div class="grid">
+      <div class="field"><label>Frequency (MHz)</label><input data-s="${i}" data-k="freq" type="number" step="0.1" value="${s.freq ?? ""}"></div>
+      <div class="field"><label>Stream mount / URL</label><input data-s="${i}" data-k="mount" value="${esc(s.mount || "")}"></div>
+      <div class="field"><label>Signal (0-100)</label><input data-s="${i}" data-k="signal" type="number" step="1" value="${s.signal ?? 80}"></div>
+      <div class="field"><label>Logo URL</label><input data-s="${i}" data-k="logo" value="${esc(s.logo || "")}"></div>
+      <div class="field"><label>Volume</label><input data-s="${i}" data-k="volume" type="number" step="0.05" value="${s.volume ?? ""}"></div>
+      <div class="field"><label>Audible bandwidth (override)</label><input data-s="${i}" data-k="audibleBandwidth" type="number" step="0.01" value="${s.audibleBandwidth ?? ""}"></div>
+    </div>
+
+    <div class="subhead">RDS</div>
+    <div class="grid">
+      <div class="field"><label>PI code (hex)</label><input data-s="${i}" data-k="pi" value="${esc(s.pi || "")}"></div>
+      <div class="field"><label>PTY (0-31)</label><input data-s="${i}" data-k="pty" type="number" min="0" max="31" value="${s.pty ?? 0}"></div>
+      <div class="field"><label>PS (8 chars)</label><input data-s="${i}" data-k="ps" maxlength="80" value="${esc(s.ps || "")}"></div>
+      <div class="field" style="grid-column: span 2"><label>RadioText</label><input data-s="${i}" data-k="rt" value="${esc(s.rt || "")}"></div>
+      <div class="field"><label>M/S</label>
+        <select data-s="${i}" data-k="ms">
+          <option value="M"${s.ms==="M"?" selected":""}>Music</option>
+          <option value="S"${s.ms==="S"?" selected":""}>Speech</option>
+        </select>
+      </div>
+    </div>
+    <div class="checkboxes" style="margin-top:8px">
+      <label><input type="checkbox" data-s="${i}" data-k="stereo" ${s.stereo!==false?"checked":""}> Stereo</label>
+      <label><input type="checkbox" data-s="${i}" data-k="tp" ${s.tp?"checked":""}> TP</label>
+      <label><input type="checkbox" data-s="${i}" data-k="ta" ${s.ta?"checked":""}> TA</label>
+      <label><input type="checkbox" data-s="${i}" data-k="rdsDisabled" ${s.rdsDisabled?"checked":""}> RDS disabled</label>
+    </div>
+
+    <div class="subhead">Station info</div>
+    <div class="grid">
+      <div class="field"><label>Station name</label><input data-s="${i}" data-k="station.name" value="${esc(s.station.name || "")}"></div>
+      <div class="field"><label>City</label><input data-s="${i}" data-k="station.city" value="${esc(s.station.city || "")}"></div>
+      <div class="field"><label>ITU / region</label><input data-s="${i}" data-k="station.itu" value="${esc(s.station.itu || "")}"></div>
+      <div class="field"><label>ERP (kW)</label><input data-s="${i}" data-k="station.erp" type="number" step="0.1" value="${s.station.erp ?? ""}"></div>
+      <div class="field"><label>Polarization</label>
+        <select data-s="${i}" data-k="station.pol">
+          ${["M","H","V","C"].map(p => `<option value="${p}"${s.station.pol===p?" selected":""}>${p}</option>`).join("")}
+        </select>
+      </div>
+      <div class="field"><label>Distance (km)</label><input data-s="${i}" data-k="station.distance" type="number" step="0.1" value="${s.station.distance ?? ""}"></div>
+      <div class="field"><label>Azimuth (°)</label><input data-s="${i}" data-k="station.azimuth" type="number" step="1" value="${s.station.azimuth ?? ""}"></div>
+    </div>
+  `;
+}
+
+function bindStationInputs(r, s, i) {
+  const inputs = document.querySelectorAll(`[data-s="${i}"]`);
+  inputs.forEach(inp => {
+    const evt = inp.type === "checkbox" || inp.tagName === "SELECT" ? "change" : "input";
+    inp.addEventListener(evt, () => {
+      const key = inp.dataset.k;
+      let val;
+      if (inp.type === "checkbox") val = inp.checked;
+      else if (inp.type === "number") val = inp.value === "" ? undefined : parseFloat(inp.value);
+      else val = inp.value;
+      setPath(s, key, val);
+      // clean undefined so JSON is tidy
+      if (val === undefined) {
+        const parts = key.split("."); let o = s;
+        for (let k = 0; k < parts.length - 1; k++) o = o[parts[k]] || {};
+        delete o[parts[parts.length-1]];
+      }
+      persist(true);
+      // update summary line if freq/ps/name changed
+      if (["freq","ps","station.name","station.city"].includes(key)) {
+        const sum = inp.closest(".station").querySelector(".station-summary");
+        sum.querySelector(".freq").textContent = (s.freq ?? 0).toFixed(1);
+        sum.querySelector(".ps").textContent = (s.ps || "        ").padEnd(8).slice(0,8);
+        sum.querySelector(".stname").innerHTML = `${esc(s.station?.name || "")} <span style="color:#8ea7a5">${esc(s.station?.city ? "· "+s.station.city : "")}</span>`;
+      }
+    });
+  });
+}
+
+// ============ Presets ============
+function renderPresets(r) {
+  const el = $("presets");
+  el.innerHTML = r.config.presets.length
+    ? r.config.presets.map((p, i) => `<span class="preset-chip">${p.toFixed(1)}<button data-p="${i}">×</button></span>`).join("")
+    : '<span style="color:#8ea7a5;font-size:12px">No presets.</span>';
+  el.querySelectorAll("[data-p]").forEach(b => b.addEventListener("click", () => {
+    r.config.presets.splice(parseInt(b.dataset.p, 10), 1);
+    persist(true); renderPresets(r);
+  }));
+  $("preset-add").addEventListener("click", () => {
+    const v = parseFloat($("preset-new").value);
+    if (isNaN(v)) return;
+    r.config.presets.push(v);
+    r.config.presets.sort((a,b)=>a-b);
+    $("preset-new").value = "";
+    persist(true); renderPresets(r);
+  });
+}
+
+// ============ Map picker ============
+const NATIVE_ZOOM = 2;
+function buildPickerLayer() {
+  const Layer = L.TileLayer.extend({
+    getTileUrl(c) {
+      const zoomOut = Math.max(0, NATIVE_ZOOM - c.z);
+      const scale = 1 << zoomOut;
+      const dtx = c.x * scale, dty = -c.y * scale;
+      const regX = Math.floor(dtx / 32), regY = Math.floor(dty / 32);
+      const prefix = zoomOut > 0 ? "z".repeat(zoomOut) + "_" : "";
+      return `https://weimctxmap.weizkule.xyz/tiles/world/flat/${regX}_${regY}/${prefix}${dtx}_${dty}.jpg`;
+    },
+  });
+  return new Layer("", { tileSize:128, minZoom:-3, maxZoom:4, noWrap:true });
+}
+function initPicker(r) {
+  const CRS = L.extend({}, L.CRS.Simple, {
+    transformation: new L.Transformation(1, 0, -1, 32),
+  });
+  pickerMap = L.map("picker", { crs: CRS, minZoom:-3, maxZoom:4,
+    zoomControl:true, attributionControl:false });
+  buildPickerLayer().addTo(pickerMap);
+
+  const hasPos = r.mc && typeof r.mc.x === "number" && typeof r.mc.z === "number";
+  if (hasPos) pickerMap.setView([-r.mc.z, r.mc.x], 1);
+  else pickerMap.setView([5333, 2102], 0);
+
+  const icon = L.divIcon({ className:"picker-marker", iconSize:[14,14] });
+  if (hasPos) {
+    pickerMarker = L.marker([-r.mc.z, r.mc.x], { icon, draggable:true }).addTo(pickerMap);
+    pickerMarker.on("dragend", () => {
+      const p = pickerMarker.getLatLng();
+      r.mc = { x: Math.round(p.lng), z: Math.round(-p.lat) };
+      $("mc-x").value = r.mc.x; $("mc-z").value = r.mc.z;
+      persist(true);
+    });
+  }
+  pickerMap.on("click", (e) => {
+    r.mc = { x: Math.round(e.latlng.lng), z: Math.round(-e.latlng.lat) };
+    if (pickerMarker) pickerMap.removeLayer(pickerMarker);
+    pickerMarker = L.marker([-r.mc.z, r.mc.x], { icon, draggable:true }).addTo(pickerMap);
+    pickerMarker.on("dragend", () => {
+      const p = pickerMarker.getLatLng();
+      r.mc = { x: Math.round(p.lng), z: Math.round(-p.lat) };
+      $("mc-x").value = r.mc.x; $("mc-z").value = r.mc.z;
+      persist(true);
+    });
+    $("mc-x").value = r.mc.x; $("mc-z").value = r.mc.z;
+    persist(true);
+  });
+  setTimeout(() => pickerMap.invalidateSize(), 50);
+}
+function syncPicker(r) {
+  if (!pickerMap || !r.mc) return;
+  const icon = L.divIcon({ className:"picker-marker", iconSize:[14,14] });
+  if (pickerMarker) pickerMap.removeLayer(pickerMarker);
+  pickerMarker = L.marker([-r.mc.z, r.mc.x], { icon, draggable:true }).addTo(pickerMap);
+  pickerMarker.on("dragend", () => {
+    const p = pickerMarker.getLatLng();
+    r.mc = { x: Math.round(p.lng), z: Math.round(-p.lat) };
+    $("mc-x").value = r.mc.x; $("mc-z").value = r.mc.z;
+    persist(true);
+  });
+}
+
+// ============ Top bar actions ============
+$("save").addEventListener("click", () => persist());
+$("reset").addEventListener("click", () => {
+  if (!confirm("Discard all local changes and revert to file defaults?")) return;
+  localStorage.removeItem("receivers_override");
+  data = JSON.parse(JSON.stringify(fileDefault));
+  activeIdx = data.receivers.length ? 0 : -1;
+  renderSidebar(); renderMain(); setStatus("Reset.");
+});
+$("download").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type:"application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "receivers.json"; a.click();
+});
+$("upload-btn").addEventListener("click", () => $("upload").click());
+$("upload").addEventListener("change", async (e) => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const parsed = JSON.parse(await f.text());
+    if (!parsed.receivers || !Array.isArray(parsed.receivers)) throw new Error("Missing 'receivers' array");
+    data = parsed; activeIdx = data.receivers.length ? 0 : -1;
+    persist(); renderSidebar(); renderMain();
+  } catch (err) { setStatus("Invalid JSON: " + err.message, false); }
+});
+$("add-receiver").addEventListener("click", () => {
+  const name = prompt("Receiver name?", "New Tuner");
+  if (!name) return;
+  const base = slugify(name);
+  let slug = base, n = 2;
+  while (data.receivers.some(r => r.slug === slug)) slug = `${base}-${n++}`;
+  data.receivers.push({
+    slug, name, location: "",
+    mc: { x: 0, z: 0 },
+    config: {
+      tunerName: name, tunerDescription: "",
+      tunerDevice: "Virtual TEF668x", ownerContact: "",
+      rdsMode: "rds", tuningMin: 87.5, tuningMax: 108, tuningStep: 0.1,
+      defaultFrequency: 100.0, noiseFloorDbf: 8, audibleBandwidth: 0.2,
+      audioDelayMs: 800, stations: [], presets: []
+    }
+  });
+  activeIdx = data.receivers.length - 1;
+  persist(true); renderSidebar(); renderMain();
+});
+
+// ============ Bootstrap ============
+(async () => {
+  fileDefault = await fetch("/receivers.json").then(r => r.json());
+  load();
+  activeIdx = data.receivers.length ? 0 : -1;
+  renderSidebar(); renderMain();
+})();
+</script>
+</body>
+</html>
