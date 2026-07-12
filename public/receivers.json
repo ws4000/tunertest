@@ -936,7 +936,7 @@
               "azimuth": 288,
               "erp": 0.5
             },
-            "mount": "https://live.kcm.fm/live-new",
+            "mount": "https://cdn.cybercdn.live/Radio2000/MP3/icecast.audio",
             "volume": 1,
             "logo": "https://i.soupco.net/u/2Oahd4.png"
           },
@@ -1176,7 +1176,6 @@
             "ps": "SHINE",
             "rt": "",
             "pi": "8767",
-            "pty": 0,
             "tp": false,
             "ta": false,
             "ms": "M",
@@ -1191,7 +1190,8 @@
               "distance": 25,
               "azimuth": 76
             },
-            "mount": "https://stream.wildfm.nl/GOD_Radio"
+            "mount": "https://stream.wildfm.nl/GOD_Radio",
+            "pty": 16
           },
           {
             "freq": 91.4,
@@ -1534,7 +1534,7 @@
               "distance": 5,
               "azimuth": 168
             },
-            "mount": "https://stream.zeno.fm/vistyzosypbvv",
+            "mount": "https://22323.live.streamtheworld.com/TLPSTR17_SC",
             "volume": 1,
             "logo": "https://i.soupco.net/u/QDSx9Y.png"
           },
@@ -1561,6 +1561,29 @@
             "volume": 1,
             "mount": "https://hard-fm.stream.laut.fm/hard-fm",
             "logo": "https://i.soupco.net/u/f0qlLr.png"
+          },
+          {
+            "freq": 93.3,
+            "ps": " K-Mix  ",
+            "rt": "%ICEMD%",
+            "pi": "86B8",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 84.3,
+            "station": {
+              "name": "K-Mix Doetinlingen",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 3.4,
+              "pol": "V",
+              "azimuth": 271,
+              "distance": 12
+            },
+            "mount": "kqzg",
+            "volume": 1
           }
         ],
         "presets": []
