@@ -1466,11 +1466,6 @@
             "pi": "82FC",
             "pty": 24,
             "af": [
-              "101.7",
-              "104.7",
-              "105.2"
-            ],
-            "af": [
               "91.3",
               "93.8",
               "106.6"
@@ -1518,6 +1513,54 @@
             "volume": 1,
             "logo": "https://i.soupco.net/u/dgsMYd.png",
             "pty": 0
+          },
+          {
+            "freq": 90.4,
+            "ps": " CAMPUS ",
+            "rt": "",
+            "pi": "89C7",
+            "pty": 5,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 80,
+            "station": {
+              "name": "Radio Campus Doetinlingen",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 1,
+              "pol": "V",
+              "distance": 5,
+              "azimuth": 168
+            },
+            "mount": "https://22323.live.streamtheworld.com/TLPSTR17_SC",
+            "volume": 1,
+            "logo": "https://i.soupco.net/u/QDSx9Y.png"
+          },
+          {
+            "freq": 97.2,
+            "ps": "S.RAVE",
+            "rt": "STUDIO RAVE. VOOR REACTIES : 0248862",
+            "pi": "8742",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 78.7,
+            "station": {
+              "name": "Studio Rave",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 1,
+              "pol": "V",
+              "distance": 13,
+              "azimuth": 273
+            },
+            "volume": 1,
+            "mount": "https://hard-fm.stream.laut.fm/hard-fm",
+            "logo": "https://i.soupco.net/u/f0qlLr.png"
           }
         ],
         "presets": []
