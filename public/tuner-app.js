@@ -599,10 +599,12 @@
     $$(".data-ta span").forEach((e) => (e.className = "opacity-half"));
     $$(".data-flag").forEach((e) => (e.innerHTML = ""));
     const afList = $("#af-list ul"); if (afList) afList.innerHTML = "";
+    // No-station / no-signal state: show the default logo so the panel
+    // doesn't collapse into an empty box.
     const logo = $("#station-logo");
-    if (logo) { logo.removeAttribute("src"); logo.style.display = "none"; }
+    if (logo) { logo.src = DEFAULT_LOGO; logo.style.display = "block"; }
     const logoP = $("#station-logo-phone");
-    if (logoP) { logoP.removeAttribute("src"); logoP.style.display = "none"; }
+    if (logoP) { logoP.src = DEFAULT_LOGO; logoP.style.display = "block"; }
   }
   function clearTX() {
     const c = $("#data-station-container");
@@ -627,8 +629,8 @@
     const setLogo = (sel) => {
       const el = $(sel);
       if (!el) return;
-      if (st.logo) { el.src = st.logo; el.style.display = "block"; }
-      else { el.removeAttribute("src"); el.style.display = "none"; }
+      el.src = st.logo || DEFAULT_LOGO;
+      el.style.display = "block";
     };
     setLogo("#station-logo");
     setLogo("#station-logo-phone");
@@ -643,7 +645,7 @@
     const afList = $("#af-list ul");
     if (!afList) return;
     const af = (st.af || []).slice(0, afShownCount);
-    afList.innerHTML = af.map((f) => `<li><a>${fmt3(f)}</a></li>`).join("");
+    afList.innerHTML = af.map((f) => `<li><a>${fmtAF(f)}</a></li>`).join("");
   }
   function showTX(st) {
     const s = st.station;
