@@ -1353,6 +1353,36 @@
     });
 
     pollIcecast(); setInterval(pollIcecast, 8000);
+    pollStreamMeta(); setInterval(pollStreamMeta, 10000);
+
+    // ---- Keyboard tuning: arrow keys step by CFG.tuningStep ----
+    document.addEventListener("keydown", (e) => {
+      const t = e.target;
+      const tag = (t && t.tagName || "").toLowerCase();
+      if (tag === "input" || tag === "textarea" || tag === "select" || (t && t.isContentEditable)) return;
+      const step = CFG.tuningStep || 0.1;
+      if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+        tuneTo(currentFreq + step); e.preventDefault();
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+        tuneTo(currentFreq - step); e.preventDefault();
+      }
+    });
+    // ---- Mouse wheel tuning over the frequency display and spectrum ----
+    const wheelTune = (el) => {
+      if (!el) return;
+      el.addEventListener("wheel", (e) => {
+        // Only intercept the spectrum wheel while spectrum mode is on.
+        if (el.id === "signal-canvas" && !spectrumMode) return;
+        e.preventDefault();
+        const step = CFG.tuningStep || 0.1;
+        tuneTo(currentFreq + (e.deltaY < 0 ? step : -step));
+      }, { passive: false });
+    };
+    wheelTune($("#data-frequency"));
+    wheelTune($("#commandinput"));
+    wheelTune($("#signal-canvas"));
+    // Also allow wheel on the outer frequency container if present.
+    wheelTune($(".data-frequency-container"));
     bgPSInitAll();
     tuneTo(CFG.defaultFrequency);
     setInterval(paint, 250);
