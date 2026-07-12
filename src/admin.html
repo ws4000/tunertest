@@ -450,6 +450,9 @@ function stationForm(s, i) {
 function bindStationInputs(r, s, i) {
   const inputs = document.querySelectorAll(`[data-s="${i}"]`);
   inputs.forEach(inp => {
+    // Skip AF chip delete buttons — they have data-s but should not be
+    // treated as generic value inputs.
+    if (inp.hasAttribute("data-af-del")) return;
     const evt = inp.type === "checkbox" || inp.tagName === "SELECT" ? "change" : "input";
     inp.addEventListener(evt, () => {
       const key = inp.dataset.k;
@@ -473,6 +476,40 @@ function bindStationInputs(r, s, i) {
         sum.querySelector(".stname").innerHTML = `${esc(s.station?.name || "")} <span style="color:#8ea7a5">${esc(s.station?.city ? "· "+s.station.city : "")}</span>`;
       }
     });
+  });
+
+  // ---- AF chip editor ----
+  const afContainer = document.getElementById(`af-list-${i}`);
+  const rerenderAF = () => {
+    if (!afContainer) return;
+    const list = s.af || [];
+    afContainer.innerHTML = list.length
+      ? list.map((f, j) => `<span class="preset-chip">${Number(f)}<button data-af-del="${j}" data-af-s="${i}" title="Remove">×</button></span>`).join("")
+      : '<span style="color:#8ea7a5;font-size:12px">No AF entries.</span>';
+    afContainer.querySelectorAll("[data-af-del]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        s.af.splice(parseInt(btn.dataset.afDel, 10), 1);
+        if (!s.af.length) delete s.af;
+        persist(true); rerenderAF();
+      });
+    });
+  };
+  rerenderAF();
+  const addBtn = document.querySelector(`[data-af-add="${i}"]`);
+  const addInput = document.getElementById(`af-new-${i}`);
+  const addAF = () => {
+    const v = parseFloat(addInput.value);
+    if (isNaN(v)) return;
+    s.af = s.af || [];
+    // De-duplicate; sort ascending for consistency.
+    if (!s.af.includes(v)) s.af.push(v);
+    s.af.sort((a, b) => a - b);
+    addInput.value = "";
+    persist(true); rerenderAF();
+  };
+  if (addBtn) addBtn.addEventListener("click", addAF);
+  if (addInput) addInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { e.preventDefault(); addAF(); }
   });
 }
 
