@@ -4,6 +4,14 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const fmt3 = (f) => Number(f).toFixed(3);
+  // AF frequencies are shown as-is (real tuners: "95.8", never "95.800").
+  const fmtAF = (f) => {
+    const n = Number(f);
+    if (!isFinite(n)) return "";
+    // Trim trailing zeros after the decimal point, then any dangling dot.
+    return n.toFixed(3).replace(/\.?0+$/, "");
+  };
+  const DEFAULT_LOGO = "https://tef.noobish.eu/logos/default-logo.png";
 
   // ----- PTY tables -----
   const PTY_RDS = [
@@ -29,6 +37,15 @@
   let audioDelayS = 0.8;
   let currentFreq = 0;
   let icecast = {};
+  // Per-mount live metadata for non-Icecast streams (populated by /api/stream-meta polls).
+  const streamMeta = {};
+  function metaFor(st) {
+    if (!st || !st.mount) return null;
+    const a = icecast[st.mount];
+    const b = streamMeta[st.mount];
+    if (a && b) return { ...b, ...a };
+    return a || b || null;
+  }
   let muted = false;                // legacy alias; play toggle uses `playing`
   let playing = false;
   let forcedMono = false;
@@ -215,6 +232,10 @@
     const sv = (src && src.server_name) || "";
     const caps = /\(ALLCAPS\)/.test(t);
     t = t.replace(/\(ALLCAPS\)/g, "").replace(/%ICEMD%/g, md).replace(/%SERVER%/g, sv);
+    // %MD% is an alias for the currently playing stream title (whether it
+    // came from the shared Icecast status feed or from the per-stream
+    // metadata poll for arbitrary URLs).
+    t = t.replace(/%MD%/g, md);
     // Collapse any whitespace (incl. newlines / tabs from Icecast metadata)
     t = t.replace(/\s+/g, " ");
     if (!preserveOuterSpacing) t = t.trim();
@@ -578,10 +599,12 @@
     $$(".data-ta span").forEach((e) => (e.className = "opacity-half"));
     $$(".data-flag").forEach((e) => (e.innerHTML = ""));
     const afList = $("#af-list ul"); if (afList) afList.innerHTML = "";
+    // No-station / no-signal state: show the default logo so the panel
+    // doesn't collapse into an empty box.
     const logo = $("#station-logo");
-    if (logo) { logo.removeAttribute("src"); logo.style.display = "none"; }
+    if (logo) { logo.src = DEFAULT_LOGO; logo.style.display = "block"; }
     const logoP = $("#station-logo-phone");
-    if (logoP) { logoP.removeAttribute("src"); logoP.style.display = "none"; }
+    if (logoP) { logoP.src = DEFAULT_LOGO; logoP.style.display = "block"; }
   }
   function clearTX() {
     const c = $("#data-station-container");
@@ -606,8 +629,8 @@
     const setLogo = (sel) => {
       const el = $(sel);
       if (!el) return;
-      if (st.logo) { el.src = st.logo; el.style.display = "block"; }
-      else { el.removeAttribute("src"); el.style.display = "none"; }
+      el.src = st.logo || DEFAULT_LOGO;
+      el.style.display = "block";
     };
     setLogo("#station-logo");
     setLogo("#station-logo-phone");
@@ -622,7 +645,7 @@
     const afList = $("#af-list ul");
     if (!afList) return;
     const af = (st.af || []).slice(0, afShownCount);
-    afList.innerHTML = af.map((f) => `<li><a>${fmt3(f)}</a></li>`).join("");
+    afList.innerHTML = af.map((f) => `<li><a>${fmtAF(f)}</a></li>`).join("");
   }
   function showTX(st) {
     const s = st.station;
@@ -685,7 +708,7 @@
     return out;
   }
   function computePSFullText(st) {
-    return resolveTokens(st.ps, icecast[st.mount], { preserveOuterSpacing: true }) || (st.station?.name || "");
+    return resolveTokens(st.ps, metaFor(st), { preserveOuterSpacing: true }) || (st.station?.name || "");
   }
   function initPSForLock(st) {
     psFullText = computePSFullText(st);
@@ -848,7 +871,7 @@
     const st = lockedStation;
     const now = performance.now();
     if (now - lockedAtMs < PI_DELAY_MS + RDS_START_MS) return;
-    const src = icecast[st.mount];
+    const src = metaFor(st);
     groupTick++;
 
     if (!rdsBasicShown) {
@@ -1170,6 +1193,28 @@
     } catch (e) {}
   }
 
+  // For stations whose `mount` is a full http(s) URL (i.e. NOT hosted on
+  // the shared Icecast server), fetch the ICY StreamTitle via our proxy
+  // so %MD% / %ICEMD% tokens work.
+  async function pollStreamMeta() {
+    if (!CFG || !CFG.stations) return;
+    const urls = new Set();
+    CFG.stations.forEach((s) => {
+      if (s.mount && /^https?:\/\//i.test(s.mount)) urls.add(s.mount);
+    });
+    if (!urls.size) return;
+    await Promise.all(Array.from(urls).map(async (u) => {
+      try {
+        const r = await fetch(`/api/stream-meta?url=${encodeURIComponent(u)}`);
+        if (!r.ok) return;
+        const j = await r.json();
+        if (j && typeof j.title === "string") {
+          streamMeta[u] = { title: j.title };
+        }
+      } catch (e) {}
+    }));
+  }
+
   // ---------- init ----------
   (async () => {
     CFG = await loadConfig();
@@ -1308,6 +1353,36 @@
     });
 
     pollIcecast(); setInterval(pollIcecast, 8000);
+    pollStreamMeta(); setInterval(pollStreamMeta, 10000);
+
+    // ---- Keyboard tuning: arrow keys step by CFG.tuningStep ----
+    document.addEventListener("keydown", (e) => {
+      const t = e.target;
+      const tag = (t && t.tagName || "").toLowerCase();
+      if (tag === "input" || tag === "textarea" || tag === "select" || (t && t.isContentEditable)) return;
+      const step = CFG.tuningStep || 0.1;
+      if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+        tuneTo(currentFreq + step); e.preventDefault();
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+        tuneTo(currentFreq - step); e.preventDefault();
+      }
+    });
+    // ---- Mouse wheel tuning over the frequency display and spectrum ----
+    const wheelTune = (el) => {
+      if (!el) return;
+      el.addEventListener("wheel", (e) => {
+        // Only intercept the spectrum wheel while spectrum mode is on.
+        if (el.id === "signal-canvas" && !spectrumMode) return;
+        e.preventDefault();
+        const step = CFG.tuningStep || 0.1;
+        tuneTo(currentFreq + (e.deltaY < 0 ? step : -step));
+      }, { passive: false });
+    };
+    wheelTune($("#data-frequency"));
+    wheelTune($("#commandinput"));
+    wheelTune($("#signal-canvas"));
+    // Also allow wheel on the outer frequency container if present.
+    wheelTune($(".data-frequency-container"));
     bgPSInitAll();
     tuneTo(CFG.defaultFrequency);
     setInterval(paint, 250);

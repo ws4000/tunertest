@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ReceiverRouteImport } from './routes/$receiver'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiStreamMetaRouteImport } from './routes/api/stream-meta'
 import { Route as ApiIcecastRouteImport } from './routes/api/icecast'
 import { Route as ApiStreamSplatRouteImport } from './routes/api/stream.$'
 
@@ -30,6 +31,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiStreamMetaRoute = ApiStreamMetaRouteImport.update({
+  id: '/api/stream-meta',
+  path: '/api/stream-meta',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiIcecastRoute = ApiIcecastRouteImport.update({
   id: '/api/icecast',
   path: '/api/icecast',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/$receiver': typeof ReceiverRoute
   '/admin': typeof AdminRoute
   '/api/icecast': typeof ApiIcecastRoute
+  '/api/stream-meta': typeof ApiStreamMetaRoute
   '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/$receiver': typeof ReceiverRoute
   '/admin': typeof AdminRoute
   '/api/icecast': typeof ApiIcecastRoute
+  '/api/stream-meta': typeof ApiStreamMetaRoute
   '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRoutesById {
@@ -61,19 +69,33 @@ export interface FileRoutesById {
   '/$receiver': typeof ReceiverRoute
   '/admin': typeof AdminRoute
   '/api/icecast': typeof ApiIcecastRoute
+  '/api/stream-meta': typeof ApiStreamMetaRoute
   '/api/stream/$': typeof ApiStreamSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$receiver' | '/admin' | '/api/icecast' | '/api/stream/$'
+  fullPaths:
+    | '/'
+    | '/$receiver'
+    | '/admin'
+    | '/api/icecast'
+    | '/api/stream-meta'
+    | '/api/stream/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$receiver' | '/admin' | '/api/icecast' | '/api/stream/$'
+  to:
+    | '/'
+    | '/$receiver'
+    | '/admin'
+    | '/api/icecast'
+    | '/api/stream-meta'
+    | '/api/stream/$'
   id:
     | '__root__'
     | '/'
     | '/$receiver'
     | '/admin'
     | '/api/icecast'
+    | '/api/stream-meta'
     | '/api/stream/$'
   fileRoutesById: FileRoutesById
 }
@@ -82,6 +104,7 @@ export interface RootRouteChildren {
   ReceiverRoute: typeof ReceiverRoute
   AdminRoute: typeof AdminRoute
   ApiIcecastRoute: typeof ApiIcecastRoute
+  ApiStreamMetaRoute: typeof ApiStreamMetaRoute
   ApiStreamSplatRoute: typeof ApiStreamSplatRoute
 }
 
@@ -108,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/stream-meta': {
+      id: '/api/stream-meta'
+      path: '/api/stream-meta'
+      fullPath: '/api/stream-meta'
+      preLoaderRoute: typeof ApiStreamMetaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/icecast': {
       id: '/api/icecast'
       path: '/api/icecast'
@@ -130,6 +160,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReceiverRoute: ReceiverRoute,
   AdminRoute: AdminRoute,
   ApiIcecastRoute: ApiIcecastRoute,
+  ApiStreamMetaRoute: ApiStreamMetaRoute,
   ApiStreamSplatRoute: ApiStreamSplatRoute,
 }
 export const routeTree = rootRouteImport
