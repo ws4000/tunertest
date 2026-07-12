@@ -1193,6 +1193,28 @@
     } catch (e) {}
   }
 
+  // For stations whose `mount` is a full http(s) URL (i.e. NOT hosted on
+  // the shared Icecast server), fetch the ICY StreamTitle via our proxy
+  // so %MD% / %ICEMD% tokens work.
+  async function pollStreamMeta() {
+    if (!CFG || !CFG.stations) return;
+    const urls = new Set();
+    CFG.stations.forEach((s) => {
+      if (s.mount && /^https?:\/\//i.test(s.mount)) urls.add(s.mount);
+    });
+    if (!urls.size) return;
+    await Promise.all(Array.from(urls).map(async (u) => {
+      try {
+        const r = await fetch(`/api/stream-meta?url=${encodeURIComponent(u)}`);
+        if (!r.ok) return;
+        const j = await r.json();
+        if (j && typeof j.title === "string") {
+          streamMeta[u] = { title: j.title };
+        }
+      } catch (e) {}
+    }));
+  }
+
   // ---------- init ----------
   (async () => {
     CFG = await loadConfig();
