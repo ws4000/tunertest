@@ -386,9 +386,12 @@
         "tuningMax": 108,
         "tuningStep": 0.1,
         "defaultFrequency": 87.6,
-        "noiseFloorDbf": 8,
+        "noiseFloorDbf": 3,
         "audibleBandwidth": 0.2,
         "audioDelayMs": 800,
+        "customFlags": {
+          "SP": "https://weimcwiki.weizkule.xyz/lib/exe/fetch.php?cache=&media=sveland.png"
+        },
         "stations": [
           {
             "freq": 87.6,
@@ -396,6 +399,10 @@
             "rt": "%ICEMD%",
             "pi": "87ED",
             "pty": 28,
+            "af": [
+              "87.6",
+              "107.8"
+            ],
             "tp": true,
             "ta": false,
             "ms": "S",
@@ -420,6 +427,21 @@
             "rt": "%ICEMD%",
             "pi": "8228",
             "pty": 0,
+            "af": [
+              "88.0",
+              "88.3",
+              "88.6",
+              "90.2",
+              "91.2",
+              "91.6",
+              "93.1",
+              "93.9",
+              "94.1",
+              "95.8",
+              "96.0",
+              "96.8",
+              "97.0"
+            ],
             "tp": false,
             "ta": false,
             "ms": "M",
@@ -444,6 +466,20 @@
             "rt": "SPO P1 : %ICEMD%",
             "pi": "8201",
             "pty": 9,
+            "af": [
+              "87.6",
+              "87.9",
+              "88.0",
+              "88.1",
+              "88.3",
+              "88.7",
+              "90.1",
+              "90.2",
+              "90.5",
+              "90.8",
+              "91.7",
+              "94.4"
+            ],
             "tp": false,
             "ta": false,
             "ms": "M",
@@ -459,7 +495,8 @@
               "azimuth": 154
             },
             "mount": "https://icecast.omroep.nl/radio1-bb-mp3",
-            "volume": 1
+            "volume": 1,
+            "logo": "https://i.soupco.net/raw/KIEZky.png"
           },
           {
             "freq": 90,
@@ -467,6 +504,18 @@
             "rt": "SPO P2 : %ICEMD%",
             "pi": "8202",
             "pty": 14,
+            "af": [
+              "90.0",
+              "90.5",
+              "90.6",
+              "92.6",
+              "93.1",
+              "94.7",
+              "96.4",
+              "96.6",
+              "96.8",
+              "104.2"
+            ],
             "tp": false,
             "ta": false,
             "ms": "M",
@@ -482,7 +531,8 @@
               "azimuth": 154
             },
             "mount": "https://icecast.omroep.nl/radio4-sb-mp3",
-            "volume": 1
+            "volume": 1,
+            "logo": "https://i.soupco.net/raw/QSdqFl.png"
           },
           {
             "freq": 97.6,
@@ -490,6 +540,15 @@
             "rt": "RTO Radio 1 -> %ICEMD%",
             "pi": "8E10",
             "pty": 10,
+            "af": [
+              "89.8",
+              "90.0",
+              "90.7",
+              "94.1",
+              "97.6",
+              "102.7",
+              "105.9"
+            ],
             "tp": false,
             "ta": false,
             "ms": "M",
@@ -514,6 +573,11 @@
             "rt": "RTO Radio 2 -> %ICEMD%",
             "pi": "8E11",
             "pty": 27,
+            "af": [
+              "90.8",
+              "90.9",
+              "105.5"
+            ],
             "tp": false,
             "ta": false,
             "ms": "M",
@@ -538,6 +602,19 @@
             "rt": "SPO P3",
             "pi": "8203",
             "pty": 10,
+            "af": [
+              "95.8",
+              "96.9",
+              "97.2",
+              "97.8",
+              "98.5",
+              "98.7",
+              "99.1",
+              "99.5",
+              "99.7",
+              "101.7",
+              "103.2"
+            ],
             "tp": false,
             "ta": false,
             "ms": "M",
@@ -553,7 +630,8 @@
               "azimuth": 154
             },
             "mount": "https://icecast.omroep.nl/3fm-bb-mp3",
-            "volume": 1
+            "volume": 1,
+            "logo": "https://i.soupco.net/raw/93N3bw.png"
           },
           {
             "freq": 96.6,
@@ -585,6 +663,10 @@
             "rt": "HOBOE",
             "pi": "82C3",
             "pty": 0,
+            "af": [
+              "98.2",
+              "107.5"
+            ],
             "tp": false,
             "ta": false,
             "ms": "M",
@@ -609,6 +691,12 @@
             "rt": "",
             "pi": "82DF",
             "pty": 0,
+            "af": [
+              "94.5",
+              "100.2",
+              "101.0",
+              "106.0"
+            ],
             "tp": false,
             "ta": false,
             "ms": "M",
@@ -694,7 +782,8 @@
               "azimuth": 154
             },
             "volume": 1,
-            "mount": "https://vrt.streamabc.net/vrt-radio1-mp3-128-9751183"
+            "mount": "https://vrt.streamabc.net/vrt-radio1-mp3-128-9751183",
+            "logo": "https://i.soupco.net/raw/lAvSb1.png"
           },
           {
             "freq": 72.89,
@@ -807,7 +896,8 @@
               "erp": 0.5
             },
             "mount": "https://live.kcm.fm/live-new",
-            "volume": 1
+            "volume": 1,
+            "logo": "https://i.soupco.net/u/2Oahd4.png"
           },
           {
             "freq": 94.1,
@@ -853,7 +943,8 @@
               "azimuth": 76
             },
             "mount": "https://icecast.omroep.nl/funx-amsterdam-bb-mp3",
-            "volume": 1
+            "volume": 1,
+            "logo": "https://i.soupco.net/u/avrEfV.png"
           },
           {
             "freq": 105.8,
@@ -900,7 +991,8 @@
               "azimuth": 76
             },
             "mount": "https://stream03.pcradio.app/Rap-med",
-            "volume": 1
+            "volume": 1,
+            "logo": "https://i.soupco.net/raw/gHbrBQ.png"
           },
           {
             "freq": 106.6,
@@ -923,7 +1015,8 @@
               "erp": 5
             },
             "mount": "https://everestcast.live-streams.nl:8816/stream",
-            "volume": 1
+            "volume": 1,
+            "logo": "https://i.soupco.net/u/dwpsYd.svg"
           },
           {
             "freq": 100.8,
