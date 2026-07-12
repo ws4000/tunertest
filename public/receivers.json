@@ -1360,6 +1360,30 @@
             },
             "mount": "http://mediaserv73.live-streams.nl:8027/stream",
             "volume": 1
+          },
+          {
+            "freq": 98.7,
+            "ps": "kapitaal",
+            "rt": "",
+            "pi": "874F",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 78.7,
+            "station": {
+              "name": "Kapitaal.",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 1,
+              "pol": "V",
+              "distance": 13,
+              "azimuth": 274
+            },
+            "mount": "https://live.2stream.net/kizrock_metal",
+            "volume": 1,
+            "logo": "https://i.soupco.net/u/dgsMYd.png",
+            "pty": 0
           }
         ],
         "presets": []
