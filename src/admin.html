@@ -418,6 +418,18 @@ function stationForm(s, i) {
       <label><input type="checkbox" data-s="${i}" data-k="rdsDisabled" ${s.rdsDisabled?"checked":""}> RDS disabled</label>
     </div>
 
+    <div class="subhead">Alternative Frequencies (AF)</div>
+    <div id="af-list-${i}" class="af-chips" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+      ${((s.af||[]).map((f, j) => `
+        <span class="preset-chip">${Number(f)}<button data-af-del="${j}" data-af-s="${i}" title="Remove">×</button></span>
+      `).join("")) || '<span style="color:#8ea7a5;font-size:12px">No AF entries.</span>'}
+    </div>
+    <div style="display:flex;gap:6px;margin-top:8px;align-items:center">
+      <input id="af-new-${i}" type="number" step="0.1" placeholder="e.g. 95.8" style="max-width:140px">
+      <button class="ghost sm" data-af-add="${i}">+ Add AF</button>
+      <span style="color:#8ea7a5;font-size:11px">Shown on the tuner as e.g. "95.8" (no trailing zeros).</span>
+    </div>
+
     <div class="subhead">Station info</div>
     <div class="grid">
       <div class="field"><label>Station name</label><input data-s="${i}" data-k="station.name" value="${esc(s.station.name || "")}"></div>
