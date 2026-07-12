@@ -4,6 +4,14 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const fmt3 = (f) => Number(f).toFixed(3);
+  // AF frequencies are shown as-is (real tuners: "95.8", never "95.800").
+  const fmtAF = (f) => {
+    const n = Number(f);
+    if (!isFinite(n)) return "";
+    // Trim trailing zeros after the decimal point, then any dangling dot.
+    return n.toFixed(3).replace(/\.?0+$/, "");
+  };
+  const DEFAULT_LOGO = "https://tef.noobish.eu/logos/default-logo.png";
 
   // ----- PTY tables -----
   const PTY_RDS = [
@@ -29,6 +37,15 @@
   let audioDelayS = 0.8;
   let currentFreq = 0;
   let icecast = {};
+  // Per-mount live metadata for non-Icecast streams (populated by /api/stream-meta polls).
+  const streamMeta = {};
+  function metaFor(st) {
+    if (!st || !st.mount) return null;
+    const a = icecast[st.mount];
+    const b = streamMeta[st.mount];
+    if (a && b) return { ...b, ...a };
+    return a || b || null;
+  }
   let muted = false;                // legacy alias; play toggle uses `playing`
   let playing = false;
   let forcedMono = false;
