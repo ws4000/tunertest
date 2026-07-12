@@ -706,7 +706,7 @@
     return out;
   }
   function computePSFullText(st) {
-    return resolveTokens(st.ps, icecast[st.mount], { preserveOuterSpacing: true }) || (st.station?.name || "");
+    return resolveTokens(st.ps, metaFor(st), { preserveOuterSpacing: true }) || (st.station?.name || "");
   }
   function initPSForLock(st) {
     psFullText = computePSFullText(st);
@@ -869,7 +869,7 @@
     const st = lockedStation;
     const now = performance.now();
     if (now - lockedAtMs < PI_DELAY_MS + RDS_START_MS) return;
-    const src = icecast[st.mount];
+    const src = metaFor(st);
     groupTick++;
 
     if (!rdsBasicShown) {
