@@ -232,6 +232,10 @@
     const sv = (src && src.server_name) || "";
     const caps = /\(ALLCAPS\)/.test(t);
     t = t.replace(/\(ALLCAPS\)/g, "").replace(/%ICEMD%/g, md).replace(/%SERVER%/g, sv);
+    // %MD% is an alias for the currently playing stream title (whether it
+    // came from the shared Icecast status feed or from the per-stream
+    // metadata poll for arbitrary URLs).
+    t = t.replace(/%MD%/g, md);
     // Collapse any whitespace (incl. newlines / tabs from Icecast metadata)
     t = t.replace(/\s+/g, " ");
     if (!preserveOuterSpacing) t = t.trim();
