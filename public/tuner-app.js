@@ -252,6 +252,23 @@
   }
   const pad8 = (s) => (s + "        ").slice(0, 8);
   const cap64 = (s) => s.length > 64 ? s.slice(0, 64) : s;
+  // Strip operator-configured substrings from RT (case-insensitive).
+  // `hide` may be a string, an array of strings, or a comma-separated list.
+  function applyRtHide(text, hide) {
+    if (!text || !hide) return text || "";
+    let list = [];
+    if (Array.isArray(hide)) list = hide;
+    else if (typeof hide === "string") list = hide.split(",");
+    list = list.map((s) => String(s || "").trim()).filter(Boolean);
+    if (!list.length) return text;
+    let out = text;
+    for (const needle of list) {
+      const re = new RegExp(needle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+      out = out.replace(re, "");
+    }
+    // Collapse whitespace left behind by the removal.
+    return out.replace(/\s+/g, " ").trim();
+  }
   function piIsNull(pi) {
     const p = (pi || "").toUpperCase();
     return !p || p === "0000" || p === "FFFF";
@@ -417,11 +434,12 @@
       audio.preload = "auto";
       audio.autoplay = false;
       audio.loop = false;
-      // Safari/WebKit bug: without element-level muting, the raw <audio>
-      // element plays in parallel with the WebAudio graph — every stream
-      // blasts at full volume and drowns out the pink-noise static.
-      // Muting the element leaves WebAudio fully functional (samples still
-      // flow through the MediaElementSource).
+      // NOTE: do NOT set audio.muted = true. Per spec, creating a
+      // MediaElementAudioSourceNode diverts the element's audio through
+      // the WebAudio graph, so the "double-play" concern is unfounded.
+      // Muting the element additionally silences the tap on some
+      // browsers (Safari + some Chromium builds), which is exactly the
+      // "streams are not hearable" symptom.
       audio.muted = false;
       audio.volume = 1;
       // Keep the element attached to the document so the browser does not
@@ -976,7 +994,10 @@
     }
 
     // ---- RT fill ----
-    const newTarget = cap64(resolveTokens(st.rt, src));
+    // Per-station `rtHide` lets the operator strip specific substrings
+    // from RadioText after %MD% / %ICEMD% substitution (case-insensitive).
+    // Accepts a string, an array of strings, or a comma-separated list.
+    const newTarget = cap64(applyRtHide(resolveTokens(st.rt, src), st.rtHide));
     if (newTarget && newTarget !== rtTargetRaw) {
       if (rtBuf) rtPrevious = rtBuf;
       if (rtTargetRaw) rtFirstLoad = false;
@@ -1490,7 +1511,7 @@
       const t = e.target;
       const tag = (t && t.tagName || "").toLowerCase();
       if (tag === "input" || tag === "textarea" || tag === "select" || (t && t.isContentEditable)) return;
-      const step = CFG.tuningStep || 0.1;
+      const step = bandStepFor(currentFreq);
       if (e.key === "ArrowRight" || e.key === "ArrowUp") {
         tuneTo(currentFreq + step); e.preventDefault();
       } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
@@ -1504,7 +1525,7 @@
         // Only intercept the spectrum wheel while spectrum mode is on.
         if (el.id === "signal-canvas" && !spectrumMode) return;
         e.preventDefault();
-        const step = CFG.tuningStep || 0.1;
+        const step = bandStepFor(currentFreq);
         tuneTo(currentFreq + (e.deltaY < 0 ? step : -step));
       }, { passive: false });
     };
@@ -1513,6 +1534,35 @@
     wheelTune($("#signal-canvas"));
     // Also allow wheel on the outer frequency container if present.
     wheelTune($(".data-frequency-container"));
+
+    // ---- Spectrum hover tooltip: shows the frequency under the cursor ----
+    const specCv = $("#signal-canvas");
+    if (specCv) {
+      const tip = document.createElement("div");
+      tip.style.cssText = [
+        "position:fixed","pointer-events:none",
+        "background:rgba(12,28,27,0.92)","color:#68f7ee",
+        "border:1px solid rgba(104,247,238,0.35)",
+        "padding:2px 6px","border-radius:4px",
+        "font-family:'Titillium Web',system-ui,sans-serif","font-size:11px",
+        "z-index:9999","display:none","white-space:nowrap",
+      ].join(";");
+      document.body.appendChild(tip);
+      specCv.addEventListener("mousemove", (e) => {
+        if (!spectrumMode || !_spectrumGeom) { tip.style.display = "none"; return; }
+        const rect = specCv.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const { gx, gw, fMin, fMax } = _spectrumGeom;
+        if (x < gx || x > gx + gw) { tip.style.display = "none"; return; }
+        const f = fMin + ((x - gx) / gw) * (fMax - fMin);
+        tip.textContent = f.toFixed(2) + " MHz";
+        tip.style.left = (e.clientX + 12) + "px";
+        tip.style.top = (e.clientY - 22) + "px";
+        tip.style.display = "block";
+      });
+      specCv.addEventListener("mouseleave", () => { tip.style.display = "none"; });
+    }
+
     bgPSInitAll();
     tuneTo(CFG.defaultFrequency);
     setInterval(paint, 250);
