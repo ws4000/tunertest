@@ -1635,6 +1635,30 @@
             },
             "mount": "kqzg",
             "volume": 1
+          },
+          {
+            "freq": 92.7,
+            "ps": " R F I  ",
+            "rt": "RFI Doetlinlingen 92.7 FM - Sur internet: rfi.fr",
+            "pi": "888F",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 58.3,
+            "station": {
+              "name": "RFI",
+              "city": "Bolsvorden Hill",
+              "itu": "SP",
+              "erp": 3,
+              "pol": "V",
+              "distance": 25,
+              "azimuth": 76
+            },
+            "mount": "https://rfimonde-96k.ice.infomaniak.ch/rfimonde-96k.mp3",
+            "volume": 1,
+            "logo": "https://i.soupco.net/u/x0Pvqw.png"
           }
         ],
         "presets": []
@@ -1925,6 +1949,28 @@
             "volume": 1
           },
           {
+            "freq": 98.1,
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 32,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "mount": "https://26383.live.streamtheworld.com/WCTKFMAAC.aac",
+            "rdsDisabled": true
+          },
+          {
             "freq": 99.3,
             "ps": " FUEGO  ",
             "rt": "Radio FUEGO on FM and on the RadioPlay Orland App !",
@@ -2089,28 +2135,6 @@
             "mount": "https://live-bauerie.sharp-stream.com/IRADNW",
             "logo": "https://www.iradio.ie/images/iradio-main-logo.svg",
             "volume": 1
-          },
-          {
-            "freq": 98.1,
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": false,
-            "signal": 32,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            },
-            "mount": "https://26383.live.streamtheworld.com/WCTKFMAAC.aac",
-            "rdsDisabled": true
           },
           {
             "freq": 107.7,
