@@ -4488,23 +4488,38 @@
           },
           {
             "freq": 105.1,
-            "ps": "",
-            "rt": "",
-            "pi": "",
+            "ps": "SPO NWS",
+            "rt": "SPO Nieuws",
+            "pi": "8204",
             "tp": false,
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 13,
             "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "pol": "H"
+              "name": "SPO Nieuws",
+              "city": "Rottingem Zendmast",
+              "itu": "SP",
+              "pol": "H",
+              "erp": 79,
+              "distance": 50,
+              "azimuth": 50
             },
             "mount": "https://vrt.streamabc.net/vrt-radio1-mp3-128-9751183",
-            "logo": "",
-            "rdsDisabled": true
+            "logo": "https://i.soupco.net/raw/lAvSb1.png",
+            "rdsDisabled": false,
+            "signal": 57,
+            "pty": 1,
+            "af": [
+              91.3,
+              94.7,
+              103.5,
+              104.9,
+              105.1,
+              105.3,
+              105.6,
+              105.7,
+              107.3
+            ]
           },
           {
             "freq": 105.6,
