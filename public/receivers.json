@@ -1663,8 +1663,8 @@
         "audioDelayMs": 800,
         "stations": [
           {
-            "ps": "%MD%  - K-LOVE",
-            "rt": "%MD%",
+            "ps": " K-LOVE ",
+            "rt": "",
             "pi": "A743",
             "pty": 19,
             "tp": false,
@@ -1682,7 +1682,7 @@
               "distance": 14
             },
             "freq": 89.1,
-            "mount": "https://emf-seg001271.cdnstream1.com/seg001271-i64.aac",
+            "mount": "https://emf-seg001271.cdnstream1.com/seg001271-h128/playlist.m3u8",
             "volume": 1,
             "logo": "https://tef.noobish.eu/logos/USA/110F.png"
           },
