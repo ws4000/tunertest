@@ -4,14 +4,18 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const fmt3 = (f) => Number(f).toFixed(3);
-  // AF frequencies are shown as-is (real tuners: "95.8", never "95.800").
+  // AF frequencies mirror real-tuner displays: keep at least one decimal
+  // ("96.0"), never pad past the last significant digit ("95.8", "72.14").
   const fmtAF = (f) => {
     const n = Number(f);
     if (!isFinite(n)) return "";
-    // Trim trailing zeros after the decimal point, then any dangling dot.
-    return n.toFixed(3).replace(/\.?0+$/, "");
+    let s = n.toFixed(3).replace(/0+$/, "").replace(/\.$/, "");
+    if (!s.includes(".")) s += ".0";
+    return s;
   };
   const DEFAULT_LOGO = "https://tef.noobish.eu/logos/default-logo.png";
+  // PI placeholder shown when no station is locked (dimmed "?").
+  const PI_EMPTY_HTML = '<span style="opacity:0.8">?</span>';
 
   // ----- PTY tables -----
   const PTY_RDS = [
