@@ -1224,7 +1224,11 @@
       const lockSnap = station;
       setTimeout(() => {
         if (lockedStation === lockSnap) {
-          $("#data-pi").textContent = (lockSnap.pi || "----").toUpperCase();
+          const el = $("#data-pi");
+          if (el) {
+            if (lockSnap.pi && !piIsNull(lockSnap.pi)) el.textContent = lockSnap.pi.toUpperCase();
+            else el.innerHTML = PI_EMPTY_HTML;
+          }
           piShown = true;
         }
       }, PI_DELAY_MS);
