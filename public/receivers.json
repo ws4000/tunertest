@@ -1657,7 +1657,7 @@
         "tuningMin": 87.5,
         "tuningMax": 108,
         "tuningStep": 0.1,
-        "defaultFrequency": 100,
+        "defaultFrequency": 107.1,
         "noiseFloorDbf": 20,
         "audibleBandwidth": 0.2,
         "audioDelayMs": 800,
