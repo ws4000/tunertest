@@ -4,14 +4,18 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const fmt3 = (f) => Number(f).toFixed(3);
-  // AF frequencies are shown as-is (real tuners: "95.8", never "95.800").
+  // AF frequencies mirror real-tuner displays: keep at least one decimal
+  // ("96.0"), never pad past the last significant digit ("95.8", "72.14").
   const fmtAF = (f) => {
     const n = Number(f);
     if (!isFinite(n)) return "";
-    // Trim trailing zeros after the decimal point, then any dangling dot.
-    return n.toFixed(3).replace(/\.?0+$/, "");
+    let s = n.toFixed(3).replace(/0+$/, "").replace(/\.$/, "");
+    if (!s.includes(".")) s += ".0";
+    return s;
   };
   const DEFAULT_LOGO = "https://tef.noobish.eu/logos/default-logo.png";
+  // PI placeholder shown when no station is locked (dimmed "?").
+  const PI_EMPTY_HTML = '<span style="opacity:0.8">?</span>';
 
   // ----- PTY tables -----
   const PTY_RDS = [
@@ -227,17 +231,20 @@
   function resolveTokens(tpl, src, opts = {}) {
     if (!tpl) return "";
     const preserveOuterSpacing = !!opts.preserveOuterSpacing;
+    const preserveInnerSpacing = !!opts.preserveInnerSpacing;
     let t = tpl;
     const md = (src && src.title) || "";
     const sv = (src && src.server_name) || "";
     const caps = /\(ALLCAPS\)/.test(t);
     t = t.replace(/\(ALLCAPS\)/g, "").replace(/%ICEMD%/g, md).replace(/%SERVER%/g, sv);
-    // %MD% is an alias for the currently playing stream title (whether it
-    // came from the shared Icecast status feed or from the per-stream
-    // metadata poll for arbitrary URLs).
     t = t.replace(/%MD%/g, md);
-    // Collapse any whitespace (incl. newlines / tabs from Icecast metadata)
-    t = t.replace(/\s+/g, " ");
+    if (preserveInnerSpacing) {
+      // Only collapse newlines/tabs; preserve user-typed runs of spaces
+      // (e.g. "  FG.  " for Radio FG's centered PS).
+      t = t.replace(/[\r\n\t]+/g, " ");
+    } else {
+      t = t.replace(/\s+/g, " ");
+    }
     if (!preserveOuterSpacing) t = t.trim();
     t = toRdsAscii(t);
     if (caps) t = t.toUpperCase();
@@ -252,10 +259,33 @@
   function hasRDS(st) { return !!(st && !st.rdsDisabled && !piIsNull(st.pi)); }
   function renderFlag(flag) {
     if (!flag) return "";
+    // Sprite object: { sprite: "https://…flags-16.png", x, y, w, h }
+    // Renders a fixed-size <span> using background-position, letting a
+    // station pick a flag out of any sprite sheet (e.g. flags-16.png).
+    if (typeof flag === "object" && flag.sprite) {
+      const w = flag.w || 16, h = flag.h || 11;
+      const style = [
+        "display:inline-block",
+        `width:${w}px`, `height:${h}px`,
+        `background-image:url('${flag.sprite}')`,
+        `background-position:-${flag.x || 0}px -${flag.y || 0}px`,
+        "background-repeat:no-repeat",
+        "vertical-align:middle",
+        "border-radius:2px",
+        "box-shadow:0 0 0 1px rgba(0,0,0,0.25)",
+      ].join(";");
+      return `<span class="sprite-flag" style="${style}"></span>`;
+    }
+    if (typeof flag !== "string") return "";
+    // "sprite:URL|x|y[|w|h]" shorthand string form.
+    if (flag.startsWith("sprite:")) {
+      const p = flag.slice(7).split("|");
+      return renderFlag({ sprite: p[0], x: +p[1]||0, y: +p[2]||0, w: +p[3]||16, h: +p[4]||11 });
+    }
     if (/^https?:\/\//i.test(flag) || flag.startsWith("/")) {
       return `<img class="custom-flag" src="${flag}" alt="">`;
     }
-    return `<i class="flag-sm flag-sm-${String(flag).toLowerCase()}"></i>`;
+    return `<i class="flag-sm flag-sm-${flag.toLowerCase()}"></i>`;
   }
   function resolveFlag(st) {
     if (!st) return "";
@@ -387,6 +417,13 @@
       audio.preload = "auto";
       audio.autoplay = false;
       audio.loop = false;
+      // Safari/WebKit bug: without element-level muting, the raw <audio>
+      // element plays in parallel with the WebAudio graph — every stream
+      // blasts at full volume and drowns out the pink-noise static.
+      // Muting the element leaves WebAudio fully functional (samples still
+      // flow through the MediaElementSource).
+      audio.muted = true;
+      audio.volume = 1;
       // Keep the element attached to the document so the browser does not
       // treat it as garbage / pause it under memory pressure. Hidden, muted
       // at the element level is fine — WebAudio still gets the samples.
@@ -521,12 +558,31 @@
       pool.delete(m);
     }
   }
+  // Static-noise level (0..1) as a function of raw dBf signal, per spec:
+  //   <10-15 dBf : heavy static
+  //   15-30 dBf  : weak / fringe (noisier in stereo)
+  //   30-50 dBf  : clear in mono, faint hiss in stereo
+  //   50+ dBf    : silent
+  function noiseAmountFromDbf(dbf, stereoActive) {
+    let base;
+    if (dbf >= 50)      base = 0;
+    else if (dbf >= 30) base = 0.06 * (1 - (dbf - 30) / 20);
+    else if (dbf >= 15) base = 0.06 + 0.19 * (1 - (dbf - 15) / 15);
+    else if (dbf >= 10) base = 0.25 + 0.15 * (1 - (dbf - 10) / 5);
+    else                base = 0.40 + 0.25 * clamp((10 - dbf) / 10, 0, 1);
+    if (stereoActive && dbf < 50) {
+      base += 0.08 * (1 - clamp((dbf - 15) / 35, 0, 1));
+    }
+    return clamp(base, 0, 0.75);
+  }
   function applyAudioModel(currentStation, offset, sig) {
     if (!ac) return;
     const bw = audibleBwFor(currentStation);
     const inside = currentStation && Math.abs(offset) <= bw;
     const onFreq = currentStation && Math.abs(offset) <= RDS_LOCK_BW;
-    const quality = clamp((sig - CFG.noiseFloorDbf) / 50, 0, 1);
+    // Quality [0..1] mapped using the same dBf thresholds as the noise
+    // curve above: 15 dBf → 0 (fringe), 50 dBf → 1 (clean).
+    const quality = clamp((sig - 15) / 35, 0, 1);
     lastQuality = quality;
     const offR = currentStation ? clamp(Math.abs(offset) / bw, 0, 1) : 1;
     const now = performance.now();
@@ -580,14 +636,15 @@
         n.monoGain.gain.setTargetAtTime(1, t0, 0.02);
       }
     }
-    noiseGain.gain.setTargetAtTime(
-      playing ? clamp((1 - quality) * 0.35 + offR * 0.3, 0, 0.6) : 0,
-      ac.currentTime, 0.05);
+    const stationNoise = noiseAmountFromDbf(sig, stereoActive);
+    const target = playing ? clamp(stationNoise + offR * 0.3, 0, 0.85) : 0;
+    noiseGain.gain.setTargetAtTime(target, ac.currentTime, 0.05);
   }
 
   // ---------- RDS render ----------
   function clearRDS() {
-    $("#data-pi").textContent = "----";
+    const piEl0 = $("#data-pi");
+    if (piEl0) piEl0.innerHTML = PI_EMPTY_HTML;
     const ps = $("#data-ps"); if (ps) ps.textContent = "        ";
     const r0 = $("#data-rt0 span"), r1 = $("#data-rt1 span");
     if (r0) r0.textContent = ""; if (r1) r1.textContent = "";
@@ -613,7 +670,11 @@
       .forEach((id) => { const e = $(id); if (e) e.textContent = ""; });
   }
   function showBasicRDS(st) {
-    $("#data-pi").textContent = (st.pi || "----").toUpperCase();
+    const piEl1 = $("#data-pi");
+    if (piEl1) {
+      if (st.pi && !piIsNull(st.pi)) piEl1.textContent = st.pi.toUpperCase();
+      else piEl1.innerHTML = PI_EMPTY_HTML;
+    }
     const PTY = getPTYList();
     $$(".data-pty").forEach((e) => (e.textContent = PTY[st.pty] || ""));
     $$(".data-tp span").forEach((e) => (e.className = st.tp ? "opacity-full" : "opacity-half"));
@@ -708,7 +769,10 @@
     return out;
   }
   function computePSFullText(st) {
-    return resolveTokens(st.ps, metaFor(st), { preserveOuterSpacing: true }) || (st.station?.name || "");
+    return resolveTokens(st.ps, metaFor(st), {
+      preserveOuterSpacing: true,
+      preserveInnerSpacing: true,
+    }) || (st.station?.name || "");
   }
   function initPSForLock(st) {
     psFullText = computePSFullText(st);
@@ -1160,7 +1224,11 @@
       const lockSnap = station;
       setTimeout(() => {
         if (lockedStation === lockSnap) {
-          $("#data-pi").textContent = (lockSnap.pi || "----").toUpperCase();
+          const el = $("#data-pi");
+          if (el) {
+            if (lockSnap.pi && !piIsNull(lockSnap.pi)) el.textContent = lockSnap.pi.toUpperCase();
+            else el.innerHTML = PI_EMPTY_HTML;
+          }
           piShown = true;
         }
       }, PI_DELAY_MS);
@@ -1168,8 +1236,23 @@
   }
 
   // ---------- tuning ----------
+  // OIRT band (65.9-74.0 MHz) uses a 30 kHz raster (65.9 → 65.93 → 65.96 …).
+  // Outside OIRT, the configured tuning step (default 100 kHz) applies.
+  function bandStepFor(f) {
+    if (f >= 65.9 && f < 74.0 + 1e-6) return 0.03;
+    return CFG.tuningStep || 0.1;
+  }
+  function snapFreq(f) {
+    if (f >= 65.9 && f < 74.0 + 1e-6) {
+      return Math.round((f - 65.9) / 0.03) * 0.03 + 65.9;
+    }
+    const step = CFG.tuningStep || 0.1;
+    return Math.round(f / step) * step;
+  }
   function tuneTo(f) {
-    currentFreq = clamp(Math.round(f * 1000) / 1000, CFG.tuningMin, CFG.tuningMax);
+    let v = clamp(f, CFG.tuningMin, CFG.tuningMax);
+    v = snapFreq(v);
+    currentFreq = clamp(Math.round(v * 1000) / 1000, CFG.tuningMin, CFG.tuningMax);
     extendPreloadWindow(12000);
     if (ac) warmDesiredStations(currentFreq);
     $("#data-signal-highest").textContent = "0.0";
@@ -1232,13 +1315,60 @@
       el.textContent = CFG.ownerContact;
       el.setAttribute("data-tooltip", CFG.ownerContact);
     });
-    (CFG.presets || []).slice(0, 4).forEach((f, i) => {
-      const el = $(`#preset${i + 1}-text`); if (el) el.textContent = fmt3(f);
-      const btn = $(`#preset${i + 1}`); if (btn) btn.addEventListener("click", () => tuneTo(f));
-    });
+    // ---- Button presets: left-click to tune, right-click to save the
+    //      current frequency into that slot. Overrides persist per-receiver
+    //      in localStorage. Any presets beyond the 4 baked-in slots get
+    //      appended as new buttons.
+    const presetKey = `presets:${CFG.tunerName || "tuner"}`;
+    let presetList = Array.isArray(CFG.presets) ? CFG.presets.slice() : [];
+    try {
+      const saved = JSON.parse(localStorage.getItem(presetKey) || "null");
+      if (Array.isArray(saved)) presetList = saved;
+    } catch (e) {}
+    const savePresets = () => {
+      try { localStorage.setItem(presetKey, JSON.stringify(presetList)); } catch (e) {}
+    };
+    const bindPreset = (btn, txt, idx) => {
+      const set = () => {
+        const v = presetList[idx];
+        if (txt) txt.textContent = (typeof v === "number") ? fmt3(v) : "—";
+      };
+      set();
+      btn.onclick = () => { const v = presetList[idx]; if (typeof v === "number") tuneTo(v); };
+      btn.oncontextmenu = (e) => {
+        e.preventDefault();
+        presetList[idx] = currentFreq;
+        savePresets(); set();
+      };
+      btn.title = "Left click: tune  ·  Right click: save current frequency";
+    };
+    for (let i = 0; i < 4; i++) {
+      const btn = $(`#preset${i + 1}`);
+      const txt = $(`#preset${i + 1}-text`);
+      if (btn) bindPreset(btn, txt, i);
+    }
+    if (presetList.length > 4) {
+      const host = $("#preset1")?.parentElement;
+      if (host) {
+        for (let i = 4; i < presetList.length; i++) {
+          if ($(`#preset${i + 1}`)) continue;
+          const b = document.createElement("button");
+          b.className = "no-bg color-4 hover-brighten";
+          b.id = `preset${i + 1}`;
+          b.style.cssText = "padding: 6px; width: 64px; min-width: 64px;";
+          const s = document.createElement("span");
+          s.style.cssText = "font-size: 10px; color: var(--color-text);";
+          s.id = `preset${i + 1}-text`;
+          b.innerHTML = `<i class="fa-solid fa-star fa-lg top-10"></i><br>`;
+          b.appendChild(s);
+          host.appendChild(b);
+          bindPreset(b, s, i);
+        }
+      }
+    }
 
-    $("#freq-up")?.addEventListener("click", () => tuneTo(currentFreq + CFG.tuningStep));
-    $("#freq-down")?.addEventListener("click", () => tuneTo(currentFreq - CFG.tuningStep));
+    $("#freq-up")?.addEventListener("click", () => tuneTo(currentFreq + bandStepFor(currentFreq)));
+    $("#freq-down")?.addEventListener("click", () => tuneTo(currentFreq - bandStepFor(currentFreq)));
     const ci2 = $("#commandinput");
     if (ci2) ci2.addEventListener("keydown", (e) => {
       if (e.key !== "Enter") return;
@@ -1360,7 +1490,7 @@
       const t = e.target;
       const tag = (t && t.tagName || "").toLowerCase();
       if (tag === "input" || tag === "textarea" || tag === "select" || (t && t.isContentEditable)) return;
-      const step = CFG.tuningStep || 0.1;
+      const step = bandStepFor(currentFreq);
       if (e.key === "ArrowRight" || e.key === "ArrowUp") {
         tuneTo(currentFreq + step); e.preventDefault();
       } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
@@ -1374,7 +1504,7 @@
         // Only intercept the spectrum wheel while spectrum mode is on.
         if (el.id === "signal-canvas" && !spectrumMode) return;
         e.preventDefault();
-        const step = CFG.tuningStep || 0.1;
+        const step = bandStepFor(currentFreq);
         tuneTo(currentFreq + (e.deltaY < 0 ? step : -step));
       }, { passive: false });
     };
@@ -1383,6 +1513,35 @@
     wheelTune($("#signal-canvas"));
     // Also allow wheel on the outer frequency container if present.
     wheelTune($(".data-frequency-container"));
+
+    // ---- Spectrum hover tooltip: shows the frequency under the cursor ----
+    const specCv = $("#signal-canvas");
+    if (specCv) {
+      const tip = document.createElement("div");
+      tip.style.cssText = [
+        "position:fixed","pointer-events:none",
+        "background:rgba(12,28,27,0.92)","color:#68f7ee",
+        "border:1px solid rgba(104,247,238,0.35)",
+        "padding:2px 6px","border-radius:4px",
+        "font-family:'Titillium Web',system-ui,sans-serif","font-size:11px",
+        "z-index:9999","display:none","white-space:nowrap",
+      ].join(";");
+      document.body.appendChild(tip);
+      specCv.addEventListener("mousemove", (e) => {
+        if (!spectrumMode || !_spectrumGeom) { tip.style.display = "none"; return; }
+        const rect = specCv.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const { gx, gw, fMin, fMax } = _spectrumGeom;
+        if (x < gx || x > gx + gw) { tip.style.display = "none"; return; }
+        const f = fMin + ((x - gx) / gw) * (fMax - fMin);
+        tip.textContent = f.toFixed(2) + " MHz";
+        tip.style.left = (e.clientX + 12) + "px";
+        tip.style.top = (e.clientY - 22) + "px";
+        tip.style.display = "block";
+      });
+      specCv.addEventListener("mouseleave", () => { tip.style.display = "none"; });
+    }
+
     bgPSInitAll();
     tuneTo(CFG.defaultFrequency);
     setInterval(paint, 250);
