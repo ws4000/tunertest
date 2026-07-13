@@ -259,10 +259,33 @@
   function hasRDS(st) { return !!(st && !st.rdsDisabled && !piIsNull(st.pi)); }
   function renderFlag(flag) {
     if (!flag) return "";
+    // Sprite object: { sprite: "https://…flags-16.png", x, y, w, h }
+    // Renders a fixed-size <span> using background-position, letting a
+    // station pick a flag out of any sprite sheet (e.g. flags-16.png).
+    if (typeof flag === "object" && flag.sprite) {
+      const w = flag.w || 16, h = flag.h || 11;
+      const style = [
+        "display:inline-block",
+        `width:${w}px`, `height:${h}px`,
+        `background-image:url('${flag.sprite}')`,
+        `background-position:-${flag.x || 0}px -${flag.y || 0}px`,
+        "background-repeat:no-repeat",
+        "vertical-align:middle",
+        "border-radius:2px",
+        "box-shadow:0 0 0 1px rgba(0,0,0,0.25)",
+      ].join(";");
+      return `<span class="sprite-flag" style="${style}"></span>`;
+    }
+    if (typeof flag !== "string") return "";
+    // "sprite:URL|x|y[|w|h]" shorthand string form.
+    if (flag.startsWith("sprite:")) {
+      const p = flag.slice(7).split("|");
+      return renderFlag({ sprite: p[0], x: +p[1]||0, y: +p[2]||0, w: +p[3]||16, h: +p[4]||11 });
+    }
     if (/^https?:\/\//i.test(flag) || flag.startsWith("/")) {
       return `<img class="custom-flag" src="${flag}" alt="">`;
     }
-    return `<i class="flag-sm flag-sm-${String(flag).toLowerCase()}"></i>`;
+    return `<i class="flag-sm flag-sm-${flag.toLowerCase()}"></i>`;
   }
   function resolveFlag(st) {
     if (!st) return "";
