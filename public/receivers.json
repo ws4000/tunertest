@@ -3553,12 +3553,12 @@
             "signal": 37,
             "station": {
               "name": "SPO Nieuws",
-              "city": "Pijnacker Zendmast",
+              "city": "Zoetergraaf Zendmast",
               "itu": "SP",
-              "erp": 10,
-              "pol": "C",
-              "distance": 41,
-              "azimuth": 26
+              "erp": 5.4,
+              "pol": "H",
+              "distance": 75,
+              "azimuth": 276
             },
             "af": [
               91.3,
