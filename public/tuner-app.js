@@ -231,17 +231,20 @@
   function resolveTokens(tpl, src, opts = {}) {
     if (!tpl) return "";
     const preserveOuterSpacing = !!opts.preserveOuterSpacing;
+    const preserveInnerSpacing = !!opts.preserveInnerSpacing;
     let t = tpl;
     const md = (src && src.title) || "";
     const sv = (src && src.server_name) || "";
     const caps = /\(ALLCAPS\)/.test(t);
     t = t.replace(/\(ALLCAPS\)/g, "").replace(/%ICEMD%/g, md).replace(/%SERVER%/g, sv);
-    // %MD% is an alias for the currently playing stream title (whether it
-    // came from the shared Icecast status feed or from the per-stream
-    // metadata poll for arbitrary URLs).
     t = t.replace(/%MD%/g, md);
-    // Collapse any whitespace (incl. newlines / tabs from Icecast metadata)
-    t = t.replace(/\s+/g, " ");
+    if (preserveInnerSpacing) {
+      // Only collapse newlines/tabs; preserve user-typed runs of spaces
+      // (e.g. "  FG.  " for Radio FG's centered PS).
+      t = t.replace(/[\r\n\t]+/g, " ");
+    } else {
+      t = t.replace(/\s+/g, " ");
+    }
     if (!preserveOuterSpacing) t = t.trim();
     t = toRdsAscii(t);
     if (caps) t = t.toUpperCase();
