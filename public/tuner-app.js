@@ -743,7 +743,10 @@
     return out;
   }
   function computePSFullText(st) {
-    return resolveTokens(st.ps, metaFor(st), { preserveOuterSpacing: true }) || (st.station?.name || "");
+    return resolveTokens(st.ps, metaFor(st), {
+      preserveOuterSpacing: true,
+      preserveInnerSpacing: true,
+    }) || (st.station?.name || "");
   }
   function initPSForLock(st) {
     psFullText = computePSFullText(st);
