@@ -2637,6 +2637,7 @@
             "af": [
               92.2,
               93.8,
+              97.5,
               99.1,
               99.5,
               107.2,
@@ -3756,6 +3757,37 @@
             "mount": "https://goedverstaanbaar.stream.laut.fm/goedverstaanbaar",
             "pty": 9,
             "signal": 70
+          },
+          {
+            "freq": 97.5,
+            "ps": "NOSTALGIE",
+            "rt": "%MD%",
+            "pi": "8213",
+            "pty": 27,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 80,
+            "station": {
+              "name": "Nostalgie",
+              "city": "Bolsrade",
+              "itu": "SP",
+              "pol": "V",
+              "distance": 7,
+              "azimuth": 71,
+              "erp": 0.2
+            },
+            "mount": "https://28553.live.streamtheworld.com/NOSTALGIEWHATAFEELING.mp3",
+            "logo": "https://tef.noobish.eu/logos/F/F218.svg",
+            "af": [
+              91.5,
+              92.2,
+              97.5,
+              99.1,
+              99.5,
+              107.2
+            ]
           }
         ],
         "presets": []
