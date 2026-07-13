@@ -617,7 +617,8 @@
 
   // ---------- RDS render ----------
   function clearRDS() {
-    $("#data-pi").textContent = "----";
+    const piEl0 = $("#data-pi");
+    if (piEl0) piEl0.innerHTML = PI_EMPTY_HTML;
     const ps = $("#data-ps"); if (ps) ps.textContent = "        ";
     const r0 = $("#data-rt0 span"), r1 = $("#data-rt1 span");
     if (r0) r0.textContent = ""; if (r1) r1.textContent = "";
