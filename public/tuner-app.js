@@ -1315,13 +1315,60 @@
       el.textContent = CFG.ownerContact;
       el.setAttribute("data-tooltip", CFG.ownerContact);
     });
-    (CFG.presets || []).slice(0, 4).forEach((f, i) => {
-      const el = $(`#preset${i + 1}-text`); if (el) el.textContent = fmt3(f);
-      const btn = $(`#preset${i + 1}`); if (btn) btn.addEventListener("click", () => tuneTo(f));
-    });
+    // ---- Button presets: left-click to tune, right-click to save the
+    //      current frequency into that slot. Overrides persist per-receiver
+    //      in localStorage. Any presets beyond the 4 baked-in slots get
+    //      appended as new buttons.
+    const presetKey = `presets:${CFG.tunerName || "tuner"}`;
+    let presetList = Array.isArray(CFG.presets) ? CFG.presets.slice() : [];
+    try {
+      const saved = JSON.parse(localStorage.getItem(presetKey) || "null");
+      if (Array.isArray(saved)) presetList = saved;
+    } catch (e) {}
+    const savePresets = () => {
+      try { localStorage.setItem(presetKey, JSON.stringify(presetList)); } catch (e) {}
+    };
+    const bindPreset = (btn, txt, idx) => {
+      const set = () => {
+        const v = presetList[idx];
+        if (txt) txt.textContent = (typeof v === "number") ? fmt3(v) : "—";
+      };
+      set();
+      btn.onclick = () => { const v = presetList[idx]; if (typeof v === "number") tuneTo(v); };
+      btn.oncontextmenu = (e) => {
+        e.preventDefault();
+        presetList[idx] = currentFreq;
+        savePresets(); set();
+      };
+      btn.title = "Left click: tune  ·  Right click: save current frequency";
+    };
+    for (let i = 0; i < 4; i++) {
+      const btn = $(`#preset${i + 1}`);
+      const txt = $(`#preset${i + 1}-text`);
+      if (btn) bindPreset(btn, txt, i);
+    }
+    if (presetList.length > 4) {
+      const host = $("#preset1")?.parentElement;
+      if (host) {
+        for (let i = 4; i < presetList.length; i++) {
+          if ($(`#preset${i + 1}`)) continue;
+          const b = document.createElement("button");
+          b.className = "no-bg color-4 hover-brighten";
+          b.id = `preset${i + 1}`;
+          b.style.cssText = "padding: 6px; width: 64px; min-width: 64px;";
+          const s = document.createElement("span");
+          s.style.cssText = "font-size: 10px; color: var(--color-text);";
+          s.id = `preset${i + 1}-text`;
+          b.innerHTML = `<i class="fa-solid fa-star fa-lg top-10"></i><br>`;
+          b.appendChild(s);
+          host.appendChild(b);
+          bindPreset(b, s, i);
+        }
+      }
+    }
 
-    $("#freq-up")?.addEventListener("click", () => tuneTo(currentFreq + CFG.tuningStep));
-    $("#freq-down")?.addEventListener("click", () => tuneTo(currentFreq - CFG.tuningStep));
+    $("#freq-up")?.addEventListener("click", () => tuneTo(currentFreq + bandStepFor(currentFreq)));
+    $("#freq-down")?.addEventListener("click", () => tuneTo(currentFreq - bandStepFor(currentFreq)));
     const ci2 = $("#commandinput");
     if (ci2) ci2.addEventListener("keydown", (e) => {
       if (e.key !== "Enter") return;
