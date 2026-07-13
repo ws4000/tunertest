@@ -2788,9 +2788,9 @@
               "city": "Zoetergraaf Zendmast",
               "itu": "SP",
               "pol": "H",
-              "azimuth": 26,
-              "erp": 75,
-              "distance": 276
+              "distance": 75,
+              "azimuth": 276,
+              "erp": 10
             },
             "mount": "https://icecast.omroep.nl/radio4-sb-mp3",
             "logo": "https://i.soupco.net/raw/QSdqFl.png",
