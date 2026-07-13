@@ -644,7 +644,11 @@
       .forEach((id) => { const e = $(id); if (e) e.textContent = ""; });
   }
   function showBasicRDS(st) {
-    $("#data-pi").textContent = (st.pi || "----").toUpperCase();
+    const piEl1 = $("#data-pi");
+    if (piEl1) {
+      if (st.pi && !piIsNull(st.pi)) piEl1.textContent = st.pi.toUpperCase();
+      else piEl1.innerHTML = PI_EMPTY_HTML;
+    }
     const PTY = getPTYList();
     $$(".data-pty").forEach((e) => (e.textContent = PTY[st.pty] || ""));
     $$(".data-tp span").forEach((e) => (e.className = st.tp ? "opacity-full" : "opacity-half"));
