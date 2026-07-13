@@ -1236,8 +1236,23 @@
   }
 
   // ---------- tuning ----------
+  // OIRT band (65.9-74.0 MHz) uses a 30 kHz raster (65.9 → 65.93 → 65.96 …).
+  // Outside OIRT, the configured tuning step (default 100 kHz) applies.
+  function bandStepFor(f) {
+    if (f >= 65.9 && f < 74.0 + 1e-6) return 0.03;
+    return CFG.tuningStep || 0.1;
+  }
+  function snapFreq(f) {
+    if (f >= 65.9 && f < 74.0 + 1e-6) {
+      return Math.round((f - 65.9) / 0.03) * 0.03 + 65.9;
+    }
+    const step = CFG.tuningStep || 0.1;
+    return Math.round(f / step) * step;
+  }
   function tuneTo(f) {
-    currentFreq = clamp(Math.round(f * 1000) / 1000, CFG.tuningMin, CFG.tuningMax);
+    let v = clamp(f, CFG.tuningMin, CFG.tuningMax);
+    v = snapFreq(v);
+    currentFreq = clamp(Math.round(v * 1000) / 1000, CFG.tuningMin, CFG.tuningMax);
     extendPreloadWindow(12000);
     if (ac) warmDesiredStations(currentFreq);
     $("#data-signal-highest").textContent = "0.0";
