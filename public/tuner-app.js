@@ -417,6 +417,13 @@
       audio.preload = "auto";
       audio.autoplay = false;
       audio.loop = false;
+      // Safari/WebKit bug: without element-level muting, the raw <audio>
+      // element plays in parallel with the WebAudio graph — every stream
+      // blasts at full volume and drowns out the pink-noise static.
+      // Muting the element leaves WebAudio fully functional (samples still
+      // flow through the MediaElementSource).
+      audio.muted = true;
+      audio.volume = 1;
       // Keep the element attached to the document so the browser does not
       // treat it as garbage / pause it under memory pressure. Hidden, muted
       // at the element level is fine — WebAudio still gets the samples.
