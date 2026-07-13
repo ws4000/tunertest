@@ -1642,7 +1642,7 @@
     },
     {
       "slug": "broken-arrow",
-      "name": "Broken Arrow",
+      "name": "Broken Arrow FM-DX Tuner",
       "location": "Broken Arrow, Orland",
       "mc": {
         "x": 2145,
@@ -1653,7 +1653,7 @@
         "tunerDescription": "TEF6686 in Broken Arrow. Local stations only, noise floor is high.",
         "tunerDevice": "Virtual TEF668x",
         "ownerContact": "",
-        "rdsMode": "rds",
+        "rdsMode": "rbds",
         "tuningMin": 87.5,
         "tuningMax": 108,
         "tuningStep": 0.1,
