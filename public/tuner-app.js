@@ -551,12 +551,31 @@
       pool.delete(m);
     }
   }
+  // Static-noise level (0..1) as a function of raw dBf signal, per spec:
+  //   <10-15 dBf : heavy static
+  //   15-30 dBf  : weak / fringe (noisier in stereo)
+  //   30-50 dBf  : clear in mono, faint hiss in stereo
+  //   50+ dBf    : silent
+  function noiseAmountFromDbf(dbf, stereoActive) {
+    let base;
+    if (dbf >= 50)      base = 0;
+    else if (dbf >= 30) base = 0.06 * (1 - (dbf - 30) / 20);
+    else if (dbf >= 15) base = 0.06 + 0.19 * (1 - (dbf - 15) / 15);
+    else if (dbf >= 10) base = 0.25 + 0.15 * (1 - (dbf - 10) / 5);
+    else                base = 0.40 + 0.25 * clamp((10 - dbf) / 10, 0, 1);
+    if (stereoActive && dbf < 50) {
+      base += 0.08 * (1 - clamp((dbf - 15) / 35, 0, 1));
+    }
+    return clamp(base, 0, 0.75);
+  }
   function applyAudioModel(currentStation, offset, sig) {
     if (!ac) return;
     const bw = audibleBwFor(currentStation);
     const inside = currentStation && Math.abs(offset) <= bw;
     const onFreq = currentStation && Math.abs(offset) <= RDS_LOCK_BW;
-    const quality = clamp((sig - CFG.noiseFloorDbf) / 50, 0, 1);
+    // Quality [0..1] mapped using the same dBf thresholds as the noise
+    // curve above: 15 dBf → 0 (fringe), 50 dBf → 1 (clean).
+    const quality = clamp((sig - 15) / 35, 0, 1);
     lastQuality = quality;
     const offR = currentStation ? clamp(Math.abs(offset) / bw, 0, 1) : 1;
     const now = performance.now();
@@ -610,9 +629,9 @@
         n.monoGain.gain.setTargetAtTime(1, t0, 0.02);
       }
     }
-    noiseGain.gain.setTargetAtTime(
-      playing ? clamp((1 - quality) * 0.35 + offR * 0.3, 0, 0.6) : 0,
-      ac.currentTime, 0.05);
+    const stationNoise = noiseAmountFromDbf(sig, stereoActive);
+    const target = playing ? clamp(stationNoise + offR * 0.3, 0, 0.85) : 0;
+    noiseGain.gain.setTargetAtTime(target, ac.currentTime, 0.05);
   }
 
   // ---------- RDS render ----------
