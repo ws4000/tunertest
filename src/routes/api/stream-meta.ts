@@ -59,7 +59,12 @@ export const Route = createFileRoute("/api/stream-meta")({
                   try { reader.cancel(); } catch (e) {}
                   const raw = new TextDecoder("utf-8", { fatal: false })
                     .decode(new Uint8Array(metaBytes));
-                  const m = /StreamTitle='([^']*)'/.exec(raw);
+                  // Match up to the canonical `';` terminator so that
+                  // titles containing apostrophes (e.g. "It's My Life")
+                  // are captured in full. Fall back to non-greedy match
+                  // ending at the last `'` before `;` or end of string.
+                  let m = /StreamTitle='([\s\S]*?)';/.exec(raw);
+                  if (!m) m = /StreamTitle='([\s\S]*)'\s*(?:;|$)/.exec(raw);
                   const title = (m ? m[1] : "").replace(/\0+$/, "").trim();
                   return json({ title });
                 }
