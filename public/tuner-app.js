@@ -447,9 +447,30 @@
       // at the element level is fine — WebAudio still gets the samples.
       audio.style.display = "none";
       try { document.body.appendChild(audio); } catch (e) {}
-      audio.src = /^https?:\/\//i.test(mount)
-        ? `/api/stream/${encodeURIComponent(mount)}`
+      // HLS (.m3u8) support: play through hls.js when available (all
+      // browsers) or native (Safari). HLS URLs are loaded DIRECTLY (not
+      // through /api/stream) because the manifest references segment
+      // URLs that must resolve relative to the original playlist host.
+      const isHls = /\.m3u8(\?|$)/i.test(mount);
+      const streamUrl = /^https?:\/\//i.test(mount)
+        ? (isHls ? mount : `/api/stream/${encodeURIComponent(mount)}`)
         : `/api/stream/${mount}`;
+      let hls = null;
+      if (isHls) {
+        if (window.Hls && window.Hls.isSupported()) {
+          hls = new window.Hls({ lowLatencyMode: true, enableWorker: true });
+          hls.loadSource(mount);
+          hls.attachMedia(audio);
+          hls.on(window.Hls.Events.ERROR, (_e, data) => {
+            if (data && data.fatal) setTimeout(() => { try { hls.startLoad(); } catch (e) {} }, 1500);
+          });
+        } else {
+          // Native HLS (Safari)
+          audio.src = mount;
+        }
+      } else {
+        audio.src = streamUrl;
+      }
       try { audio.load(); } catch (e) {}
       // Buffer-recovery. NEVER call audio.load() — that fully resets the
       // MediaElement and creates an audible cut-out. We also never seek
@@ -479,11 +500,20 @@
         if (now - reconnectingAt < 5000) return;
         reconnectingAt = now;
         try {
+          if (isHls && hls) {
+            // hls.js: nudge the internal loader instead of re-assigning src.
+            try { hls.startLoad(); } catch (e) {}
+            waitingSince = now;
+            const p = audio.play(); if (p && p.catch) p.catch(() => {});
+            return;
+          }
           // Force the browser to drop the dead socket and open a new one
           // by re-assigning src (cheaper than .load() + .play()).
-          const src = /^https?:\/\//i.test(mount)
-            ? `/api/stream/${encodeURIComponent(mount)}?t=${now}`
-            : `/api/stream/${mount}?t=${now}`;
+          const src = isHls
+            ? mount
+            : (/^https?:\/\//i.test(mount)
+                ? `/api/stream/${encodeURIComponent(mount)}?t=${now}`
+                : `/api/stream/${mount}?t=${now}`);
           audio.src = src;
           waitingSince = now;
           const p = audio.play(); if (p && p.catch) p.catch(() => {});
@@ -556,13 +586,14 @@
     gain.connect(masterGain);
 
     const out = { audio, source, stVol, delay, eqNodes, hp, lp, ws, splitter, merger,
-                  monoL, monoR, stereoGain, monoGain, gain, _cfg: stCfg };
+                  monoL, monoR, stereoGain, monoGain, gain, hls, _cfg: stCfg };
     pool.set(mount, out);
     return out;
   }
   function pruneStations(keep) {
     for (const [m, n] of pool) {
       if (keep.has(m)) continue;
+      try { n.hls?.destroy(); } catch (e) {}
       try { n.audio.pause(); n.audio.removeAttribute("src"); n.audio.load(); } catch(e){}
       try { n.audio.remove(); } catch (e) {}
       try {
@@ -964,21 +995,24 @@
     // Glitch probabilities scale with low signal
     const q = lastQuality;
     const dropProb = clamp((1 - q) * 0.6, 0, 0.6);
+    // Higher signal → reveal more segments per group tick, so PS/RT
+    // fill in faster on strong stations and only crawl on weak ones.
+    // q ~1.0 → 3 segments/tick, q ~0.5 → 2, q ~0.0 → 1.
+    const revealPerTick = 1 + Math.floor(clamp(q, 0, 1) * 2);
 
     // ---- PS gradual fill (2 chars per group). Used for both the initial
     // ---- lock and for every chunk transition in groups mode, so dynamic
     // ---- updates load in the same way a fresh tune-in does.
     if (!psFilled.every(Boolean)) {
-      if (Math.random() >= dropProb) {
-        for (let i = 0; i < 4; i++) {
-          if (!psFilled[i]) {
-            psFilled[i] = true;
-            const chars = psFillTarget.slice(i * 2, i * 2 + 2);
-            psBuf = psBuf.slice(0, i * 2) + chars + psBuf.slice(i * 2 + 2);
-            paintPS();
-            break;
-          }
-        }
+      let revealed = 0;
+      for (let i = 0; i < 4 && revealed < revealPerTick; i++) {
+        if (psFilled[i]) continue;
+        if (Math.random() < dropProb) { revealed++; continue; }
+        psFilled[i] = true;
+        const chars = psFillTarget.slice(i * 2, i * 2 + 2);
+        psBuf = psBuf.slice(0, i * 2) + chars + psBuf.slice(i * 2 + 2);
+        paintPS();
+        revealed++;
       }
     } else {
       if (!psFirstCycleDone) psFirstCycleDone = true;
@@ -1007,24 +1041,27 @@
       rtBuf = "";
       paintRT();
     }
-    if (rtTargetRaw && rtSegFilled.some((v) => !v) && Math.random() >= dropProb) {
-      for (let i = 0; i < rtSegFilled.length; i++) {
-        if (!rtSegFilled[i]) {
-          rtSegFilled[i] = true;
-          let chars = rtTargetRaw.slice(i * 8, i * 8 + 8);
-          // Weak signals: occasionally corrupt one char
-          if (q < 0.25 && Math.random() < 0.4 && chars.length > 0) {
-            const ci = Math.floor(Math.random() * chars.length);
-            chars = chars.slice(0, ci) + "_" + chars.slice(ci + 1);
-          }
-          while (rtBuf.length < i * 8) rtBuf += " ";
-          rtBuf = rtBuf.slice(0, i * 8) + chars + rtBuf.slice(i * 8 + chars.length);
-          paintRT();
-          break;
+    if (rtTargetRaw && rtSegFilled.some((v) => !v)) {
+      let revealed = 0;
+      for (let i = 0; i < rtSegFilled.length && revealed < revealPerTick; i++) {
+        if (rtSegFilled[i]) continue;
+        if (Math.random() < dropProb) { revealed++; continue; }
+        rtSegFilled[i] = true;
+        let chars = rtTargetRaw.slice(i * 8, i * 8 + 8);
+        // Only genuinely weak signals occasionally corrupt one char to `_`
+        // (RDS uncorrectable-block indicator). Strong signals never do.
+        if (q < 0.15 && Math.random() < 0.25 && chars.length > 0) {
+          const ci = Math.floor(Math.random() * chars.length);
+          chars = chars.slice(0, ci) + "_" + chars.slice(ci + 1);
         }
+        while (rtBuf.length < i * 8) rtBuf += " ";
+        rtBuf = rtBuf.slice(0, i * 8) + chars + rtBuf.slice(i * 8 + chars.length);
+        paintRT();
+        revealed++;
       }
       if (rtSegFilled.every(Boolean)) rtFirstLoad = false;
     }
+
 
     // ---- TX info after ~4s of lock ----
     if (!rdsTxShown && now - lockedAtMs > 4500) {
@@ -1304,7 +1341,8 @@
     if (!CFG || !CFG.stations) return;
     const urls = new Set();
     CFG.stations.forEach((s) => {
-      if (s.mount && /^https?:\/\//i.test(s.mount)) urls.add(s.mount);
+      // HLS playlists don't carry ICY metadata — skip them.
+      if (s.mount && /^https?:\/\//i.test(s.mount) && !/\.m3u8(\?|$)/i.test(s.mount)) urls.add(s.mount);
     });
     if (!urls.size) return;
     await Promise.all(Array.from(urls).map(async (u) => {
