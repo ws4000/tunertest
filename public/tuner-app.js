@@ -1388,6 +1388,125 @@
       }
     }
 
+    // ---- Bottom preset bar (10 slots) — visual preset buttons that show
+    //      the current station logo when set. Right-click on the tuned
+    //      frequency saves { freq, name, logo } into the slot; left-click
+    //      tunes to it. Persisted per-receiver in localStorage.
+    const NUM_PRESET_SLOTS = 10;
+    const barKey = `presetBar:${CFG.tunerName || "tuner"}`;
+    let barSlots = new Array(NUM_PRESET_SLOTS).fill(null);
+    try {
+      const raw = JSON.parse(localStorage.getItem(barKey) || "null");
+      if (Array.isArray(raw)) {
+        for (let i = 0; i < Math.min(NUM_PRESET_SLOTS, raw.length); i++) {
+          barSlots[i] = raw[i] || null;
+        }
+      }
+    } catch (e) {}
+    const saveBar = () => {
+      try { localStorage.setItem(barKey, JSON.stringify(barSlots)); } catch (e) {}
+    };
+    const stationForCurrent = () => {
+      if (!CFG.stations) return null;
+      let best = null, bestD = Infinity;
+      CFG.stations.forEach((s) => {
+        const d = Math.abs((s.freq || 0) - currentFreq);
+        if (d < bestD) { bestD = d; best = s; }
+      });
+      return bestD <= 0.05 ? best : null;
+    };
+
+    if (!document.getElementById("lov-preset-bar-styles")) {
+      const styleEl = document.createElement("style");
+      styleEl.id = "lov-preset-bar-styles";
+      styleEl.textContent = `
+        .lov-preset-bar { display:flex; gap:8px; padding:10px 12px 14px;
+          justify-content:center; align-items:center; flex-wrap:nowrap; }
+        .lov-preset-btn { flex:1 1 0; min-width:0; height:52px; border-radius:26px;
+          background: rgba(255,255,255,0.03); border:1px solid var(--color-2, #223b3a);
+          color: var(--color-text, #cfeae8); cursor:pointer; padding:4px 8px;
+          overflow:hidden; position:relative; display:flex; align-items:center;
+          justify-content:center; transition: transform .12s ease, background .12s ease; }
+        .lov-preset-btn:hover { transform: translateY(-2px);
+          background: var(--color-3, #2f4a48); color:#fff; }
+        .lov-preset-btn img { max-height:38px; max-width:100%; object-fit:contain;
+          display:block; }
+        .lov-preset-empty { text-align:center; font-size:11px; line-height:1.1;
+          opacity:.75; display:flex; flex-direction:column; align-items:center;
+          justify-content:center; gap:2px; }
+        .lov-preset-empty i { font-size:14px; opacity:.7; }
+        .lov-preset-hover { position:absolute; inset:0; display:none;
+          align-items:center; justify-content:center; flex-direction:column;
+          background: var(--color-3, #2f4a48); color:#fff; font-size:12px;
+          line-height:1.15; text-align:center; padding:4px; border-radius:26px;
+          font-weight:600; }
+        .lov-preset-btn:hover .lov-preset-hover { display:flex; }
+        .lov-preset-btn:hover .lov-preset-face { visibility:hidden; }
+      `;
+      document.head.appendChild(styleEl);
+    }
+
+    // Attach at the bottom of the main wrapper so it sits under RADIOTEXT.
+    const barHost = $("#wrapper") || document.body;
+    let bar = $("#lov-preset-bar");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.id = "lov-preset-bar";
+      bar.className = "lov-preset-bar";
+      barHost.appendChild(bar);
+    }
+
+    const fmt1 = (f) => Number(f).toFixed(1);
+    const escHtml = (s) => String(s || "").replace(/[&<>"']/g,
+      (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[c]));
+    const renderBar = () => {
+      if (!bar) return;
+      const nodes = [];
+      for (let i = 0; i < NUM_PRESET_SLOTS; i++) {
+        const slot = barSlots[i];
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "lov-preset-btn";
+        if (slot && typeof slot === "object" && slot.freq != null) {
+          const logo = slot.logo || DEFAULT_LOGO;
+          btn.innerHTML =
+            `<span class="lov-preset-face"><img src="${escHtml(logo)}" alt="${escHtml(slot.name)}"></span>` +
+            `<span class="lov-preset-hover"><span>${fmt1(slot.freq)}</span><span>${escHtml(slot.name)}</span></span>`;
+          btn.title = slot.name ? `${slot.name} — ${fmt1(slot.freq)} MHz` : `${fmt1(slot.freq)} MHz`;
+          btn.addEventListener("click", () => tuneTo(slot.freq));
+        } else {
+          btn.innerHTML =
+            `<span class="lov-preset-face lov-preset-empty">` +
+              `<i class="fa-solid fa-wave-square"></i>` +
+              `<span data-lov-preset-freq>${fmt1(currentFreq)}</span>` +
+            `</span>`;
+          btn.title = "Right-click to save the current frequency as a preset";
+        }
+        btn.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          const st = stationForCurrent();
+          barSlots[i] = {
+            freq: currentFreq,
+            name: st?.station?.name || (st?.ps || "").trim() || `${fmt1(currentFreq)} MHz`,
+            logo: st?.logo || "",
+          };
+          saveBar();
+          renderBar();
+        });
+        nodes.push(btn);
+      }
+      bar.replaceChildren(...nodes);
+    };
+    renderBar();
+    // Keep empty-slot placeholders in sync with the currently tuned freq
+    // without a full re-render — cheap 1 Hz text tick.
+    setInterval(() => {
+      const txt = fmt1(currentFreq);
+      bar.querySelectorAll("[data-lov-preset-freq]").forEach((el) => {
+        if (el.textContent !== txt) el.textContent = txt;
+      });
+    }, 1000);
+
     $("#freq-up")?.addEventListener("click", () => tuneTo(currentFreq + bandStepFor(currentFreq)));
     $("#freq-down")?.addEventListener("click", () => tuneTo(currentFreq - bandStepFor(currentFreq)));
     const ci2 = $("#commandinput");
