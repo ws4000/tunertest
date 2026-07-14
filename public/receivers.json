@@ -552,7 +552,7 @@
               "distance": 0,
               "azimuth": 0
             },
-            "mount": "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO538AAC.aac",
+            "mount": "https://25453.live.streamtheworld.com/RADIO538.mp3",
             "volume": 10,
             "rdsDisabled": true
           },
@@ -1396,7 +1396,7 @@
               "distance": 48,
               "azimuth": 154
             },
-            "mount": "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO538AAC.aac",
+            "mount": "https://25453.live.streamtheworld.com/RADIO538.mp3",
             "logo": "https://tef.noobish.eu/logos/HOL/83C7.svg",
             "volume": 1
           },
