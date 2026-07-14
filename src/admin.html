@@ -590,34 +590,70 @@ function bindStationInputs(r, s, i) {
   });
 }
 
-// Sprite sheet is 288x272 native = 16 cols x 16 rows of 18x17 flags.
-// We render at 2x for easier clicking (576x544, cell 36x34).
+// Flag picker: exposes a configurable grid over an arbitrary sprite sheet.
+// Defaults to a 24 columns × 16 rows selection grid (384 flags). The user
+// can point at any sprite by editing the sheet URL + cell dimensions —
+// cell size on the sheet is derived from (sheet width / cols, height / rows)
+// once the image loads.
 function openFlagPicker(onPick) {
-  const SHEET = "https://i.soupco.net/u/0n9Wni.png";
-  const CELL_W = 18, CELL_H = 17, COLS = 16, ROWS = 16, SCALE = 2;
+  const DEFAULTS = {
+    sheet: localStorage.getItem("flagpicker_sheet") || "https://i.soupco.net/u/0n9Wni.png",
+    cols: parseInt(localStorage.getItem("flagpicker_cols") || "24", 10),
+    rows: parseInt(localStorage.getItem("flagpicker_rows") || "16", 10),
+  };
   const back = document.createElement("div");
   back.className = "flag-picker-backdrop";
   back.innerHTML = `
-    <div class="flag-picker-modal">
+    <div class="flag-picker-modal" style="max-width:720px">
       <button class="flag-picker-close" title="Close">×</button>
       <div style="color:#68f7ee;font-size:13px;margin-bottom:8px">
-        Click a flag to select it
+        Click a flag to select it — grid is
+        <input id="fp-cols" type="number" min="1" max="64" value="${DEFAULTS.cols}" style="width:52px"> ×
+        <input id="fp-rows" type="number" min="1" max="64" value="${DEFAULTS.rows}" style="width:52px"> cells
       </div>
-      <div class="flag-picker-sheet" id="flag-picker-sheet"></div>
+      <div style="color:#8ea7a5;font-size:11px;margin-bottom:8px">
+        Sprite URL: <input id="fp-sheet" type="text" value="${DEFAULTS.sheet}" style="width:70%">
+      </div>
+      <div class="flag-picker-sheet" id="flag-picker-sheet" style="width:100%;height:auto;overflow:auto"></div>
     </div>`;
   document.body.appendChild(back);
   const close = () => back.remove();
   back.querySelector(".flag-picker-close").addEventListener("click", close);
   back.addEventListener("click", (e) => { if (e.target === back) close(); });
+
   const sheet = back.querySelector("#flag-picker-sheet");
-  sheet.addEventListener("click", (e) => {
-    const rect = sheet.getBoundingClientRect();
-    const px = e.clientX - rect.left, py = e.clientY - rect.top;
-    const col = Math.min(COLS - 1, Math.max(0, Math.floor(px / (CELL_W * SCALE))));
-    const row = Math.min(ROWS - 1, Math.max(0, Math.floor(py / (CELL_H * SCALE))));
-    onPick({ sprite: SHEET, x: col * CELL_W, y: row * CELL_H, w: CELL_W, h: CELL_H });
-    close();
-  });
+  const colsInput = back.querySelector("#fp-cols");
+  const rowsInput = back.querySelector("#fp-rows");
+  const sheetInput = back.querySelector("#fp-sheet");
+
+  function render() {
+    const url = sheetInput.value.trim();
+    const cols = Math.max(1, Math.min(64, parseInt(colsInput.value, 10) || 24));
+    const rows = Math.max(1, Math.min(64, parseInt(rowsInput.value, 10) || 16));
+    localStorage.setItem("flagpicker_sheet", url);
+    localStorage.setItem("flagpicker_cols", String(cols));
+    localStorage.setItem("flagpicker_rows", String(rows));
+    sheet.innerHTML = `<img id="fp-img" src="${url}" style="display:block;max-width:100%;image-rendering:pixelated;cursor:crosshair">`;
+    const img = sheet.querySelector("#fp-img");
+    img.addEventListener("click", (e) => {
+      const rect = img.getBoundingClientRect();
+      const scaleX = img.naturalWidth / rect.width;
+      const scaleY = img.naturalHeight / rect.height;
+      const cellDispW = rect.width / cols;
+      const cellDispH = rect.height / rows;
+      const px = e.clientX - rect.left, py = e.clientY - rect.top;
+      const col = Math.min(cols - 1, Math.max(0, Math.floor(px / cellDispW)));
+      const row = Math.min(rows - 1, Math.max(0, Math.floor(py / cellDispH)));
+      const CELL_W = Math.round((img.naturalWidth || 288) / cols);
+      const CELL_H = Math.round((img.naturalHeight || 272) / rows);
+      onPick({ sprite: url, x: col * CELL_W, y: row * CELL_H, w: CELL_W, h: CELL_H });
+      close();
+    });
+  }
+  colsInput.addEventListener("change", render);
+  rowsInput.addEventListener("change", render);
+  sheetInput.addEventListener("change", render);
+  render();
 }
 
 // ============ Presets ============
