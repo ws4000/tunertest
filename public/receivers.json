@@ -1543,7 +1543,7 @@
             },
             "mount": "kipu",
             "volume": 1,
-            "logo": "https://tef.noobish.eu/logos/ROU/E0D6.svg"
+            "logo": "https://i.soupco.net/u/pgVUB5.png"
           },
           {
             "freq": 106.2,
@@ -2298,7 +2298,7 @@
               "azimuth": 207,
               "erp": 0.2
             },
-            "logo": "https://tef.noobish.eu/logos/ROU/E0D6.svg",
+            "logo": "https://i.soupco.net/u/pgVUB5.png",
             "mount": "kipu",
             "volume": 1,
             "pty": 10,
@@ -3107,7 +3107,7 @@
               "azimuth": 125,
               "erp": 0.5
             },
-            "logo": "https://tef.noobish.eu/logos/ROU/E0D6.svg",
+            "logo": "https://i.soupco.net/u/pgVUB5.png",
             "mount": "kipu",
             "volume": 1,
             "pty": 10,
@@ -4069,7 +4069,7 @@
               "azimuth": 95
             },
             "mount": "kipu",
-            "logo": "https://tef.noobish.eu/logos/ROU/E0D6.svg",
+            "logo": "https://i.soupco.net/u/pgVUB5.png",
             "af": [
               89.5,
               92.3,
