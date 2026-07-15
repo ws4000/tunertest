@@ -273,7 +273,9 @@
     const p = (pi || "").toUpperCase();
     return !p || p === "0000" || p === "FFFF";
   }
-  function hasRDS(st) { return !!(st && !st.rdsDisabled && !piIsNull(st.pi)); }
+  // A station has RDS as long as it's not explicitly disabled. A null/0000/FFFF
+  // PI just means we can't display a PI code — PS/RT/PTY still decode normally.
+  function hasRDS(st) { return !!(st && !st.rdsDisabled); }
   function renderFlag(flag) {
     if (!flag) return "";
     // Sprite object: { sprite: "https://…flags-16.png", x, y, w, h }
@@ -690,7 +692,7 @@
   function showBasicRDS(st) {
     const piEl1 = $("#data-pi");
     if (piEl1) {
-      if (st.pi && !piIsNull(st.pi)) piEl1.textContent = st.pi.toUpperCase();
+      if (st.pi) piEl1.textContent = st.pi.toUpperCase();
       else piEl1.innerHTML = PI_EMPTY_HTML;
     }
     const PTY = getPTYList();
@@ -1247,7 +1249,7 @@
         if (lockedStation === lockSnap) {
           const el = $("#data-pi");
           if (el) {
-            if (lockSnap.pi && !piIsNull(lockSnap.pi)) el.textContent = lockSnap.pi.toUpperCase();
+            if (lockSnap.pi) el.textContent = lockSnap.pi.toUpperCase();
             else el.innerHTML = PI_EMPTY_HTML;
           }
           piShown = true;
