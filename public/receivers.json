@@ -1013,8 +1013,8 @@
           },
           {
             "freq": 88.5,
-            "ps": " IMPULS ",
-            "rt": "%ICEMD%",
+            "ps": " J E Y  ",
+            "rt": "%MD%",
             "pi": "8220",
             "tp": false,
             "ta": false,
@@ -1022,7 +1022,7 @@
             "stereo": true,
             "signal": 76,
             "station": {
-              "name": "Radio Impuls",
+              "name": "Jey",
               "city": "Bolsrade",
               "itu": "SP",
               "pol": "V",
@@ -1030,8 +1030,8 @@
               "azimuth": 207,
               "erp": 0.2
             },
-            "logo": "https://i.soupco.net/u/pgVUB5.png",
-            "mount": "kipu",
+            "logo": "https://i.soupco.net/u/Hqs99I.png",
+            "mount": "https://stream.jeyradio.nl/JEY",
             "volume": 1,
             "pty": 10,
             "af": [
@@ -1081,8 +1081,8 @@
               "itu": "",
               "pol": "V"
             },
-            "mount": "kipu",
-            "logo": "https://tef.noobish.eu/logos/ROU/E0D6.svg",
+            "mount": "https://stream.jeyradio.nl/JEY",
+            "logo": "",
             "signal": 13,
             "rdsDisabled": true
           },
@@ -1860,8 +1860,8 @@
           },
           {
             "freq": 100.3,
-            "ps": " IMPULS ",
-            "rt": "%ICEMD%",
+            "ps": " J E Y  ",
+            "rt": "%MD%",
             "pi": "8220",
             "tp": false,
             "ta": false,
@@ -1869,7 +1869,7 @@
             "stereo": true,
             "signal": 42,
             "station": {
-              "name": "Radio Impuls",
+              "name": "Jey",
               "city": "Shapeer",
               "itu": "SP",
               "pol": "V",
@@ -1877,8 +1877,8 @@
               "azimuth": 125,
               "erp": 0.5
             },
-            "logo": "https://i.soupco.net/u/pgVUB5.png",
-            "mount": "kipu",
+            "logo": "https://i.soupco.net/u/Hqs99I.png",
+            "mount": "https://stream.jeyradio.nl/JEY",
             "volume": 1,
             "pty": 10,
             "af": [
@@ -2820,7 +2820,7 @@
           },
           {
             "freq": 89.5,
-            "ps": " IMPULS ",
+            "ps": " J E Y  ",
             "rt": "%ICEMD%",
             "pi": "8220",
             "pty": 10,
@@ -2830,7 +2830,7 @@
             "stereo": true,
             "signal": 80,
             "station": {
-              "name": "Radio Impuls",
+              "name": "Jey",
               "city": "Emmelburg",
               "itu": "SP",
               "erp": 1,
@@ -2838,8 +2838,8 @@
               "distance": 13,
               "azimuth": 95
             },
-            "mount": "kipu",
-            "logo": "https://i.soupco.net/u/pgVUB5.png",
+            "mount": "https://stream.jeyradio.nl/JEY",
+            "logo": "https://i.soupco.net/u/Hqs99I.png",
             "af": [
               89.5,
               92.3,
@@ -5031,8 +5031,8 @@
           },
           {
             "freq": 105.8,
-            "ps": " IMPULS ",
-            "rt": "%ICEMD%",
+            "ps": " J E Y  ",
+            "rt": "%MD%",
             "pi": "8220",
             "pty": 10,
             "af": [
@@ -5052,7 +5052,7 @@
             "stereo": true,
             "signal": 71,
             "station": {
-              "name": "Radio Impuls",
+              "name": "Jey",
               "city": "Bolsvorden Hill",
               "itu": "SP",
               "erp": 8,
@@ -5060,9 +5060,9 @@
               "distance": 25,
               "azimuth": 76
             },
-            "mount": "kipu",
+            "mount": "https://stream.jeyradio.nl/JEY",
             "volume": 1,
-            "logo": "https://i.soupco.net/u/pgVUB5.png"
+            "logo": "https://stream.jeyradio.nl/JEY"
           },
           {
             "freq": 106.2,
@@ -5319,7 +5319,7 @@
             "mount": "https://rusfm.stream.laut.fm/rusfm"
           },
           {
-            "ps": " IMPULS ",
+            "ps": " J E Y  ",
             "rt": "%ICEMD%",
             "pi": "8220",
             "pty": 10,
@@ -5338,8 +5338,8 @@
               "azimuth": 309
             },
             "freq": 89.4,
-            "mount": "kipu",
-            "logo": "https://i.soupco.net/u/pgVUB5.png"
+            "mount": "https://stream.jeyradio.nl/JEY",
+            "logo": "https://i.soupco.net/u/Hqs99I.png"
           },
           {
             "freq": 90.4,
