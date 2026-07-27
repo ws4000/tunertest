@@ -4800,7 +4800,7 @@
               "distance": 25,
               "azimuth": 76
             },
-            "mount": "https://live.advailo.com/topradio/live/playlist.m3u8",
+            "mount": "https://live.advailo.com/topradio/live/playlist.m3u8 ",
             "logo": "https://tef.noobish.eu/logos/LVA/924A.png",
             "volume": 1
           },
@@ -7060,7 +7060,7 @@
               "azimuth": 19,
               "erp": 0.5
             },
-            "mount": "https://live.advailo.com/topradio/live/playlist.m3u8",
+            "mount": "https://live.advailo.com/topradio/live/playlist.m3u8 ",
             "logo": "https://tef.noobish.eu/logos/LVA/924A.png",
             "af": [
               87.9,
@@ -7210,7 +7210,7 @@
             "freq": 96,
             "pty": 10,
             "logo": "https://i.soupco.net/u/Hqs99I.png",
-            "mount": "v",
+            "mount": "https://stream.jeyradio.nl/JEY",
             "af": [
               88.5,
               89.2,
