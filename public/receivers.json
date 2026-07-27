@@ -6523,7 +6523,7 @@
         "tunerDevice": "Virtual TEF668x",
         "ownerContact": "",
         "rdsMode": "rds",
-        "tuningMin": 87.5,
+        "tuningMin": 102.3,
         "tuningMax": 108,
         "tuningStep": 0.1,
         "defaultFrequency": 100,
