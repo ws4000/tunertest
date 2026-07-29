@@ -412,10 +412,10 @@
     for (let i = 0; i < bs; i++) {
       const white = Math.random() * 2 - 1;
       b0 = 0.99886 * b0 + white * 0.0555179;
-      b1 = 0.99332 * b1 + white * 0.0750759;
+      b1 = 0.99332 * b1 + white * 0.07759;
       b2 = 0.96900 * b2 + white * 0.1538520;
-      b3 = 0.86650 * b3 + white * 0.3104856;
-      b4 = 0.55000 * b4 + white * 0.5329522;
+      b3 = 0.866 * b3 + white * 0.3104856;
+      b4 = 0.500 * b4 + white * 0.5329522;
       b5 = -0.7616 * b5 - white * 0.0168980;
       d[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
       b6 = white * 0.115926;
@@ -1817,9 +1817,9 @@
     tuneTo(CFG.defaultFrequency);
     setInterval(paint, 250);
     setInterval(rdsGroup, GROUP_MS);
-    setInterval(psFastFillTick, 50);
-    setInterval(rtFastFillTick, 60);
-    setInterval(bgPSTick, 120);
+    setInterval(psFastFillTick, 125);
+    setInterval(rtFastFillTick, 150);
+    setInterval(bgPSTick, 125);
     setInterval(psSchedulerTick, 80);
   })();
 })();
