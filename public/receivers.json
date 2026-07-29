@@ -5266,7 +5266,8 @@
               94.4,
               99.3,
               103.1,
-              103.4
+              103.4,
+              106.2
             ],
             "logo": "https://i.soupco.net/u/Jl4cxv.png",
             "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac"
@@ -7914,6 +7915,36 @@
             },
             "mount": "https://goedverstaanbaar.stream.laut.fm/goedverstaanbaar",
             "signal": 73
+          },
+          {
+            "freq": 106.2,
+            "ps": "EVASION EVASION EVASION %MD%",
+            "rt": "",
+            "pi": "83E2",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 78.7,
+            "station": {
+              "name": "Evasion",
+              "city": "Vilren",
+              "itu": "SP",
+              "pol": "V",
+              "distance": 4,
+              "azimuth": 19,
+              "erp": 0.1
+            },
+            "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac",
+            "logo": "https://i.soupco.net/u/Jl4cxv.png",
+            "af": [
+              94.4,
+              99.3,
+              103.1,
+              103.4,
+              106.2
+            ]
           }
         ],
         "presets": []
