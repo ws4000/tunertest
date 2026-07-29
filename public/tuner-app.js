@@ -89,6 +89,7 @@
   let rtBuf = "";
   let rtPrevious = "";
   let rtFirstLoad = true;
+  let rtFastFillNextMs = 0;
   let afShownCount = 0;
   let rdsBasicShown = false;
   let rdsTxShown = false;
@@ -451,10 +452,51 @@
       // at the element level is fine — WebAudio still gets the samples.
       audio.style.display = "none";
       try { document.body.appendChild(audio); } catch (e) {}
-      audio.src = /^https?:\/\//i.test(mount)
-        ? `/api/stream/${encodeURIComponent(mount)}`
-        : `/api/stream/${mount}`;
-      try { audio.load(); } catch (e) {}
+      const proxyUrl = (m, bust) => {
+        const q = bust ? `?t=${bust}` : "";
+        return /^https?:\/\//i.test(m)
+          ? `/api/stream/${encodeURIComponent(m)}${q}`
+          : `/api/stream/${m}${q}`;
+      };
+      const isHls = /\.m3u8(\?|$)/i.test(mount);
+      let hls = null;
+      const attachHls = (bust) => {
+        if (!isHls) return false;
+        const url = proxyUrl(mount, bust);
+        // Native HLS (Safari)
+        if (audio.canPlayType("application/vnd.apple.mpegurl")) {
+          audio.src = url;
+          try { audio.load(); } catch (e) {}
+          return true;
+        }
+        if (typeof window.Hls === "undefined" || !window.Hls.isSupported()) {
+          // Fall back to direct src; browser probably can't play it, but try.
+          audio.src = url;
+          try { audio.load(); } catch (e) {}
+          return true;
+        }
+        try { if (hls) { hls.destroy(); hls = null; } } catch (e) {}
+        hls = new window.Hls({
+          lowLatencyMode: true,
+          liveSyncDurationCount: 2,
+          maxBufferLength: 15,
+          enableWorker: true,
+        });
+        hls.on(window.Hls.Events.ERROR, (_evt, data) => {
+          if (data && data.fatal) {
+            try { hls.destroy(); } catch (e) {}
+            hls = null;
+            setTimeout(() => attachHls(Date.now()), 1500);
+          }
+        });
+        hls.loadSource(url);
+        hls.attachMedia(audio);
+        return true;
+      };
+      if (!attachHls()) {
+        audio.src = proxyUrl(mount);
+        try { audio.load(); } catch (e) {}
+      }
       // Buffer-recovery. NEVER call audio.load() — that fully resets the
       // MediaElement and creates an audible cut-out. We also never seek
       // (currentTime = …) for the same reason. On any stall/wait we just
@@ -483,12 +525,13 @@
         if (now - reconnectingAt < 5000) return;
         reconnectingAt = now;
         try {
-          // Force the browser to drop the dead socket and open a new one
-          // by re-assigning src (cheaper than .load() + .play()).
-          const src = /^https?:\/\//i.test(mount)
-            ? `/api/stream/${encodeURIComponent(mount)}?t=${now}`
-            : `/api/stream/${mount}?t=${now}`;
-          audio.src = src;
+          if (isHls) {
+            attachHls(now);
+          } else {
+            // Force the browser to drop the dead socket and open a new one
+            // by re-assigning src (cheaper than .load() + .play()).
+            audio.src = proxyUrl(mount, now);
+          }
           waitingSince = now;
           const p = audio.play(); if (p && p.catch) p.catch(() => {});
         } catch (e) {}
@@ -964,8 +1007,8 @@
     if (now < psFastFillNextMs) return;
     const q = lastQuality;
     let interval;
-    if (q >= 0.8) interval = 125;
-    else if (q >= 0.5) interval = 175;
+    if (q >= 0.8) interval = 50;
+    else if (q >= 0.5) interval = 100;
     else return; // weak: let rdsGroup handle it at 600ms
     const dropProb = clamp((1 - q) * 0.6, 0, 0.6);
     if (Math.random() < dropProb) { psFastFillNextMs = now + interval; return; }
@@ -980,6 +1023,44 @@
       }
     }
     psFastFillNextMs = now + interval;
+  }
+
+  // Fast-fill RT between group ticks on strong signal, mirroring psFastFillTick.
+  // Real 2A groups arrive at ~5-11/sec on solid signal, delivering 4 chars each,
+  // so a 64-char RT lands in ~1-2 s rather than the ~5 s the 600ms group cadence
+  // would allow. Weak signals fall back to the rdsGroup slow path.
+  function rtFastFillTick() {
+    if (!lockedStation) return;
+    const now = performance.now();
+    if (now - lockedAtMs < PI_DELAY_MS + RDS_START_MS) return;
+    if (!rtTargetRaw || !rtSegFilled.length) return;
+    if (rtSegFilled.every(Boolean)) return;
+    if (now < rtFastFillNextMs) return;
+    const q = lastQuality;
+    let interval;
+    if (q >= 0.8) interval = 120;
+    else if (q >= 0.5) interval = 220;
+    else return; // weak: let rdsGroup handle it at 600ms
+    // Same initial gate as the group-tick RT fill: wait until PS finished + 2s
+    // on first lock so PS reveals before RT starts populating.
+    const rtInitialGateOpen =
+      !rtFirstLoad ||
+      (psFullyFilledAtMs > 0 && (now - psFullyFilledAtMs) >= 2000);
+    if (!rtInitialGateOpen) return;
+    const dropProb = clamp((1 - q) * 0.6, 0, 0.6);
+    if (Math.random() < dropProb) { rtFastFillNextMs = now + interval; return; }
+    for (let i = 0; i < rtSegFilled.length; i++) {
+      if (!rtSegFilled[i]) {
+        rtSegFilled[i] = true;
+        let chars = rtTargetRaw.slice(i * 8, i * 8 + 8);
+        while (rtBuf.length < i * 8) rtBuf += " ";
+        rtBuf = rtBuf.slice(0, i * 8) + chars + rtBuf.slice(i * 8 + chars.length);
+        paintRT();
+        if (rtSegFilled.every(Boolean)) rtFirstLoad = false;
+        break;
+      }
+    }
+    rtFastFillNextMs = now + interval;
   }
 
   // ---------- RDS group tick ----------
@@ -1053,7 +1134,12 @@
       !rtFirstLoad ||
       (psFullyFilledAtMs > 0 && (now - psFullyFilledAtMs) >= 2000);
     if (rtInitialGateOpen && rtTargetRaw && rtSegFilled.some((v) => !v) && Math.random() >= dropProb) {
-      for (let i = 0; i < rtSegFilled.length; i++) {
+      // Fill multiple segments per group tick when signal is strong — real 2A
+      // groups deliver RT quickly on solid signal. Weak signals still fill one
+      // segment per group tick (slow-path fallback for rtFastFillTick).
+      const segsThisTick = q >= 0.8 ? 4 : q >= 0.5 ? 2 : 1;
+      let filledCount = 0;
+      for (let i = 0; i < rtSegFilled.length && filledCount < segsThisTick; i++) {
         if (!rtSegFilled[i]) {
           rtSegFilled[i] = true;
           let chars = rtTargetRaw.slice(i * 8, i * 8 + 8);
@@ -1064,10 +1150,10 @@
           }
           while (rtBuf.length < i * 8) rtBuf += " ";
           rtBuf = rtBuf.slice(0, i * 8) + chars + rtBuf.slice(i * 8 + chars.length);
-          paintRT();
-          break;
+          filledCount++;
         }
       }
+      if (filledCount) paintRT();
       if (rtSegFilled.every(Boolean)) rtFirstLoad = false;
     }
 
@@ -1269,7 +1355,7 @@
         rdsBasicShown = false; rdsTxShown = false; piShown = false;
         psFilled = [false,false,false,false]; psBuf = "        "; psFillTarget = "        ";
         psFirstCycleDone = false; psFullyFilledAtMs = 0; psChunks = []; psChunkIdx = 0; psChunkHoldTicks = 0;
-        rtTargetRaw = ""; rtBuf = ""; rtPrevious = ""; rtSegFilled = []; rtFirstLoad = true;
+        rtTargetRaw = ""; rtBuf = ""; rtPrevious = ""; rtSegFilled = []; rtFirstLoad = true; rtFastFillNextMs = 0;
         afShownCount = 0; groupTick = 0;
         clearRDS(); clearTX();
       }
@@ -1282,7 +1368,7 @@
       stereoErraticOff = 0;
       rdsBasicShown = false; rdsTxShown = false; piShown = false;
       psFilled = [false,false,false,false]; psBuf = "        "; psFullyFilledAtMs = 0; psFastFillNextMs = 0;
-      rtTargetRaw = ""; rtBuf = ""; rtPrevious = ""; rtSegFilled = []; rtFirstLoad = true;
+      rtTargetRaw = ""; rtBuf = ""; rtPrevious = ""; rtSegFilled = []; rtFirstLoad = true; rtFastFillNextMs = 0;
       afShownCount = 0; groupTick = 0;
       clearRDS(); clearTX();
       initPSForLock(station);
@@ -1732,6 +1818,7 @@
     setInterval(paint, 250);
     setInterval(rdsGroup, GROUP_MS);
     setInterval(psFastFillTick, 50);
+    setInterval(rtFastFillTick, 60);
     setInterval(bgPSTick, 120);
     setInterval(psSchedulerTick, 80);
   })();
