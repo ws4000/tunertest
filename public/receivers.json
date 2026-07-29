@@ -1621,7 +1621,7 @@
               "azimuth": 244,
               "erp": 0.2
             },
-            "mount": "https://webvib-region.ice.infomaniak.ch/webvib-region-128.mp3",
+            "mount": "https://vibration.ice.infomaniak.ch/vibration-high.aac",
             "logo": "https://tef.noobish.eu/logos/F/F560.png",
             "af": [
               88.1,
@@ -1968,7 +1968,7 @@
               "azimuth": 71,
               "erp": 0.2
             },
-            "mount": "https://webvib-region.ice.infomaniak.ch/webvib-region-128.mp3",
+            "mount": "https://vibration.ice.infomaniak.ch/vibration-high.aac",
             "logo": "https://tef.noobish.eu/logos/F/F560.png",
             "af": [
               88.1,
@@ -2481,7 +2481,7 @@
               "azimuth": 282,
               "erp": 0.2
             },
-            "mount": "https://webvib-region.ice.infomaniak.ch/webvib-region-128.mp3",
+            "mount": "https://vibration.ice.infomaniak.ch/vibration-high.aac",
             "logo": "https://tef.noobish.eu/logos/F/F560.png",
             "af": [
               88.1,
@@ -7809,7 +7809,7 @@
               "azimuth": 256,
               "erp": 0.5
             },
-            "mount": "https://webvib-region.ice.infomaniak.ch/webvib-region-128.mp3",
+            "mount": "https://vibration.ice.infomaniak.ch/vibration-high.aac",
             "logo": "https://tef.noobish.eu/logos/F/F560.png",
             "af": [
               88.1,
@@ -7845,7 +7845,7 @@
               "azimuth": 151,
               "erp": 0.1
             },
-            "mount": "https://webvib-region.ice.infomaniak.ch/webvib-region-128.mp3",
+            "mount": "https://vibration.ice.infomaniak.ch/vibration-high.aac",
             "logo": "https://tef.noobish.eu/logos/F/F560.png",
             "af": [
               88.1,
