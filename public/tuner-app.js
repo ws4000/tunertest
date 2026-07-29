@@ -1038,8 +1038,8 @@
     if (now < rtFastFillNextMs) return;
     const q = lastQuality;
     let interval;
-    if (q >= 0.8) interval = 120;
-    else if (q >= 0.5) interval = 220;
+    if (q >= 0.8) interval = 150;
+    else if (q >= 0.5) interval = 175;
     else return; // weak: let rdsGroup handle it at 600ms
     // Same initial gate as the group-tick RT fill: wait until PS finished + 2s
     // on first lock so PS reveals before RT starts populating.
