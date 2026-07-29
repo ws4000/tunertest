@@ -69,6 +69,8 @@
   let psBuf = "        ";
   let psFullText = "";
   let psFirstCycleDone = false;
+  let psFullyFilledAtMs = 0;       // set when the initial 8-char PS fill completes
+  let psFastFillNextMs = 0;        // next allowed fast-fill tick
   let psChunks = [];
   let psChunkIdx = 0;
   let psChunkHoldTicks = 0;        // counts group ticks for "groups" mode
@@ -815,6 +817,7 @@
     psScrollDir = 1;
     psScrollNextMs = performance.now() + (st.scrollStopStartMs ?? CFG.scrollStopStartMs ?? 1500);
     psFirstCycleDone = false;
+    psFullyFilledAtMs = 0;
     psFilled = [false, false, false, false];
     psFillTarget = (psMode === "scroll")
       ? pad8(psFullText.slice(0, 8))
@@ -949,6 +952,36 @@
     if (s) { s.idx = idx; s.holdTicks = 0; s.nextTickMs = performance.now() + GROUP_MS; }
   }
 
+  // ---------- Signal-adaptive PS initial fast fill ----------
+  // On strong signals, PS characters arrive faster than the 600ms RDS
+  // group cadence: ~50ms/pair at q>=0.8 (very strong, sig>=~50dBf),
+  // ~100ms/pair at q>=0.5, otherwise fall back to the slow rdsGroup path.
+  function psFastFillTick() {
+    if (!lockedStation) return;
+    const now = performance.now();
+    if (now - lockedAtMs < PI_DELAY_MS + RDS_START_MS) return;
+    if (psFilled.every(Boolean)) return;
+    if (now < psFastFillNextMs) return;
+    const q = lastQuality;
+    let interval;
+    if (q >= 0.8) interval = 50;
+    else if (q >= 0.5) interval = 100;
+    else return; // weak: let rdsGroup handle it at 600ms
+    const dropProb = clamp((1 - q) * 0.6, 0, 0.6);
+    if (Math.random() < dropProb) { psFastFillNextMs = now + interval; return; }
+    for (let i = 0; i < 4; i++) {
+      if (!psFilled[i]) {
+        psFilled[i] = true;
+        const chars = psFillTarget.slice(i * 2, i * 2 + 2);
+        psBuf = psBuf.slice(0, i * 2) + chars + psBuf.slice(i * 2 + 2);
+        paintPS();
+        if (psFilled.every(Boolean)) psFullyFilledAtMs = now;
+        break;
+      }
+    }
+    psFastFillNextMs = now + interval;
+  }
+
   // ---------- RDS group tick ----------
   function rdsGroup() {
     if (!lockedStation) return;
@@ -971,13 +1004,17 @@
     // ---- lock and for every chunk transition in groups mode, so dynamic
     // ---- updates load in the same way a fresh tune-in does.
     if (!psFilled.every(Boolean)) {
-      if (Math.random() >= dropProb) {
+      // Slow-path fallback for weak signals. Strong signals fill via
+      // psFastFillTick() at up to ~150ms per pair; when that's already
+      // handling the fill, this branch simply won't find work to do.
+      if (q < 0.5 && Math.random() >= dropProb) {
         for (let i = 0; i < 4; i++) {
           if (!psFilled[i]) {
             psFilled[i] = true;
             const chars = psFillTarget.slice(i * 2, i * 2 + 2);
             psBuf = psBuf.slice(0, i * 2) + chars + psBuf.slice(i * 2 + 2);
             paintPS();
+            if (psFilled.every(Boolean)) psFullyFilledAtMs = performance.now();
             break;
           }
         }
@@ -1009,7 +1046,13 @@
       rtBuf = "";
       paintRT();
     }
-    if (rtTargetRaw && rtSegFilled.some((v) => !v) && Math.random() >= dropProb) {
+    // For the initial RT reveal after a fresh lock, wait until PS has
+    // fully filled AND 2s have elapsed since that completion. Subsequent
+    // RT changes (rtFirstLoad === false) flow through immediately.
+    const rtInitialGateOpen =
+      !rtFirstLoad ||
+      (psFullyFilledAtMs > 0 && (now - psFullyFilledAtMs) >= 2000);
+    if (rtInitialGateOpen && rtTargetRaw && rtSegFilled.some((v) => !v) && Math.random() >= dropProb) {
       for (let i = 0; i < rtSegFilled.length; i++) {
         if (!rtSegFilled[i]) {
           rtSegFilled[i] = true;
@@ -1225,7 +1268,7 @@
         lockedStation = null;
         rdsBasicShown = false; rdsTxShown = false; piShown = false;
         psFilled = [false,false,false,false]; psBuf = "        "; psFillTarget = "        ";
-        psFirstCycleDone = false; psChunks = []; psChunkIdx = 0; psChunkHoldTicks = 0;
+        psFirstCycleDone = false; psFullyFilledAtMs = 0; psChunks = []; psChunkIdx = 0; psChunkHoldTicks = 0;
         rtTargetRaw = ""; rtBuf = ""; rtPrevious = ""; rtSegFilled = []; rtFirstLoad = true;
         afShownCount = 0; groupTick = 0;
         clearRDS(); clearTX();
@@ -1238,7 +1281,7 @@
       stereoPilotMs = lockedAtMs + 400;
       stereoErraticOff = 0;
       rdsBasicShown = false; rdsTxShown = false; piShown = false;
-      psFilled = [false,false,false,false]; psBuf = "        ";
+      psFilled = [false,false,false,false]; psBuf = "        "; psFullyFilledAtMs = 0; psFastFillNextMs = 0;
       rtTargetRaw = ""; rtBuf = ""; rtPrevious = ""; rtSegFilled = []; rtFirstLoad = true;
       afShownCount = 0; groupTick = 0;
       clearRDS(); clearTX();
@@ -1688,6 +1731,7 @@
     tuneTo(CFG.defaultFrequency);
     setInterval(paint, 250);
     setInterval(rdsGroup, GROUP_MS);
+    setInterval(psFastFillTick, 50);
     setInterval(bgPSTick, 120);
     setInterval(psSchedulerTick, 80);
   })();
