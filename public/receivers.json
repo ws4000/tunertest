@@ -5896,8 +5896,8 @@
             "mount": "https://mediaserv73.live-streams.nl:18044/stream"
           },
           {
-            "freq": 97.9,
-            "ps": " O N R  HOBOCTN",
+            "freq": 92.4,
+            "ps": "OMIGRAD",
             "rt": "",
             "pi": "84C1",
             "tp": false,
@@ -5906,7 +5906,7 @@
             "stereo": true,
             "signal": 80,
             "station": {
-              "name": "ONR Omigrad Novosti Radio",
+              "name": "Radio Omigrad",
               "city": "Ivanovskoe 2",
               "itu": "SP",
               "erp": 6.3,
@@ -5917,11 +5917,12 @@
             "pty": 1,
             "mount": "https://n0b.radiojar.com/hcrb063nn3quv",
             "af": [
+              92.4,
               92.7,
-              97.9,
               98.1,
               104.1
-            ]
+            ],
+            "logo": "https://i.soupco.net/u/8kahhZ.png"
           },
           {
             "freq": 89.8,
