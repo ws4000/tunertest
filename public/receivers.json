@@ -5241,6 +5241,33 @@
             },
             "mount": "https://stream.jeyradio.nl/JEY",
             "rdsDisabled": true
+          },
+          {
+            "freq": 99.3,
+            "ps": " EVASION %MD%",
+            "rt": "",
+            "pi": "83E2",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 87,
+            "station": {
+              "name": "Evasion",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 2.786,
+              "pol": "V",
+              "distance": 5,
+              "azimuth": 169
+            },
+            "af": [
+              99.3,
+              103.1
+            ],
+            "logo": "https://i.soupco.net/u/Jl4cxv.png",
+            "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac"
           }
         ],
         "presets": []
