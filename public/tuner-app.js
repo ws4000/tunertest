@@ -964,8 +964,8 @@
     if (now < psFastFillNextMs) return;
     const q = lastQuality;
     let interval;
-    if (q >= 0.8) interval = 100;
-    else if (q >= 0.5) interval = 100;
+    if (q >= 0.8) interval = 125;
+    else if (q >= 0.5) interval = 175;
     else return; // weak: let rdsGroup handle it at 600ms
     const dropProb = clamp((1 - q) * 0.6, 0, 0.6);
     if (Math.random() < dropProb) { psFastFillNextMs = now + interval; return; }
