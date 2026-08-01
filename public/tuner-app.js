@@ -86,6 +86,8 @@
 
   let rtTargetRaw = "";
   let rtSegFilled = [];
+  // Real 2A RadioText groups carry 4 characters each.
+  const RT_SEG = 4;
   let rtBuf = "";
   let rtPrevious = "";
   let rtFirstLoad = true;
@@ -1026,9 +1028,9 @@
   }
 
   // Fast-fill RT between group ticks on strong signal, mirroring psFastFillTick.
-  // Real 2A groups arrive at ~5-11/sec on solid signal, delivering 4 chars each,
-  // so a 64-char RT lands in ~1-2 s rather than the ~5 s the 600ms group cadence
-  // would allow. Weak signals fall back to the rdsGroup slow path.
+  // 2A groups are interleaved with 0A/0B (PS), 1A, 3A and 8A groups in a real
+  // multiplex, so RadioText trickles in noticeably slower than PS: a 64-char
+  // RT takes roughly 5-7 s on a solid signal.
   function rtFastFillTick() {
     if (!lockedStation) return;
     const now = performance.now();
@@ -1038,8 +1040,8 @@
     if (now < rtFastFillNextMs) return;
     const q = lastQuality;
     let interval;
-    if (q >= 0.8) interval = 150;
-    else if (q >= 0.5) interval = 190;
+    if (q >= 0.8) interval = 330;
+    else if (q >= 0.5) interval = 430;
     else return; // weak: let rdsGroup handle it at 600ms
     // Same initial gate as the group-tick RT fill: wait until PS finished + 2s
     // on first lock so PS reveals before RT starts populating.
@@ -1052,9 +1054,9 @@
     for (let i = 0; i < rtSegFilled.length; i++) {
       if (!rtSegFilled[i]) {
         rtSegFilled[i] = true;
-        let chars = rtTargetRaw.slice(i * 8, i * 8 + 8);
-        while (rtBuf.length < i * 8) rtBuf += " ";
-        rtBuf = rtBuf.slice(0, i * 8) + chars + rtBuf.slice(i * 8 + chars.length);
+        let chars = rtTargetRaw.slice(i * RT_SEG, i * RT_SEG + RT_SEG);
+        while (rtBuf.length < i * RT_SEG) rtBuf += " ";
+        rtBuf = rtBuf.slice(0, i * RT_SEG) + chars + rtBuf.slice(i * RT_SEG + chars.length);
         paintRT();
         if (rtSegFilled.every(Boolean)) rtFirstLoad = false;
         break;
@@ -1122,7 +1124,7 @@
       if (rtBuf) rtPrevious = rtBuf;
       if (rtTargetRaw) rtFirstLoad = false;
       rtTargetRaw = newTarget;
-      const segCount = Math.ceil(rtTargetRaw.length / 8);
+      const segCount = Math.ceil(rtTargetRaw.length / RT_SEG);
       rtSegFilled = new Array(segCount).fill(false);
       rtBuf = "";
       paintRT();
@@ -1134,22 +1136,22 @@
       !rtFirstLoad ||
       (psFullyFilledAtMs > 0 && (now - psFullyFilledAtMs) >= 2000);
     if (rtInitialGateOpen && rtTargetRaw && rtSegFilled.some((v) => !v) && Math.random() >= dropProb) {
-      // Fill multiple segments per group tick when signal is strong — real 2A
-      // groups deliver RT quickly on solid signal. Weak signals still fill one
-      // segment per group tick (slow-path fallback for rtFastFillTick).
-      const segsThisTick = q >= 0.8 ? 4 : q >= 0.5 ? 2 : 1;
+      // One 2A group per tick on strong signal (rtFastFillTick handles the
+      // in-between cadence); weak signals get the same single segment but
+      // only at the 600ms group rate, so RT crawls in.
+      const segsThisTick = q >= 0.8 ? 2 : 1;
       let filledCount = 0;
       for (let i = 0; i < rtSegFilled.length && filledCount < segsThisTick; i++) {
         if (!rtSegFilled[i]) {
           rtSegFilled[i] = true;
-          let chars = rtTargetRaw.slice(i * 8, i * 8 + 8);
+          let chars = rtTargetRaw.slice(i * RT_SEG, i * RT_SEG + RT_SEG);
           // Weak signals: occasionally corrupt one char
           if (q < 0.25 && Math.random() < 0.4 && chars.length > 0) {
             const ci = Math.floor(Math.random() * chars.length);
             chars = chars.slice(0, ci) + "_" + chars.slice(ci + 1);
           }
-          while (rtBuf.length < i * 8) rtBuf += " ";
-          rtBuf = rtBuf.slice(0, i * 8) + chars + rtBuf.slice(i * 8 + chars.length);
+          while (rtBuf.length < i * RT_SEG) rtBuf += " ";
+          rtBuf = rtBuf.slice(0, i * RT_SEG) + chars + rtBuf.slice(i * RT_SEG + chars.length);
           filledCount++;
         }
       }
