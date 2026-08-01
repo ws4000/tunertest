@@ -1040,14 +1040,14 @@
     if (now < rtFastFillNextMs) return;
     const q = lastQuality;
     let interval;
-    if (q >= 0.8) interval = 330;
-    else if (q >= 0.5) interval = 430;
+    if (q >= 0.8) interval = 150;
+    else if (q >= 0.5) interval = 200;
     else return; // weak: let rdsGroup handle it at 600ms
     // Same initial gate as the group-tick RT fill: wait until PS finished + 2s
     // on first lock so PS reveals before RT starts populating.
     const rtInitialGateOpen =
       !rtFirstLoad ||
-      (psFullyFilledAtMs > 0 && (now - psFullyFilledAtMs) >= 2000);
+      (psFullyFilledAtMs > 0 && (now - psFullyFilledAtMs) >= 600);
     if (!rtInitialGateOpen) return;
     const dropProb = clamp((1 - q) * 0.6, 0, 0.6);
     if (Math.random() < dropProb) { rtFastFillNextMs = now + interval; return; }
@@ -1134,12 +1134,12 @@
     // RT changes (rtFirstLoad === false) flow through immediately.
     const rtInitialGateOpen =
       !rtFirstLoad ||
-      (psFullyFilledAtMs > 0 && (now - psFullyFilledAtMs) >= 2000);
-    if (rtInitialGateOpen && rtTargetRaw && rtSegFilled.some((v) => !v) && Math.random() >= dropProb) {
-      // One 2A group per tick on strong signal (rtFastFillTick handles the
-      // in-between cadence); weak signals get the same single segment but
-      // only at the 600ms group rate, so RT crawls in.
-      const segsThisTick = q >= 0.8 ? 2 : 1;
+      (psFullyFilledAtMs > 0 && (now - psFullyFilledAtMs) >= 600);
+    // Strong signals (q >= 0.5) are paced entirely by rtFastFillTick, so this
+    // group-rate path only acts as the weak-signal fallback — otherwise both
+    // paths would fill at once and RT would snap in far quicker than PS.
+    if (q < 0.5 && rtInitialGateOpen && rtTargetRaw && rtSegFilled.some((v) => !v) && Math.random() >= dropProb) {
+      const segsThisTick = 1;
       let filledCount = 0;
       for (let i = 0; i < rtSegFilled.length && filledCount < segsThisTick; i++) {
         if (!rtSegFilled[i]) {
@@ -1820,7 +1820,7 @@
     setInterval(paint, 250);
     setInterval(rdsGroup, GROUP_MS);
     setInterval(psFastFillTick, 125);
-    setInterval(rtFastFillTick, 150);
+    setInterval(rtFastFillTick, 60);
     setInterval(bgPSTick, 125);
     setInterval(psSchedulerTick, 80);
   })();
