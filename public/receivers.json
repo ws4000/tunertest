@@ -1060,16 +1060,16 @@
             "pty": 10,
             "af": [
               88.5,
-              89.2,
               92,
               92.7,
               96,
               100.3,
-              105.2
+              105.2,
+              106.7
             ]
           },
           {
-            "freq": 88.7,
+            "freq": 88.8,
             "ps": "        ",
             "rt": "",
             "pi": "",
@@ -1091,7 +1091,7 @@
             "rdsDisabled": true
           },
           {
-            "freq": 89.2,
+            "freq": 106.7,
             "ps": "",
             "rt": "",
             "pi": "",
@@ -1133,7 +1133,7 @@
             "logo": "https://tef.noobish.eu/logos/F/F22C.png",
             "volume": 1,
             "af": [
-              88.7,
+              88.8,
               89,
               89.4,
               89.7,
@@ -1907,12 +1907,12 @@
             "pty": 10,
             "af": [
               88.5,
-              89.2,
               92,
               92.7,
               96,
               100.3,
-              105.2
+              105.2,
+              106.7
             ]
           },
           {
@@ -3133,7 +3133,7 @@
             "logo": "https://tef.noobish.eu/logos/F/F22C.png",
             "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
             "af": [
-              88.7,
+              88.8,
               89,
               89.4,
               89.7,
@@ -3186,7 +3186,7 @@
             "logo": "https://tef.noobish.eu/logos/F/F22C.png",
             "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
             "af": [
-              88.7,
+              88.8,
               89,
               89.4,
               89.7,
@@ -4811,7 +4811,7 @@
             "pi": "822C",
             "pty": 0,
             "af": [
-              "88.7",
+              88.8,
               "89.0",
               "89.4",
               "89.7",
@@ -5399,7 +5399,7 @@
             "stereo": true,
             "signal": 86,
             "station": {
-              "name": "Radio Impuls",
+              "name": "Jey",
               "city": "Ivanovskoe Zendmast",
               "itu": "SP",
               "erp": 1,
@@ -5409,7 +5409,15 @@
             },
             "freq": 89.4,
             "mount": "https://stream.jeyradio.nl/JEY",
-            "logo": "https://i.soupco.net/u/Hqs99I.png"
+            "logo": "https://i.soupco.net/u/Hqs99I.png",
+            "af": [
+              89.4,
+              91.2,
+              91.5,
+              99.4,
+              106.7,
+              107.4
+            ]
           },
           {
             "freq": 90.4,
@@ -6076,7 +6084,7 @@
             },
             "logo": "https://tef.noobish.eu/logos/F/F22C.png",
             "af": [
-              88.7,
+              88.8,
               89,
               89.4,
               89.7,
@@ -7352,7 +7360,7 @@
             "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
             "logo": "https://tef.noobish.eu/logos/F/F22C.png",
             "af": [
-              88.7,
+              88.8,
               89,
               89.4,
               89.7,
