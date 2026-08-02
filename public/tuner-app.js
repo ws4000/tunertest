@@ -867,9 +867,16 @@
     if (s.length >= 8) return s.slice(0, 8);
     return pad8(s);
   }
-  function splitPSChunks(text) {
+  function splitPSChunks(text, fixedFrames) {
     if (!text) return ["        "];
     const raw = toRdsAscii(text);
+    // Underscore-authored PS is a sequence of literal 8-char frames — slice it
+    // exactly, so "_MIDDEN_ _LANDEN_" keeps the operator's blank padding.
+    if (fixedFrames && raw.length > 8) {
+      const out = [];
+      for (let i = 0; i < raw.length; i += 8) out.push(pad8(raw.slice(i, i + 8)));
+      return out;
+    }
     // If the whole text already fits in 8 chars, preserve the user's spacing.
     if (raw.length <= 8) return [fitChunk(raw)];
     const t = raw.trim();
