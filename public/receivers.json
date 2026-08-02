@@ -2532,7 +2532,10 @@
           },
           {
             "freq": 107.8,
-            "ps": " MIDDEN    LANDEN ",
+            "ps": [
+              "5s:_MIDDEN_",
+              "5s:_LANDEN_"
+            ],
             "rt": "%MD%",
             "pi": "8969",
             "tp": false,
@@ -5244,10 +5247,7 @@
           },
           {
             "freq": 99.3,
-            "ps": [
-              "5s:EVASION",
-              "1s:%MD%"
-            ],
+            "ps": "EVASION EVASION EVASION %MD%",
             "rt": "",
             "pi": "83E2",
             "pty": 10,
@@ -7908,7 +7908,10 @@
           },
           {
             "freq": 107.8,
-            "ps": " MIDDEN    LANDEN ",
+            "ps": [
+              "5s:_MIDDEN_",
+              "5s:_LANDEN_"
+            ],
             "rt": "%MD%",
             "pi": "8969",
             "pty": 9,
@@ -7930,10 +7933,7 @@
           },
           {
             "freq": 106.2,
-            "ps": [
-              "5s:EVASION",
-              "1s:%MD%"
-            ],
+            "ps": "EVASION EVASION EVASION %MD%",
             "rt": "",
             "pi": "83E2",
             "pty": 10,
