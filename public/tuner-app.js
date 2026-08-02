@@ -899,18 +899,20 @@
     return out;
   }
   function computePSFullText(st) {
-    const tpl = decodePsUnderscores(
-      pickTimedEntry(
-        (st.mount || st.freq) + "|ps",
-        st.ps,
-        st.psEntryMs ?? CFG.psEntryMs ?? 8000
-      )
+    const rawTpl = pickTimedEntry(
+      (st.mount || st.freq) + "|ps",
+      st.ps,
+      st.psEntryMs ?? CFG.psEntryMs ?? 8000
     );
+    _psFixed.set(st.mount || st.freq, /(^|[^\\])_/.test(rawTpl));
+    const tpl = decodePsUnderscores(rawTpl);
     return resolveTokens(tpl, metaFor(st), {
       preserveOuterSpacing: true,
       preserveInnerSpacing: true,
     }) || (st.station?.name || "");
   }
+  const _psFixed = new Map();
+  const psFixedFor = (st) => !!_psFixed.get(st.mount || st.freq);
   function initPSForLock(st) {
     psFullText = computePSFullText(st);
     psMode = (st.dynamicPsMode || CFG.dynamicPsMode || "groups").toLowerCase();
