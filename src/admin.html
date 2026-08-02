@@ -423,8 +423,6 @@ function stationForm(s, i) {
     <div class="grid">
       <div class="field"><label>PI code (hex)</label><input data-s="${i}" data-k="pi" value="${esc(s.pi || "")}"></div>
       <div class="field"><label>PTY (0-31)</label><input data-s="${i}" data-k="pty" type="number" min="0" max="31" value="${s.pty ?? 0}"></div>
-      <div class="field"><label>PS (8 chars)</label><input data-s="${i}" data-k="ps" maxlength="80" value="${esc(s.ps || "")}"></div>
-      <div class="field" style="grid-column: span 2"><label>RadioText</label><input data-s="${i}" data-k="rt" value="${esc(s.rt || "")}"></div>
       <div class="field"><label>M/S</label>
         <select data-s="${i}" data-k="ms">
           <option value="M"${s.ms==="M"?" selected":""}>Music</option>
@@ -432,6 +430,27 @@ function stationForm(s, i) {
         </select>
       </div>
     </div>
+
+    <div class="subhead">PS entries</div>
+    <div id="ps-list-${i}" class="entry-list"></div>
+    <div style="display:flex;gap:6px;margin-top:6px;align-items:center">
+      <button class="ghost sm" data-entry-add="ps" data-entry-s="${i}">+ Add PS entry</button>
+      <span style="color:#8ea7a5;font-size:11px">
+        "_" = blank character (use "\\_" for a literal underscore). Multiple
+        entries rotate; the seconds field sets how long each stays on air.
+        Underscore PS is sliced into exact 8-char frames.
+      </span>
+    </div>
+
+    <div class="subhead">RadioText entries</div>
+    <div id="rt-list-${i}" class="entry-list"></div>
+    <div style="display:flex;gap:6px;margin-top:6px;align-items:center">
+      <button class="ghost sm" data-entry-add="rt" data-entry-s="${i}">+ Add RT entry</button>
+      <span style="color:#8ea7a5;font-size:11px">
+        Max 64 chars. Multiple entries rotate on the configured interval.
+      </span>
+    </div>
+
     <div class="checkboxes" style="margin-top:8px">
       <label><input type="checkbox" data-s="${i}" data-k="stereo" ${s.stereo!==false?"checked":""}> Stereo</label>
       <label><input type="checkbox" data-s="${i}" data-k="tp" ${s.tp?"checked":""}> TP</label>
