@@ -255,6 +255,62 @@
     if (caps) t = t.toUpperCase();
     return preserveOuterSpacing ? t : t.trim();
   }
+  // ---------- Timed PS/RT entry lists ----------
+  // A PS/RT value may be a single string or an array of strings. Each entry
+  // may be prefixed with a duration, e.g. "10s:HELLO" or "2500ms:HELLO",
+  // saying how long that entry stays on air before the next one takes over.
+  function parseTimedEntries(value, defMs) {
+    const list = Array.isArray(value) ? value : (value == null || value === "" ? [] : [value]);
+    const out = [];
+    for (const raw of list) {
+      if (raw == null) continue;
+      let s = String(raw);
+      let ms = defMs;
+      const m = s.match(/^\s*(\d+(?:\.\d+)?)\s*(ms|s)\s*:/i);
+      if (m) {
+        ms = parseFloat(m[1]) * (m[2].toLowerCase() === "ms" ? 1 : 1000);
+        s = s.slice(m[0].length);
+      }
+      if (!(ms > 100)) ms = 100;
+      out.push({ text: s, ms });
+    }
+    return out;
+  }
+  // Rotation state per (station, field) so background stations keep their own
+  // position in the list.
+  const _entryRot = new Map();
+  function pickTimedEntry(key, value, defMs) {
+    const list = parseTimedEntries(value, defMs);
+    if (!list.length) return "";
+    if (list.length === 1) return list[0].text;
+    const sig = list.map((e) => e.ms + "\u0002" + e.text).join("\u0001");
+    const now = performance.now();
+    let st = _entryRot.get(key);
+    if (!st || st.sig !== sig) {
+      st = { sig, idx: 0, nextMs: now + list[0].ms };
+      _entryRot.set(key, st);
+    }
+    let guard = 0;
+    while (now >= st.nextMs && guard++ < 64) {
+      st.idx = (st.idx + 1) % list.length;
+      st.nextMs += list[st.idx].ms;
+    }
+    if (guard >= 64) st.nextMs = now + list[st.idx].ms;
+    return list[st.idx].text;
+  }
+  // In PS, "_" is an explicit blank character (so "_MIDDEN__" keeps its
+  // padding), while "\_" is a literal underscore.
+  function decodePsUnderscores(s) {
+    if (!s) return s || "";
+    return String(s)
+      .replace(/\\_/g, "\u0000")
+      .replace(/_/g, " ")
+      .replace(/\u0000/g, "_");
+  }
+  // RT keeps literal underscores, but still honours the "\_" escape.
+  function unescapeUnderscores(s) {
+    return s ? String(s).replace(/\\_/g, "_") : (s || "");
+  }
   const pad8 = (s) => (s + "        ").slice(0, 8);
   const cap64 = (s) => s.length > 64 ? s.slice(0, 64) : s;
   // Strip operator-configured substrings from RT (case-insensitive).
