@@ -5244,7 +5244,10 @@
           },
           {
             "freq": 99.3,
-            "ps": "EVASION EVASION EVASION %MD%",
+            "ps": [
+              "5s:EVASION",
+              "1s:%MD%"
+            ],
             "rt": "",
             "pi": "83E2",
             "pty": 10,
@@ -7927,7 +7930,10 @@
           },
           {
             "freq": 106.2,
-            "ps": "EVASION EVASION EVASION %MD%",
+            "ps": [
+              "5s:EVASION",
+              "1s:%MD%"
+            ],
             "rt": "",
             "pi": "83E2",
             "pty": 10,
