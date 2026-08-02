@@ -501,6 +501,9 @@ function stationForm(s, i) {
 }
 
 function bindStationInputs(r, s, i) {
+  // ---- PS / RT timed entry editors ----
+  bindEntryList(s, i, "ps");
+  bindEntryList(s, i, "rt");
   const inputs = document.querySelectorAll(`[data-s="${i}"]`);
   inputs.forEach(inp => {
     // Skip AF chip delete buttons — they have data-s but should not be
