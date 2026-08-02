@@ -892,7 +892,14 @@
     return out;
   }
   function computePSFullText(st) {
-    return resolveTokens(st.ps, metaFor(st), {
+    const tpl = decodePsUnderscores(
+      pickTimedEntry(
+        (st.mount || st.freq) + "|ps",
+        st.ps,
+        st.psEntryMs ?? CFG.psEntryMs ?? 8000
+      )
+    );
+    return resolveTokens(tpl, metaFor(st), {
       preserveOuterSpacing: true,
       preserveInnerSpacing: true,
     }) || (st.station?.name || "");
