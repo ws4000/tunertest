@@ -255,6 +255,62 @@
     if (caps) t = t.toUpperCase();
     return preserveOuterSpacing ? t : t.trim();
   }
+  // ---------- Timed PS/RT entry lists ----------
+  // A PS/RT value may be a single string or an array of strings. Each entry
+  // may be prefixed with a duration, e.g. "10s:HELLO" or "2500ms:HELLO",
+  // saying how long that entry stays on air before the next one takes over.
+  function parseTimedEntries(value, defMs) {
+    const list = Array.isArray(value) ? value : (value == null || value === "" ? [] : [value]);
+    const out = [];
+    for (const raw of list) {
+      if (raw == null) continue;
+      let s = String(raw);
+      let ms = defMs;
+      const m = s.match(/^\s*(\d+(?:\.\d+)?)\s*(ms|s)\s*:/i);
+      if (m) {
+        ms = parseFloat(m[1]) * (m[2].toLowerCase() === "ms" ? 1 : 1000);
+        s = s.slice(m[0].length);
+      }
+      if (!(ms > 100)) ms = 100;
+      out.push({ text: s, ms });
+    }
+    return out;
+  }
+  // Rotation state per (station, field) so background stations keep their own
+  // position in the list.
+  const _entryRot = new Map();
+  function pickTimedEntry(key, value, defMs) {
+    const list = parseTimedEntries(value, defMs);
+    if (!list.length) return "";
+    if (list.length === 1) return list[0].text;
+    const sig = list.map((e) => e.ms + "\u0002" + e.text).join("\u0001");
+    const now = performance.now();
+    let st = _entryRot.get(key);
+    if (!st || st.sig !== sig) {
+      st = { sig, idx: 0, nextMs: now + list[0].ms };
+      _entryRot.set(key, st);
+    }
+    let guard = 0;
+    while (now >= st.nextMs && guard++ < 64) {
+      st.idx = (st.idx + 1) % list.length;
+      st.nextMs += list[st.idx].ms;
+    }
+    if (guard >= 64) st.nextMs = now + list[st.idx].ms;
+    return list[st.idx].text;
+  }
+  // In PS, "_" is an explicit blank character (so "_MIDDEN__" keeps its
+  // padding), while "\_" is a literal underscore.
+  function decodePsUnderscores(s) {
+    if (!s) return s || "";
+    return String(s)
+      .replace(/\\_/g, "\u0000")
+      .replace(/_/g, " ")
+      .replace(/\u0000/g, "_");
+  }
+  // RT keeps literal underscores, but still honours the "\_" escape.
+  function unescapeUnderscores(s) {
+    return s ? String(s).replace(/\\_/g, "_") : (s || "");
+  }
   const pad8 = (s) => (s + "        ").slice(0, 8);
   const cap64 = (s) => s.length > 64 ? s.slice(0, 64) : s;
   // Strip operator-configured substrings from RT (case-insensitive).
@@ -811,9 +867,16 @@
     if (s.length >= 8) return s.slice(0, 8);
     return pad8(s);
   }
-  function splitPSChunks(text) {
+  function splitPSChunks(text, fixedFrames) {
     if (!text) return ["        "];
     const raw = toRdsAscii(text);
+    // Underscore-authored PS is a sequence of literal 8-char frames — slice it
+    // exactly, so "_MIDDEN_ _LANDEN_" keeps the operator's blank padding.
+    if (fixedFrames && raw.length > 8) {
+      const out = [];
+      for (let i = 0; i < raw.length; i += 8) out.push(pad8(raw.slice(i, i + 8)));
+      return out;
+    }
     // If the whole text already fits in 8 chars, preserve the user's spacing.
     if (raw.length <= 8) return [fitChunk(raw)];
     const t = raw.trim();
@@ -836,15 +899,24 @@
     return out;
   }
   function computePSFullText(st) {
-    return resolveTokens(st.ps, metaFor(st), {
+    const rawTpl = pickTimedEntry(
+      (st.mount || st.freq) + "|ps",
+      st.ps,
+      st.psEntryMs ?? CFG.psEntryMs ?? 8000
+    );
+    _psFixed.set(st.mount || st.freq, /(^|[^\\])_/.test(rawTpl));
+    const tpl = decodePsUnderscores(rawTpl);
+    return resolveTokens(tpl, metaFor(st), {
       preserveOuterSpacing: true,
       preserveInnerSpacing: true,
     }) || (st.station?.name || "");
   }
+  const _psFixed = new Map();
+  const psFixedFor = (st) => !!_psFixed.get(st.mount || st.freq);
   function initPSForLock(st) {
     psFullText = computePSFullText(st);
     psMode = (st.dynamicPsMode || CFG.dynamicPsMode || "groups").toLowerCase();
-    psChunks = splitPSChunks(psFullText);
+    psChunks = splitPSChunks(psFullText, psFixedFor(st));
     // Seed chunk index from the background scheduler so tuning in lands
     // mid-cycle rather than always at chunk 0.
     let startIdx = 0;
@@ -876,7 +948,7 @@
     const next = computePSFullText(lockedStation);
     if (next && next !== psFullText) {
       psFullText = next;
-      const newChunks = splitPSChunks(psFullText);
+      const newChunks = splitPSChunks(psFullText, psFixedFor(lockedStation));
       _pendingPSChunks = newChunks;
     }
   }
@@ -955,7 +1027,7 @@
       if (!hasRDS(st)) return;
       const mode = (st.dynamicPsMode || CFG.dynamicPsMode || "groups").toLowerCase();
       if (mode !== "groups") return;
-      const chunks = splitPSChunks(computePSFullText(st));
+      const chunks = splitPSChunks(computePSFullText(st), psFixedFor(st));
       if (!chunks.length) return;
       const hold = st.groupsHoldGroups ?? CFG.groupsHoldGroups ?? 4;
       bgPS.set(st.mount, {
@@ -978,7 +1050,7 @@
       const st = CFG.stations.find((x) => x.mount === mount);
       if (!st) continue;
       // Refresh chunks if Icecast metadata changed
-      const newChunks = splitPSChunks(computePSFullText(st));
+      const newChunks = splitPSChunks(computePSFullText(st), psFixedFor(st));
       if (newChunks.length && newChunks.join("|") !== s.chunks.join("|")) {
         s.chunks = newChunks;
         if (s.idx >= s.chunks.length) s.idx = 0;
@@ -1119,7 +1191,14 @@
     // Per-station `rtHide` lets the operator strip specific substrings
     // from RadioText after %MD% / %ICEMD% substitution (case-insensitive).
     // Accepts a string, an array of strings, or a comma-separated list.
-    const newTarget = cap64(applyRtHide(resolveTokens(st.rt, src), st.rtHide));
+    const rtTpl = unescapeUnderscores(
+      pickTimedEntry(
+        (st.mount || st.freq) + "|rt",
+        st.rt,
+        st.rtEntryMs ?? CFG.rtEntryMs ?? 15000
+      )
+    );
+    const newTarget = cap64(applyRtHide(resolveTokens(rtTpl, src), st.rtHide));
     if (newTarget && newTarget !== rtTargetRaw) {
       if (rtBuf) rtPrevious = rtBuf;
       if (rtTargetRaw) rtFirstLoad = false;

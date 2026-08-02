@@ -375,7 +375,7 @@ function renderStations(r) {
       <div class="station-summary">
         <span class="caret">▶</span>
         <span class="freq">${(s.freq ?? 0).toFixed(1)}</span>
-        <span class="ps">${esc((s.ps || "        ").padEnd(8).slice(0,8))}</span>
+        <span class="ps">${esc(psSummary(s.ps))}</span>
         <span class="stname">${esc(s.station?.name || "")} <span style="color:#8ea7a5">${esc(s.station?.city ? "· "+s.station.city : "")}</span></span>
         <button class="ghost sm" data-dup="${i}" title="Duplicate">⧉</button>
         <button class="danger sm" data-rm="${i}" title="Delete">✕</button>
@@ -423,8 +423,6 @@ function stationForm(s, i) {
     <div class="grid">
       <div class="field"><label>PI code (hex)</label><input data-s="${i}" data-k="pi" value="${esc(s.pi || "")}"></div>
       <div class="field"><label>PTY (0-31)</label><input data-s="${i}" data-k="pty" type="number" min="0" max="31" value="${s.pty ?? 0}"></div>
-      <div class="field"><label>PS (8 chars)</label><input data-s="${i}" data-k="ps" maxlength="80" value="${esc(s.ps || "")}"></div>
-      <div class="field" style="grid-column: span 2"><label>RadioText</label><input data-s="${i}" data-k="rt" value="${esc(s.rt || "")}"></div>
       <div class="field"><label>M/S</label>
         <select data-s="${i}" data-k="ms">
           <option value="M"${s.ms==="M"?" selected":""}>Music</option>
@@ -432,6 +430,27 @@ function stationForm(s, i) {
         </select>
       </div>
     </div>
+
+    <div class="subhead">PS entries</div>
+    <div id="ps-list-${i}" class="entry-list"></div>
+    <div style="display:flex;gap:6px;margin-top:6px;align-items:center">
+      <button class="ghost sm" data-entry-add="ps" data-entry-s="${i}">+ Add PS entry</button>
+      <span style="color:#8ea7a5;font-size:11px">
+        "_" = blank character (use "\\_" for a literal underscore). Multiple
+        entries rotate; the seconds field sets how long each stays on air.
+        Underscore PS is sliced into exact 8-char frames.
+      </span>
+    </div>
+
+    <div class="subhead">RadioText entries</div>
+    <div id="rt-list-${i}" class="entry-list"></div>
+    <div style="display:flex;gap:6px;margin-top:6px;align-items:center">
+      <button class="ghost sm" data-entry-add="rt" data-entry-s="${i}">+ Add RT entry</button>
+      <span style="color:#8ea7a5;font-size:11px">
+        Max 64 chars. Multiple entries rotate on the configured interval.
+      </span>
+    </div>
+
     <div class="checkboxes" style="margin-top:8px">
       <label><input type="checkbox" data-s="${i}" data-k="stereo" ${s.stereo!==false?"checked":""}> Stereo</label>
       <label><input type="checkbox" data-s="${i}" data-k="tp" ${s.tp?"checked":""}> TP</label>
@@ -481,7 +500,87 @@ function stationForm(s, i) {
   `;
 }
 
+function psSummary(v) {
+  const first = Array.isArray(v) ? (v[0] || "") : (v || "");
+  return String(first).replace(/^\s*\d+(?:\.\d+)?\s*(ms|s)\s*:/i, "").replace(/\\_/g, "_").replace(/_/g, " ").padEnd(8).slice(0, 8);
+}
+// ---------- PS / RT timed entry lists ----------
+// A PS/RT value is either a plain string or an array of strings, where each
+// entry may carry a "10s:" / "500ms:" duration prefix.
+function parseEntryValue(v) {
+  const list = Array.isArray(v) ? v : (v == null || v === "" ? [] : [v]);
+  return list.map((raw) => {
+    let text = String(raw ?? ""), secs = "";
+    const m = text.match(/^\s*(\d+(?:\.\d+)?)\s*(ms|s)\s*:/i);
+    if (m) {
+      secs = String(m[2].toLowerCase() === "ms" ? parseFloat(m[1]) / 1000 : parseFloat(m[1]));
+      text = text.slice(m[0].length);
+    }
+    return { text, secs };
+  });
+}
+function serializeEntries(rows) {
+  const out = rows
+    .filter((r) => r.text !== "" || r.secs !== "")
+    .map((r) => (r.secs !== "" && !isNaN(parseFloat(r.secs)) ? `${parseFloat(r.secs)}s:${r.text}` : r.text));
+  if (!out.length) return "";
+  if (out.length === 1) return out[0];
+  return out;
+}
+function renderEntryList(s, i, key) {
+  const host = document.getElementById(`${key}-list-${i}`);
+  if (!host) return;
+  const rows = parseEntryValue(s[key]);
+  if (!rows.length) rows.push({ text: "", secs: "" });
+  host.innerHTML = rows.map((row, j) => `
+    <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px">
+      <input type="number" step="0.5" min="0.5" placeholder="secs" style="max-width:80px"
+             data-entry-k="${key}" data-entry-s="${i}" data-entry-j="${j}" data-entry-f="secs"
+             value="${row.secs}">
+      <input type="text" style="flex:1" placeholder="${key === "ps" ? "e.g. _MIDDEN_" : "e.g. %MD% - K-Mix"}"
+             ${key === "ps" ? 'maxlength="80"' : 'maxlength="64"'}
+             data-entry-k="${key}" data-entry-s="${i}" data-entry-j="${j}" data-entry-f="text"
+             value="${esc(row.text)}">
+      <button class="ghost sm" data-entry-del="${key}" data-entry-s="${i}" data-entry-j="${j}" title="Remove">×</button>
+    </div>
+  `).join("");
+  const commit = () => {
+    const next = [];
+    host.querySelectorAll('[data-entry-f="text"]').forEach((inp) => {
+      const j = inp.dataset.entryJ;
+      const secs = host.querySelector(`[data-entry-f="secs"][data-entry-j="${j}"]`);
+      next.push({ text: inp.value, secs: (secs && secs.value) || "" });
+    });
+    const val = serializeEntries(next);
+    if (val === "") delete s[key]; else s[key] = val;
+    persist(true);
+  };
+  host.querySelectorAll("[data-entry-f]").forEach((inp) => inp.addEventListener("input", commit));
+  host.querySelectorAll("[data-entry-del]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const rows2 = parseEntryValue(s[key]);
+      rows2.splice(parseInt(btn.dataset.entryJ, 10), 1);
+      const val = serializeEntries(rows2);
+      if (val === "") delete s[key]; else s[key] = val;
+      persist(true); renderEntryList(s, i, key);
+    });
+  });
+}
+function bindEntryList(s, i, key) {
+  renderEntryList(s, i, key);
+  const add = document.querySelector(`[data-entry-add="${key}"][data-entry-s="${i}"]`);
+  if (add) add.addEventListener("click", () => {
+    const rows = parseEntryValue(s[key]);
+    rows.push({ text: "", secs: "10" });
+    s[key] = serializeEntries(rows.length ? rows : [{ text: "", secs: "" }]);
+    if (s[key] === "") delete s[key];
+    persist(true); renderEntryList(s, i, key);
+  });
+}
+
 function bindStationInputs(r, s, i) {
+  bindEntryList(s, i, "ps");
+  bindEntryList(s, i, "rt");
   const inputs = document.querySelectorAll(`[data-s="${i}"]`);
   inputs.forEach(inp => {
     // Skip AF chip delete buttons — they have data-s but should not be
@@ -506,7 +605,7 @@ function bindStationInputs(r, s, i) {
       if (["freq","ps","station.name","station.city"].includes(key)) {
         const sum = inp.closest(".station").querySelector(".station-summary");
         sum.querySelector(".freq").textContent = (s.freq ?? 0).toFixed(1);
-        sum.querySelector(".ps").textContent = (s.ps || "        ").padEnd(8).slice(0,8);
+        sum.querySelector(".ps").textContent = psSummary(s.ps);
         sum.querySelector(".stname").innerHTML = `${esc(s.station?.name || "")} <span style="color:#8ea7a5">${esc(s.station?.city ? "· "+s.station.city : "")}</span>`;
       }
     });
