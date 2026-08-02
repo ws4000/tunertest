@@ -916,7 +916,7 @@
   function initPSForLock(st) {
     psFullText = computePSFullText(st);
     psMode = (st.dynamicPsMode || CFG.dynamicPsMode || "groups").toLowerCase();
-    psChunks = splitPSChunks(psFullText);
+    psChunks = splitPSChunks(psFullText, psFixedFor(st));
     // Seed chunk index from the background scheduler so tuning in lands
     // mid-cycle rather than always at chunk 0.
     let startIdx = 0;
@@ -948,7 +948,7 @@
     const next = computePSFullText(lockedStation);
     if (next && next !== psFullText) {
       psFullText = next;
-      const newChunks = splitPSChunks(psFullText);
+      const newChunks = splitPSChunks(psFullText, psFixedFor(lockedStation));
       _pendingPSChunks = newChunks;
     }
   }
@@ -1027,7 +1027,7 @@
       if (!hasRDS(st)) return;
       const mode = (st.dynamicPsMode || CFG.dynamicPsMode || "groups").toLowerCase();
       if (mode !== "groups") return;
-      const chunks = splitPSChunks(computePSFullText(st));
+      const chunks = splitPSChunks(computePSFullText(st), psFixedFor(st));
       if (!chunks.length) return;
       const hold = st.groupsHoldGroups ?? CFG.groupsHoldGroups ?? 4;
       bgPS.set(st.mount, {
@@ -1050,7 +1050,7 @@
       const st = CFG.stations.find((x) => x.mount === mount);
       if (!st) continue;
       // Refresh chunks if Icecast metadata changed
-      const newChunks = splitPSChunks(computePSFullText(st));
+      const newChunks = splitPSChunks(computePSFullText(st), psFixedFor(st));
       if (newChunks.length && newChunks.join("|") !== s.chunks.join("|")) {
         s.chunks = newChunks;
         if (s.idx >= s.chunks.length) s.idx = 0;
