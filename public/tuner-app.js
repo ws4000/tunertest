@@ -1182,7 +1182,14 @@
     // Per-station `rtHide` lets the operator strip specific substrings
     // from RadioText after %MD% / %ICEMD% substitution (case-insensitive).
     // Accepts a string, an array of strings, or a comma-separated list.
-    const newTarget = cap64(applyRtHide(resolveTokens(st.rt, src), st.rtHide));
+    const rtTpl = unescapeUnderscores(
+      pickTimedEntry(
+        (st.mount || st.freq) + "|rt",
+        st.rt,
+        st.rtEntryMs ?? CFG.rtEntryMs ?? 15000
+      )
+    );
+    const newTarget = cap64(applyRtHide(resolveTokens(rtTpl, src), st.rtHide));
     if (newTarget && newTarget !== rtTargetRaw) {
       if (rtBuf) rtPrevious = rtBuf;
       if (rtTargetRaw) rtFirstLoad = false;
