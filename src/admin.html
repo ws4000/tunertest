@@ -375,7 +375,7 @@ function renderStations(r) {
       <div class="station-summary">
         <span class="caret">▶</span>
         <span class="freq">${(s.freq ?? 0).toFixed(1)}</span>
-        <span class="ps">${esc((s.ps || "        ").padEnd(8).slice(0,8))}</span>
+        <span class="ps">${esc(psSummary(s.ps))}</span>
         <span class="stname">${esc(s.station?.name || "")} <span style="color:#8ea7a5">${esc(s.station?.city ? "· "+s.station.city : "")}</span></span>
         <button class="ghost sm" data-dup="${i}" title="Duplicate">⧉</button>
         <button class="danger sm" data-rm="${i}" title="Delete">✕</button>
@@ -500,6 +500,10 @@ function stationForm(s, i) {
   `;
 }
 
+function psSummary(v) {
+  const first = Array.isArray(v) ? (v[0] || "") : (v || "");
+  return String(first).replace(/^\s*\d+(?:\.\d+)?\s*(ms|s)\s*:/i, "").replace(/\\_/g, "_").replace(/_/g, " ").padEnd(8).slice(0, 8);
+}
 // ---------- PS / RT timed entry lists ----------
 // A PS/RT value is either a plain string or an array of strings, where each
 // entry may carry a "10s:" / "500ms:" duration prefix.
@@ -601,7 +605,7 @@ function bindStationInputs(r, s, i) {
       if (["freq","ps","station.name","station.city"].includes(key)) {
         const sum = inp.closest(".station").querySelector(".station-summary");
         sum.querySelector(".freq").textContent = (s.freq ?? 0).toFixed(1);
-        sum.querySelector(".ps").textContent = (s.ps || "        ").padEnd(8).slice(0,8);
+        sum.querySelector(".ps").textContent = psSummary(s.ps);
         sum.querySelector(".stname").innerHTML = `${esc(s.station?.name || "")} <span style="color:#8ea7a5">${esc(s.station?.city ? "· "+s.station.city : "")}</span>`;
       }
     });
