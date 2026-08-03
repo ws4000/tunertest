@@ -7965,6 +7965,267 @@
         ],
         "presets": []
       }
+    },
+    {
+      "slug": "bruxelles",
+      "name": "Bruxelles",
+      "location": "Bruxelles, Belvenia",
+      "mc": {
+        "x": 8618,
+        "z": -19578
+      },
+      "config": {
+        "tunerName": "Bruxelles",
+        "tunerDescription": "TEF6686 right from the town hall of Bruxelles. Sponsored by the town hall of Bruxelles, the capital of Belvenia.",
+        "tunerDevice": "Virtual TEF668x",
+        "ownerContact": "tunermairie@bruxelles.bx",
+        "rdsMode": "rds",
+        "tuningMin": 87.5,
+        "tuningMax": 108,
+        "tuningStep": 0.1,
+        "defaultFrequency": 87.6,
+        "noiseFloorDbf": -1,
+        "audibleBandwidth": 0.2,
+        "audioDelayMs": 800,
+        "stations": [
+          {
+            "freq": 87.6,
+            "ps": "La 1ere",
+            "rt": "%MD%",
+            "pi": "6201",
+            "pty": 1,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "OBRT La Première",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 68,
+              "pol": "M",
+              "distance": 17,
+              "azimuth": 149
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-lapremiere-mp3-160-7134387",
+            "signal": 83,
+            "af": [
+              87.6
+            ],
+            "logo": "https://i.soupco.net/raw/KCXRmf.png"
+          },
+          {
+            "freq": 90.5,
+            "ps": "5s:CLASS.21",
+            "rt": "",
+            "pi": "6204",
+            "pty": 11,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "OBRT Classic 21",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 6,
+              "pol": "M",
+              "distance": 17,
+              "azimuth": 149
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-classic21-aac-128-5744784 ",
+            "signal": 82.3,
+            "af": [
+              90.5
+            ],
+            "logo": "https://i.soupco.net/raw/uUzicS.png"
+          },
+          {
+            "ps": "MUSIQ 3",
+            "rt": "",
+            "pi": "6203",
+            "pty": 14,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 83,
+            "station": {
+              "name": "OBRT Musiq 3",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 68,
+              "pol": "M",
+              "distance": 17,
+              "azimuth": 149
+            },
+            "freq": 92.8,
+            "mount": "https://redbeemedia.streamabc.net/redbm-musiq3-mp3-320-9308179 ",
+            "af": [
+              92.8
+            ],
+            "logo": "https://i.soupco.net/raw/k5zlLh.png"
+          },
+          {
+            "freq": 97.6,
+            "ps": "_RTO_R1_",
+            "rt": "RTO Radio 1 -> %ICEMD%",
+            "pi": "6101",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 82.35,
+            "station": {
+              "name": "RTO Radio 1 [F]",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 6.384,
+              "pol": "M",
+              "distance": 17,
+              "azimuth": 149
+            },
+            "mount": "rtor1",
+            "logo": "https://i.soupco.net/u/Bd7FQU.png",
+            "af": [
+              89.8,
+              90,
+              90.7,
+              94.1,
+              97.6,
+              102.7,
+              105.9
+            ]
+          },
+          {
+            "ps": "VIVACITE",
+            "rt": "",
+            "pi": "6202",
+            "pty": 9,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 83,
+            "station": {
+              "name": "OBRT Vivacité",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 68,
+              "pol": "M",
+              "distance": 17,
+              "azimuth": 149
+            },
+            "freq": 98.3,
+            "mount": "https://redbeemedia.streamabc.net/redbm-vivabxl-aac-128-1428473 ",
+            "af": [
+              98.3
+            ],
+            "logo": "https://i.soupco.net/raw/csaQau.png"
+          },
+          {
+            "freq": 100.4,
+            "ps": "NOSTALGI",
+            "rt": "%MD%",
+            "pi": "6214",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79,
+            "station": {
+              "name": "Nostalgie Belvénie",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 6.3,
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 80
+            },
+            "mount": "https://stream.rcs.revma.com/5gd04cwptg0uv ",
+            "logo": "https://tef.noobish.eu/logos/F/F218.svg"
+          },
+          {
+            "freq": 100.8,
+            "ps": "__FG.___",
+            "rt": "FG. DJ Radio",
+            "pi": "622C",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79,
+            "station": {
+              "name": "Radio FG.",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 6.3,
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 80
+            },
+            "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
+            "logo": "https://tef.noobish.eu/logos/F/F22C.png",
+            "af": [
+              100.8
+            ]
+          },
+          {
+            "freq": 102.2,
+            "ps": "CONTACT",
+            "rt": "RADIO CONTACT FEELGOOD!",
+            "pi": "6215",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 80,
+            "station": {
+              "name": "Radio Contact",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 10,
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 80
+            },
+            "af": [
+              102.2
+            ],
+            "logo": "https://tef.noobish.eu/logos/BEL/6315.svg",
+            "mount": "https://radiocontact.ice.infomaniak.ch/radiocontact-mp3-192.mp3 ",
+            "volume": 1
+          },
+          {
+            "freq": 103.7,
+            "rt": "NRJ HIT MUSIC ONLY !",
+            "pi": "6220",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79,
+            "station": {
+              "name": "NRJ Belvénie",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 6.3,
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 80
+            },
+            "mount": "https://stream.rcs.revma.com/xh00fwuptg0uv ",
+            "ps": "__NRJ___",
+            "logo": "https://tef.noobish.eu/logos/BEL/6381.png"
+          }
+        ],
+        "presets": []
+      }
     }
   ]
 }
