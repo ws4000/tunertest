@@ -319,7 +319,7 @@
             "pty": 9,
             "af": [],
             "ps": " COMEDY ",
-            "rt": "%MD% - 102.7 Kiss FM",
+            "rt": "OPB Comedy",
             "tp": false,
             "ta": false,
             "ms": "M",
@@ -405,7 +405,7 @@
             "pty": 9,
             "volume": 1,
             "mount": "https://live-bauerie.sharp-stream.com/IRADNW",
-            "logo": "https://www.iradio.ie/images/iradio-main-logo.svg",
+            "logo": "https://tef.noobish.eu/logos/IRL/23E2.svg",
             "af": [
               107.1
             ]
@@ -866,7 +866,7 @@
             },
             "signal": 78.7,
             "mount": "https://live-bauerie.sharp-stream.com/IRADNW",
-            "logo": "https://www.iradio.ie/images/iradio-main-logo.svg",
+            "logo": "https://tef.noobish.eu/logos/IRL/23E2.svg",
             "volume": 1
           },
           {
@@ -4120,7 +4120,8 @@
               "distance": 0,
               "azimuth": 0
             },
-            "mount": "https://vrt.streamabc.net/vrt-radio1-mp3-128-9751183"
+            "mount": "https://vrt.streamabc.net/vrt-radio1-mp3-128-9751183",
+            "rdsDisabled": true
           },
           {
             "freq": 87.6,
