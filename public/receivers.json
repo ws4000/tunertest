@@ -7991,7 +7991,7 @@
           {
             "freq": 87.6,
             "ps": "La 1ere",
-            "rt": "%MD%",
+            "rt": "LA 1ERE - L'esprit clair",
             "pi": "6201",
             "pty": 1,
             "tp": false,
@@ -8018,7 +8018,7 @@
           {
             "freq": 90.5,
             "ps": "5s:CLASS.21",
-            "rt": "",
+            "rt": "%MD%",
             "pi": "6204",
             "pty": 11,
             "tp": false,
@@ -8044,7 +8044,7 @@
           },
           {
             "ps": "MUSIQ 3",
-            "rt": "",
+            "rt": "%MD%",
             "pi": "6203",
             "pty": 14,
             "tp": false,
@@ -8062,7 +8062,7 @@
               "azimuth": 149
             },
             "freq": 92.8,
-            "mount": "https://redbeemedia.streamabc.net/redbm-musiq3-mp3-320-9308179 ",
+            "mount": "https://redbeemedia.streamabc.net/redbm-musiq3-aac-256-1558698",
             "af": [
               92.8
             ],
@@ -8104,7 +8104,6 @@
           },
           {
             "ps": "VIVACITE",
-            "rt": "",
             "pi": "6202",
             "pty": 9,
             "tp": false,
@@ -8127,7 +8126,11 @@
               98.3
             ],
             "logo": "https://i.soupco.net/raw/csaQau.png",
-            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "rt": [
+              "%MD%",
+              "10s:Viva Bruxelles - Ma radio complicite"
+            ]
           },
           {
             "freq": 100.4,
