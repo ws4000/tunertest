@@ -8012,7 +8012,8 @@
             "af": [
               87.6
             ],
-            "logo": "https://i.soupco.net/raw/KCXRmf.png"
+            "logo": "https://i.soupco.net/raw/KCXRmf.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 90.5,
@@ -8038,7 +8039,8 @@
             "af": [
               90.5
             ],
-            "logo": "https://i.soupco.net/raw/uUzicS.png"
+            "logo": "https://i.soupco.net/raw/uUzicS.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "ps": "MUSIQ 3",
@@ -8064,7 +8066,8 @@
             "af": [
               92.8
             ],
-            "logo": "https://i.soupco.net/raw/k5zlLh.png"
+            "logo": "https://i.soupco.net/raw/k5zlLh.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 97.6,
@@ -8096,7 +8099,8 @@
               97.6,
               102.7,
               105.9
-            ]
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "ps": "VIVACITE",
@@ -8122,7 +8126,8 @@
             "af": [
               98.3
             ],
-            "logo": "https://i.soupco.net/raw/csaQau.png"
+            "logo": "https://i.soupco.net/raw/csaQau.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 100.4,
@@ -8145,7 +8150,8 @@
               "azimuth": 80
             },
             "mount": "https://stream.rcs.revma.com/5gd04cwptg0uv ",
-            "logo": "https://tef.noobish.eu/logos/F/F218.svg"
+            "logo": "https://tef.noobish.eu/logos/F/F218.svg",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 100.8,
@@ -8171,7 +8177,8 @@
             "logo": "https://tef.noobish.eu/logos/F/F22C.png",
             "af": [
               100.8
-            ]
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 102.2,
@@ -8196,9 +8203,10 @@
             "af": [
               102.2
             ],
-            "logo": "https://tef.noobish.eu/logos/BEL/6315.svg",
+            "logo": "https://i.soupco.net/raw/h0Y13n.png",
             "mount": "https://radiocontact.ice.infomaniak.ch/radiocontact-mp3-192.mp3 ",
-            "volume": 1
+            "volume": 1,
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 103.7,
@@ -8221,7 +8229,8 @@
             },
             "mount": "https://stream.rcs.revma.com/xh00fwuptg0uv ",
             "ps": "__NRJ___",
-            "logo": "https://tef.noobish.eu/logos/BEL/6381.png"
+            "logo": "https://tef.noobish.eu/logos/BEL/6381.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           }
         ],
         "presets": []
