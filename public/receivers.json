@@ -8070,6 +8070,33 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "freq": 94.9,
+            "ps": "K_I_F___",
+            "rt": "",
+            "pi": "6297",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 80,
+            "station": {
+              "name": "KIF",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 4,
+              "pol": "V",
+              "distance": 13,
+              "azimuth": 90
+            },
+            "mount": "https://broadcast.sksgroup.com/kif_aac ",
+            "logo": "https://tef.noobish.eu/logos/BEL/6497.png",
+            "af": [
+              94.9
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
             "freq": 97.6,
             "ps": "_RTO_R1_",
             "rt": "RTO Radio 1 -> %ICEMD%",
@@ -8233,6 +8260,33 @@
             "mount": "https://stream.rcs.revma.com/xh00fwuptg0uv ",
             "ps": "__NRJ___",
             "logo": "https://tef.noobish.eu/logos/BEL/6381.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 107.1,
+            "ps": "_F_U_N__",
+            "rt": "Enjoy Dance Music !",
+            "pi": "6217",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 80,
+            "station": {
+              "name": "Fun Radio",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 4,
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 80
+            },
+            "mount": "https://funradiobe.ice.infomaniak.ch/funradiobe-high.mp3",
+            "logo": "https://tef.noobish.eu/logos/BEL/6217.png",
+            "af": [
+              107.1
+            ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           }
         ],
