@@ -47,8 +47,11 @@
   box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
 }
 .data-flag-big img.custom-flag { height: 22px; }
-/* PTY: regular weight, always visible (shows "No PTY" when unavailable). */
-.data-pty { font-weight: 400 !important; }
+/* PTY: regular weight, always visible (shows "No PTY" when unavailable).
+   Uses the same colour + opacity states as the TP/TA/MS labels next to it. */
+.data-pty, .data-pty span { font-weight: 400 !important; }
+.data-pty .opacity-half { opacity: 0.5; }
+.data-pty .opacity-full { opacity: 1; }
 
 /* Flags: no border/outline artifacts. */
 .data-flag img.custom-flag,
@@ -59,3 +62,7 @@
   border: 0 !important;
   outline: none !important;
 }
+
+/* Flags: never show broken-image/placeholder boxes. */
+.data-flag img.custom-flag[src=""],
+.data-flag-big img.custom-flag[src=""] { display: none; }
