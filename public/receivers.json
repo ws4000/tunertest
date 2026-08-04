@@ -8288,6 +8288,35 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "freq": 106.2,
+            "pi": "6E35",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79.7,
+            "station": {
+              "name": "Évasion",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 3.792,
+              "pol": "V",
+              "distance": 13,
+              "azimuth": 90
+            },
+            "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac",
+            "ps": [
+              "8s:EVASION_",
+              "1s:%MD%"
+            ],
+            "logo": "https://i.soupco.net/u/Jl4cxv.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              106.2
+            ]
+          },
+          {
             "freq": 107.1,
             "ps": "_F_U_N__",
             "rt": [
