@@ -8097,6 +8097,31 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "freq": 95.7,
+            "ps": "ROCK_FM_",
+            "rt": "(ALLCAPS)%MD%",
+            "pi": "621C",
+            "pty": 11,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 78,
+            "station": {
+              "name": "Rock FM",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 4,
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 80
+            },
+            "mount": "https://badrockradio.stream.laut.fm/badrockradio",
+            "af": [
+              95.7
+            ]
+          },
+          {
             "freq": 97.6,
             "ps": "_RTO_R1_",
             "rt": "RTO Radio 1 -> %ICEMD%",
@@ -8275,7 +8300,7 @@
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 80,
+            "signal": 78,
             "station": {
               "name": "Fun Radio",
               "city": "Bruxelles",
