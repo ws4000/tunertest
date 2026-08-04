@@ -19,13 +19,13 @@
 
   // ----- PTY tables -----
   const PTY_RDS = [
-    "None","News","Current Affairs","Information","Sport","Education","Drama","Culture",
+    "No PTY","News","Current Affairs","Info","Sport","Education","Drama","Culture",
     "Science","Varied","Pop Music","Rock Music","Easy Listening","Light Classics","Serious Classics","Other Music",
     "Weather","Finance","Children's","Social Affairs","Religion","Phone In","Travel","Leisure",
     "Jazz","Country","National Music","Oldies","Folk Music","Documentary","Alarm Test","Alarm"
   ];
   const PTY_RBDS = [
-    "None","News","Information","Sports","Talk","Rock","Classic Rock","Adult Hits",
+    "No PTY","News","Info","Sports","Talk","Rock","Classic Rock","Adult Hits",
     "Soft Rock","Top 40","Country","Oldies","Soft","Nostalgia","Jazz","Classical",
     "Rhythm and Blues","Soft R&B","Foreign Language","Religious Music","Religious Talk","Personality","Public","College",
     "Spanish Talk","Spanish Music","Hip Hop","Unassigned","Unassigned","Weather","Emergency Test","Emergency"
@@ -771,7 +771,7 @@
     const ps = $("#data-ps"); if (ps) ps.textContent = "        ";
     const r0 = $("#data-rt0 span"), r1 = $("#data-rt1 span");
     if (r0) r0.textContent = ""; if (r1) r1.textContent = "";
-    $$(".data-pty").forEach((e) => (e.textContent = ""));
+    $$(".data-pty").forEach((e) => (e.textContent = "No PTY"));
     $$(".data-ms").forEach((el) => {
       el.innerHTML = `<span class="opacity-half">M</span><span class="opacity-half">S</span>`;
     });
@@ -799,7 +799,7 @@
       else piEl1.innerHTML = PI_EMPTY_HTML;
     }
     const PTY = getPTYList();
-    $$(".data-pty").forEach((e) => (e.textContent = PTY[st.pty] || ""));
+    $$(".data-pty").forEach((e) => (e.textContent = PTY[st.pty] || "No PTY"));
     $$(".data-tp span").forEach((e) => (e.className = st.tp ? "opacity-full" : "opacity-half"));
     $$(".data-ta span").forEach((e) => (e.className = st.ta ? "opacity-full" : "opacity-half"));
     $$(".data-ms").forEach((el) => {
