@@ -20,8 +20,8 @@
   // ----- PTY tables -----
   const PTY_RDS = [
     "No PTY","News","Current Affairs","Info","Sport","Education","Drama","Culture",
-    "Science","Varied","Pop Music","Rock Music","Easy Listening","Light Classics","Serious Classics","Other Music",
-    "Weather","Finance","Children's","Social Affairs","Religion","Phone In","Travel","Leisure",
+    "Science","Varied","Pop Music","Rock Music","Easy Listening","Light Classical","Serious Classical","Other Music",
+    "Weather","Finance","Children's Programmes","Social Affairs","Religion","Phone In","Travel","Leisure",
     "Jazz","Country","National Music","Oldies","Folk Music","Documentary","Alarm Test","Alarm"
   ];
   const PTY_RBDS = [
