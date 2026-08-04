@@ -337,8 +337,11 @@
   // A station has RDS as long as it's not explicitly disabled. A null/0000/FFFF
   // PI just means we can't display a PI code — PS/RT/PTY still decode normally.
   function hasRDS(st) { return !!(st && !st.rdsDisabled); }
+  // Invisible, fixed-size placeholder so the flag slot keeps its spacing
+  // even when there is no country flag for the current station.
+  const FLAG_PLACEHOLDER = `<span class="flag-placeholder"></span>`;
   function renderFlag(flag) {
-    if (!flag) return "";
+    if (!flag) return FLAG_PLACEHOLDER;
     // Sprite object: { sprite: "https://…flags-16.png", x, y, w, h }
     // Renders a fixed-size <span> using background-position, letting a
     // station pick a flag out of any sprite sheet (e.g. flags-16.png).
@@ -354,7 +357,7 @@
       ].join(";");
       return `<span class="sprite-flag" style="${style}"></span>`;
     }
-    if (typeof flag !== "string") return "";
+    if (typeof flag !== "string") return FLAG_PLACEHOLDER;
     // "sprite:URL|x|y[|w|h]" shorthand string form.
     if (flag.startsWith("sprite:")) {
       const p = flag.slice(7).split("|");
@@ -363,7 +366,7 @@
     if (/^https?:\/\//i.test(flag) || flag.startsWith("/")) {
       // onerror: a missing/blocked image would otherwise render the browser's
       // broken-image box (which looks like a black border).
-      return `<img class="custom-flag" src="${flag}" alt="" onerror="this.style.display='none'">`;
+      return `<img class="custom-flag" src="${flag}" alt="" onerror="this.style.visibility='hidden'">`;
     }
     return `<i class="flag-sm flag-sm-${flag.toLowerCase()}"></i>`;
   }
@@ -771,13 +774,13 @@
     const ps = $("#data-ps"); if (ps) ps.textContent = "        ";
     const r0 = $("#data-rt0 span"), r1 = $("#data-rt1 span");
     if (r0) r0.textContent = ""; if (r1) r1.textContent = "";
-    $$(".data-pty").forEach((e) => (e.innerHTML = `<span class="opacity-half">No PTY</span>`));
+    $$(".data-pty").forEach((e) => (e.innerHTML = `<span>No PTY</span>`));
     $$(".data-ms").forEach((el) => {
       el.innerHTML = `<span class="opacity-half">M</span><span class="opacity-half">S</span>`;
     });
     $$(".data-tp span").forEach((e) => (e.className = "opacity-half"));
     $$(".data-ta span").forEach((e) => (e.className = "opacity-half"));
-    $$(".data-flag").forEach((e) => (e.innerHTML = ""));
+    $$(".data-flag").forEach((e) => (e.innerHTML = FLAG_PLACEHOLDER));
     const afList = $("#af-list ul"); if (afList) afList.innerHTML = "";
     // No-station / no-signal state: show the default logo so the panel
     // doesn't collapse into an empty box.
@@ -801,9 +804,7 @@
     const PTY = getPTYList();
     $$(".data-pty").forEach((e) => {
       const name = st.pty ? PTY[st.pty] : "";
-      e.innerHTML = name
-        ? `<span class="opacity-full">${name}</span>`
-        : `<span class="opacity-half">No PTY</span>`;
+      e.innerHTML = `<span>${name || "No PTY"}</span>`;
     });
     $$(".data-tp span").forEach((e) => (e.className = st.tp ? "opacity-full" : "opacity-half"));
     $$(".data-ta span").forEach((e) => (e.className = st.ta ? "opacity-full" : "opacity-half"));
