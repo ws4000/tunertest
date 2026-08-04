@@ -50,8 +50,7 @@
 /* PTY: regular weight, always visible (shows "No PTY" when unavailable).
    Uses the same colour + opacity states as the TP/TA/MS labels next to it. */
 .data-pty, .data-pty span { font-weight: 400 !important; }
-.data-pty .opacity-half { opacity: 0.5; }
-.data-pty .opacity-full { opacity: 1; }
+.data-pty, .data-pty span { opacity: 1; }
 
 /* Flags: no border/outline artifacts. */
 .data-flag img.custom-flag,
@@ -65,4 +64,12 @@
 
 /* Flags: never show broken-image/placeholder boxes. */
 .data-flag img.custom-flag[src=""],
-.data-flag-big img.custom-flag[src=""] { display: none; }
+.data-flag-big img.custom-flag[src=""] { visibility: hidden; }
+
+/* Empty flag slot: invisible but keeps the same footprint as a real flag. */
+.flag-placeholder {
+  display: inline-block;
+  width: 24px;
+  height: 16px;
+  vertical-align: middle;
+}
