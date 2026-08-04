@@ -8306,10 +8306,7 @@
               "azimuth": 90
             },
             "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac",
-            "ps": [
-              "8s:EVASION_",
-              "1s:%MD%"
-            ],
+            "ps": "5s:EVASION EVASION EVASION %MD%",
             "logo": "https://i.soupco.net/u/Jl4cxv.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "af": [
