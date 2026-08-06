@@ -8067,8 +8067,8 @@
               92.4
             ],
             "pty": 23,
-            "rt": "100% RIRE : L'HUMOUR GARANTI",
-            "rdsDisabled": true
+            "rdsDisabled": false,
+            "rt": "100% RIRE : L'HUMOUR GARANTI"
           },
           {
             "ps": "MUSIQ 3",
