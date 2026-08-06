@@ -8043,49 +8043,30 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
-            "ps": [
-              "4s:R_A_D_I_",
-              "1s:_A_D_I_O",
-              "1s:A_D_I_O_",
-              "1s:_D_I_O_C",
-              "1s:D_I_O_C_",
-              "1s:_I_O_C_A",
-              "1s:I_O_C_A_",
-              "1s:_O_C_A_M",
-              "1s:O_C_A_M_",
-              "1s:_C_A_M_P",
-              "1s:C_A_M_P_",
-              "1s:_A_M_P_U",
-              "1s:A_M_P_U_",
-              "1s:_M_P_U_S",
-              "1s:M_P_U_S_",
-              "1s:_P_U_S__",
-              "1s:P_U_S___",
-              "1s:_U_S____",
-              "1s:U_S_____",
-              "1s:_S______",
-              "1s:S_______",
-              "1s:________"
-            ],
-            "pi": "6203",
+            "pi": "6219",
             "tp": true,
             "ta": false,
-            "ms": "M",
+            "ms": "S",
             "stereo": true,
-            "signal": 83,
+            "signal": 89,
             "station": {
-              "name": "Radio Campus",
+              "name": "100% Rire",
               "city": "Bruxelles",
               "itu": "BX",
-              "erp": 4,
+              "erp": 1,
               "pol": "V",
-              "distance": 21,
-              "azimuth": 80
+              "distance": 7,
+              "azimuth": 190
             },
-            "freq": 92.1,
-            "mount": "https://www.radiocampus.be/stream/stream.mp3",
+            "freq": 92.4,
+            "mount": "https://live.m40radio.fr/listen/m40-humour/m40-humour-128.mp3",
             "logo": "",
-            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "ps": "100%RIR",
+            "af": [
+              92.4
+            ],
+            "pty": 23
           },
           {
             "ps": "MUSIQ 3",
