@@ -8062,11 +8062,13 @@
             "mount": "https://live.m40radio.fr/listen/m40-humour/m40-humour-128.mp3",
             "logo": "",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "ps": "100%RIR",
+            "ps": "100%RIRE",
             "af": [
               92.4
             ],
-            "pty": 23
+            "pty": 23,
+            "rt": "100% RIRE : L'HUMOUR GARANTI",
+            "rdsDisabled": true
           },
           {
             "ps": "MUSIQ 3",
