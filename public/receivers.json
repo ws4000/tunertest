@@ -8107,15 +8107,15 @@
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 80,
+            "signal": 78,
             "station": {
               "name": "KIF",
               "city": "Bruxelles",
               "itu": "BX",
               "erp": 4,
               "pol": "V",
-              "distance": 13,
-              "azimuth": 90
+              "distance": 21,
+              "azimuth": 80
             },
             "mount": "https://broadcast.sksgroup.com/kif_aac ",
             "logo": "https://tef.noobish.eu/logos/BEL/6497.png",
@@ -8323,15 +8323,15 @@
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 79.7,
+            "signal": 78,
             "station": {
               "name": "Évasion",
               "city": "Bruxelles",
               "itu": "BX",
               "erp": 3.792,
               "pol": "V",
-              "distance": 13,
-              "azimuth": 90
+              "distance": 21,
+              "azimuth": 80
             },
             "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac",
             "ps": "5s:EVASION EVASION EVASION %MD%",
