@@ -8016,6 +8016,33 @@
             "pty": 3
           },
           {
+            "freq": 88,
+            "ps": "_TIPIK__",
+            "rt": "Tipik - Keep It Pop !",
+            "pi": "6205",
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "OBRT Tipik",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 5,
+              "azimuth": 54
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-tipik-mp3-160-1909468",
+            "signal": 83,
+            "af": [
+              88
+            ],
+            "logo": "https://i.soupco.net/u/aV108t.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "pty": 10
+          },
+          {
             "freq": 90.5,
             "ps": "5s:CLASS.21",
             "rt": "%MD%",
@@ -8059,8 +8086,8 @@
               "azimuth": 190
             },
             "freq": 92.4,
-            "mount": "https://live.m40radio.fr/listen/m40-humour/m40-humour-128.mp3",
-            "logo": "",
+            "mount": "https://allzic25.ice.infomaniak.ch/allzic25.mp3",
+            "logo": "https://i.soupco.net/u/QlHAfx.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "ps": "100%RIRE",
             "af": [
@@ -8068,7 +8095,10 @@
             ],
             "pty": 23,
             "rdsDisabled": false,
-            "rt": "100% RIRE : L'HUMOUR GARANTI"
+            "rt": [
+              "10s:100% RIRE : L'HUMOUR GARANTI",
+              "10s:(ALLCAPS)100% RIRE : %MD%"
+            ]
           },
           {
             "ps": "MUSIQ 3",
@@ -8181,10 +8211,7 @@
             ],
             "logo": "https://i.soupco.net/raw/csaQau.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "rt": [
-              "%MD%",
-              "10s:Viva Bruxelles - Ma radio complicite"
-            ]
+            "rt": "10s:Viva Bruxelles - Ma radio complicite"
           },
           {
             "freq": 100.4,
@@ -8318,7 +8345,7 @@
           },
           {
             "freq": 105.3,
-            "pi": "0000",
+            "pi": "6218",
             "tp": false,
             "ta": false,
             "ms": "M",
@@ -8333,15 +8360,13 @@
               "azimuth": 89
             },
             "mount": "https://belrtl.ice.infomaniak.ch/belrtl-mp3-192.mp3",
-            "ps": [
-              "3s:TEM_____",
-              "3s:OPERA___",
-              "3s:PLUS____",
-              "3s:5000W___"
-            ],
-            "logo": "",
+            "ps": "3s:BX_!_RTL",
+            "logo": "https://i.soupco.net/u/1ua88T.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "signal": 81
+            "signal": 81,
+            "af": [
+              105.3
+            ]
           },
           {
             "freq": 106.2,
