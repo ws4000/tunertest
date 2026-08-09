@@ -8098,33 +8098,6 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
-            "ps": "__MOUV'_",
-            "pi": "6297",
-            "pty": 0,
-            "tp": true,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 79,
-            "station": {
-              "name": "Mouv'",
-              "city": "Bruxelles",
-              "itu": "BX",
-              "pol": "V",
-              "distance": 21,
-              "azimuth": 80,
-              "erp": 6.3
-            },
-            "mount": "https://icecast.radiofrance.fr/mouv-hifi.aac",
-            "logo": "https://i.soupco.net/u/vAzM7p.png",
-            "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "freq": 102.7,
-            "af": [
-              102.7
-            ],
-            "rt": "MOUV' - CULTURE ET FLOW"
-          },
-          {
             "freq": 95.7,
             "ps": "ROCK_FM_",
             "rt": "(ALLCAPS)%MD%",
@@ -8292,6 +8265,33 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "ps": "__MOUV'_",
+            "pi": "6297",
+            "pty": 0,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79,
+            "station": {
+              "name": "Mouv'",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 80,
+              "erp": 6.3
+            },
+            "mount": "https://icecast.radiofrance.fr/mouv-hifi.aac",
+            "logo": "https://i.soupco.net/u/vAzM7p.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "freq": 102.7,
+            "af": [
+              102.7
+            ],
+            "rt": "MOUV' - CULTURE ET FLOW"
+          },
+          {
             "freq": 103.7,
             "rt": "NRJ HIT MUSIC ONLY !",
             "pi": "6220",
@@ -8314,6 +8314,33 @@
             "ps": "__NRJ___",
             "logo": "https://tef.noobish.eu/logos/BEL/6381.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 105.3,
+            "pi": "0000",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "BX RTL",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 3.792,
+              "pol": "V",
+              "distance": 13,
+              "azimuth": 89
+            },
+            "mount": "https://belrtl.ice.infomaniak.ch/belrtl-mp3-192.mp3",
+            "ps": [
+              "3s:TEM_____",
+              "3s:OPERA___",
+              "3s:PLUS____",
+              "3s:5000W___"
+            ],
+            "logo": "",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "signal": 81
           },
           {
             "freq": 106.2,
