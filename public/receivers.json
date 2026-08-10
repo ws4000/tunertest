@@ -8043,6 +8043,33 @@
             "pty": 10
           },
           {
+            "freq": 88.8,
+            "pi": "6E35",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 39,
+            "station": {
+              "name": "Évasion",
+              "city": "Villers-le-Temple",
+              "itu": "BX",
+              "erp": 1.513,
+              "pol": "V",
+              "distance": 55,
+              "azimuth": 348
+            },
+            "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac",
+            "ps": "5s:EVASION EVASION EVASION %MD%",
+            "logo": "https://i.soupco.net/u/Jl4cxv.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              88.8,
+              106.2
+            ]
+          },
+          {
             "freq": 90.5,
             "ps": "5s:CLASS.21",
             "rt": "%MD%",
@@ -8152,6 +8179,34 @@
               95.7
             ],
             "logo": "https://i.soupco.net/raw/UwwsrC.png"
+          },
+          {
+            "freq": 96.9,
+            "ps": "CONTACT",
+            "rt": "RADIO CONTACT FEELGOOD!",
+            "pi": "6215",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "Radio Contact",
+              "city": "Villers-le-Temple",
+              "itu": "BX",
+              "erp": 10,
+              "pol": "V",
+              "distance": 55,
+              "azimuth": 348
+            },
+            "af": [
+              102.2
+            ],
+            "logo": "https://i.soupco.net/raw/h0Y13n.png",
+            "mount": "https://radiocontact.ice.infomaniak.ch/radiocontact-mp3-192.mp3 ",
+            "volume": 1,
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "signal": 39
           },
           {
             "freq": 97.6,
@@ -8320,6 +8375,34 @@
             "rt": "MOUV' - CULTURE ET FLOW"
           },
           {
+            "freq": 103.4,
+            "rt": "NRJ HIT MUSIC ONLY !",
+            "pi": "6220",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 39,
+            "station": {
+              "name": "NRJ Belvénie",
+              "city": "Villers-le-Temple",
+              "itu": "BX",
+              "erp": 1.513,
+              "pol": "V",
+              "distance": 55,
+              "azimuth": 348
+            },
+            "mount": "https://stream.rcs.revma.com/xh00fwuptg0uv ",
+            "ps": "__NRJ___",
+            "logo": "https://tef.noobish.eu/logos/BEL/6381.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              103.4,
+              103.7
+            ]
+          },
+          {
             "freq": 103.7,
             "rt": "NRJ HIT MUSIC ONLY !",
             "pi": "6220",
@@ -8341,7 +8424,11 @@
             "mount": "https://stream.rcs.revma.com/xh00fwuptg0uv ",
             "ps": "__NRJ___",
             "logo": "https://tef.noobish.eu/logos/BEL/6381.png",
-            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              103.4,
+              103.7
+            ]
           },
           {
             "freq": 105.3,
@@ -8391,6 +8478,7 @@
             "logo": "https://i.soupco.net/u/Jl4cxv.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "af": [
+              88.8,
               106.2
             ]
           },
