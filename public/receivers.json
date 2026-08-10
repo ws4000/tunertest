@@ -4574,7 +4574,7 @@
             },
             "mount": "https://listen.vdfm.ru:8000/rusradio",
             "volume": 1,
-            "logo": "https://tef.noobish.eu/logos/RUS/1016_RUSSKOYERADIO.png"
+            "logo": "https://tef.noobish.eu/logos/RUS/7201_RUSSKOERADIO.png"
           },
           {
             "freq": 95.8,
@@ -8017,7 +8017,7 @@
           },
           {
             "freq": 88,
-            "ps": "_TIPIK__",
+            "ps": "_Tipik__",
             "rt": "Tipik - Keep It Pop !",
             "pi": "6205",
             "tp": true,
@@ -8067,6 +8067,32 @@
             "af": [
               88.8,
               106.2
+            ]
+          },
+          {
+            "freq": 89,
+            "ps": "_PYCCKOE",
+            "pi": "6099",
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "Russkoe Radio",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 16,
+              "azimuth": 320
+            },
+            "mount": "https://listen.vdfm.ru:8000/rusradio",
+            "signal": 81,
+            "logo": "https://tef.noobish.eu/logos/RUS/7201_RUSSKOERADIO.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "pty": 16,
+            "af": [
+              89
             ]
           },
           {
@@ -8511,6 +8537,153 @@
               107.1
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 21,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 89.9
+          },
+          {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 21,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 91.3
+          },
+          {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 21,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 93.6
+          },
+          {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 21,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 94.7
+          },
+          {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 21,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 96.6
+          },
+          {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 21,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 99.7
+          },
+          {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 21,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 101.4
           }
         ],
         "presets": []
