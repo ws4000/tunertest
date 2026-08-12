@@ -8490,6 +8490,7 @@
             "logo": "https://tef.noobish.eu/logos/BEL/6381.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "af": [
+              96.8,
               103.4,
               103.7
             ]
@@ -8516,6 +8517,8 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "signal": 81,
             "af": [
+              90.1,
+              91.1,
               105.3
             ]
           },
@@ -8543,7 +8546,9 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "af": [
               88.8,
-              106.2
+              95.5,
+              106.2,
+              106.6
             ]
           },
           {
