@@ -409,6 +409,38 @@
             "af": [
               107.1
             ]
+          },
+          {
+            "freq": 94.5,
+            "ps": [
+              "3s: K-LOVE",
+              "1s:(ALLCAPS)%MD%"
+            ],
+            "rt": [
+              "10s:(ALLCAPS)%MD%",
+              "10s:K-LOVE - POSITIVE, ENCOURAGING"
+            ],
+            "pi": "2B98",
+            "pty": 19,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79.9,
+            "station": {
+              "name": "OKLS-FM",
+              "city": "Springton",
+              "itu": "OR",
+              "erp": 10,
+              "pol": "C",
+              "distance": 29,
+              "azimuth": 336
+            },
+            "mount": "oklv",
+            "logo": "https://tef.noobish.eu/logos/USA/110F.png",
+            "af": [
+              94.5
+            ]
           }
         ],
         "presets": [
@@ -442,11 +474,13 @@
         "audioDelayMs": 800,
         "stations": [
           {
-            "ps": " K-LOVE ",
-            "rt": "",
+            "ps": [
+              "3s: K-LOVE",
+              "1s:(ALLCAPS)%MD%"
+            ],
             "pi": "A743",
             "pty": 19,
-            "tp": false,
+            "tp": true,
             "ta": false,
             "ms": "M",
             "stereo": true,
@@ -461,9 +495,13 @@
               "distance": 14
             },
             "freq": 89.1,
-            "mount": "https://emf-seg001271.cdnstream1.com/seg001271-h128/playlist.m3u8",
+            "mount": "oklv",
             "volume": 1,
-            "logo": "https://tef.noobish.eu/logos/USA/110F.png"
+            "logo": "https://tef.noobish.eu/logos/USA/110F.png",
+            "rt": [
+              "10s:(ALLCAPS)%MD%",
+              "10s:K-LOVE - POSITIVE, ENCOURAGING"
+            ]
           },
           {
             "freq": 89.5,
