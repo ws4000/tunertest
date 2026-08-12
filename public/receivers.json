@@ -8751,6 +8751,33 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "volume": 1,
             "audibleBandwidth": 0.25
+          },
+          {
+            "freq": 98.8,
+            "ps": "K-Love",
+            "rt": "%MD%",
+            "pi": "6102",
+            "pty": 20,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 77.5,
+            "station": {
+              "name": "K-Love Bruxelles",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "pol": "H",
+              "distance": 12,
+              "azimuth": 153,
+              "erp": 0.63
+            },
+            "mount": "oklv",
+            "logo": "https://tef.noobish.eu/logos/USA/110F.png",
+            "af": [
+              98.8
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           }
         ],
         "presets": []
