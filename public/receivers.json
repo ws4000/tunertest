@@ -8839,7 +8839,7 @@
         "tuningMin": 87.5,
         "tuningMax": 108,
         "tuningStep": 0.1,
-        "defaultFrequency": 100,
+        "defaultFrequency": 99.1,
         "noiseFloorDbf": 2,
         "audibleBandwidth": 0.2,
         "audioDelayMs": 800,
