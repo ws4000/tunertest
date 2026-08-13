@@ -9239,6 +9239,7 @@
             "af": [
               90.1,
               99.1,
+              103.7,
               105.3
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
@@ -9385,6 +9386,36 @@
               100.8,
               102.7
             ]
+          },
+          {
+            "freq": 103.7,
+            "ps": "BX_!_RTL",
+            "rt": "",
+            "pi": "6218",
+            "pty": 0,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 27,
+            "station": {
+              "name": "BX RTL",
+              "city": "Vendôme",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 38,
+              "azimuth": 353
+            },
+            "mount": "https://belrtl.ice.infomaniak.ch/belrtl-mp3-192.mp3",
+            "logo": "https://i.soupco.net/u/1ua88T.png",
+            "af": [
+              90.1,
+              99.1,
+              103.7,
+              105.3
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 105.6,
