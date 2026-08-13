@@ -8399,9 +8399,10 @@
               "azimuth": 80
             },
             "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
-            "logo": "https://tef.noobish.eu/logos/F/F22C.png",
+            "logo": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
             "af": [
-              100.8
+              100.8,
+              102.7
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
@@ -9359,13 +9360,40 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "freq": 102.7,
+            "ps": "__FG.____",
+            "rt": "FG. DJ Radio",
+            "pi": "622C",
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 88,
+            "station": {
+              "name": "Radio FG.",
+              "city": "Jamagne",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "H",
+              "distance": 8,
+              "azimuth": 105
+            },
+            "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
+            "logo": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              100.8,
+              102.7
+            ]
+          },
+          {
             "freq": 105.6,
             "ps": [
               "4s:ANTENNE",
               "4s:JAMAGNE"
             ],
             "rt": "(ALLCAPS)%MD%",
-            "pi": "0000",
+            "pi": "6647",
             "pty": 0,
             "tp": true,
             "ta": false,
