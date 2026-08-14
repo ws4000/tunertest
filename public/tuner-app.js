@@ -684,20 +684,20 @@
       pool.delete(m);
     }
   }
-  // Static-noise level (0..1) as a function of raw dBf signal, per spec:
-  //   <10-15 dBf : heavy static
-  //   15-30 dBf  : weak / fringe (noisier in stereo)
-  //   30-50 dBf  : clear in mono, faint hiss in stereo
-  //   50+ dBf    : silent
+  // Static-noise level (0..1) as a function of raw dBf signal:
+  //   <10 dBf    : heavy static
+  //   10-25 dBf  : weak / fringe (noisier in stereo)
+  //   25-40 dBf  : decent, only faint hiss (semi-local)
+  //   40+ dBf    : local, silent
   function noiseAmountFromDbf(dbf, stereoActive) {
     let base;
-    if (dbf >= 50)      base = 0;
-    else if (dbf >= 30) base = 0.06 * (1 - (dbf - 30) / 20);
-    else if (dbf >= 15) base = 0.06 + 0.19 * (1 - (dbf - 15) / 15);
-    else if (dbf >= 10) base = 0.25 + 0.15 * (1 - (dbf - 10) / 5);
-    else                base = 0.40 + 0.25 * clamp((10 - dbf) / 10, 0, 1);
-    if (stereoActive && dbf < 50) {
-      base += 0.08 * (1 - clamp((dbf - 15) / 35, 0, 1));
+    if (dbf >= 40)      base = 0;
+    else if (dbf >= 25) base = 0.04 * (1 - (dbf - 25) / 15);
+    else if (dbf >= 15) base = 0.04 + 0.16 * (1 - (dbf - 15) / 10);
+    else if (dbf >= 10) base = 0.20 + 0.18 * (1 - (dbf - 10) / 5);
+    else                base = 0.38 + 0.27 * clamp((10 - dbf) / 10, 0, 1);
+    if (stereoActive && dbf < 40) {
+      base += 0.07 * (1 - clamp((dbf - 12) / 28, 0, 1));
     }
     return clamp(base, 0, 0.75);
   }
@@ -706,9 +706,11 @@
     const bw = audibleBwFor(currentStation);
     const inside = currentStation && Math.abs(offset) <= bw;
     const onFreq = currentStation && Math.abs(offset) <= RDS_LOCK_BW;
-    // Quality [0..1] mapped using the same dBf thresholds as the noise
-    // curve above: 15 dBf → 0 (fringe), 50 dBf → 1 (clean).
-    const quality = clamp((sig - 15) / 35, 0, 1);
+    // Quality [0..1] using the same dBf thresholds as the noise curve:
+    // 10 dBf → 0 (fringe), 25 dBf → 0.7 (decent), 40 dBf → 1 (local).
+    const quality = sig >= 25
+      ? clamp(0.7 + (sig - 25) / 15 * 0.3, 0, 1)
+      : clamp((sig - 10) / 15 * 0.7, 0, 1);
     lastQuality = quality;
     const offR = currentStation ? clamp(Math.abs(offset) / bw, 0, 1) : 1;
     const now = performance.now();
