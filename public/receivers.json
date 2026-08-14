@@ -8744,25 +8744,31 @@
             "freq": 99.7
           },
           {
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
+            "ps": "_Gay_FM_",
+            "rt": "Pure Dance",
+            "pi": "6077",
             "pty": 0,
-            "tp": false,
+            "tp": true,
             "ta": false,
             "ms": "M",
             "stereo": true,
             "signal": 81,
             "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
+              "name": "Gay FM",
+              "city": "Bruxelles",
+              "itu": "BX",
               "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
+              "pol": "V",
+              "distance": 16,
+              "azimuth": 320
             },
-            "freq": 101.4
+            "freq": 101.4,
+            "mount": "https://icepool.silvacast.com/GAYFM.mp3",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              101.4
+            ],
+            "logo": "https://i.soupco.net/u/Axzd1C.png"
           },
           {
             "freq": 106.7,
