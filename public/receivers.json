@@ -9659,6 +9659,63 @@
               106
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 98,
+            "ps": "100/100_",
+            "rt": "100% LES TUBES ET L'INFO DE VENDOME",
+            "pi": "6692",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "100% Radio",
+              "city": "Vendôme",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 38,
+              "azimuth": 353
+            },
+            "signal": 27,
+            "mount": "https://100radio-herault.ice.infomaniak.ch/100radio-herault-128.mp3",
+            "logo": "https://i.soupco.net/u/yyEnQQ.png",
+            "af": [
+              89.8,
+              98
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 89.8,
+            "ps": "100/100_",
+            "rt": "100% LES TUBES ET L'INFO DE BALAGNE",
+            "pi": "6692",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "100% Radio",
+              "city": "Vendôme",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 38,
+              "azimuth": 353
+            },
+            "signal": 11,
+            "mount": "https://100radio-herault.ice.infomaniak.ch/100radio-herault-128.mp3",
+            "logo": "https://i.soupco.net/u/yyEnQQ.png",
+            "af": [
+              89.8,
+              98
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "rdsDisabled": true
           }
         ],
         "presets": []
