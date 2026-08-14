@@ -8401,6 +8401,7 @@
             "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
             "logo": "https://tef.noobish.eu/logos/F/F22C.png",
             "af": [
+              91.4,
               100.8,
               102.7
             ],
@@ -8786,6 +8787,8 @@
             "logo": "https://tef.noobish.eu/logos/BEL/6220.png",
             "mount": "https://rcfing.streamakaci.com/rcfbruxelles.mp3 ",
             "af": [
+              96.7,
+              98.7,
               106.7
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
@@ -8989,6 +8992,34 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "freq": 91.4,
+            "ps": "__FG.___",
+            "rt": "FG. DJ Radio",
+            "pi": "622C",
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 41,
+            "station": {
+              "name": "Radio FG.",
+              "city": "Vendôme",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 8
+            },
+            "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
+            "logo": "https://tef.noobish.eu/logos/F/F22C.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              91.4,
+              100.8,
+              102.7
+            ]
+          },
+          {
             "pi": "",
             "tp": false,
             "ta": false,
@@ -9073,6 +9104,35 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "freq": 93.2,
+            "ps": "NOSTALGI",
+            "rt": "%MD%",
+            "pi": "6214",
+            "pty": 0,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 41,
+            "station": {
+              "name": "Nostalgie Belvénie",
+              "city": "Vendôme",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 8
+            },
+            "mount": "https://stream.rcs.revma.com/5gd04cwptg0uv ",
+            "logo": "https://tef.noobish.eu/logos/F/F218.svg",
+            "af": [
+              93.2,
+              93.4,
+              100.4
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
             "freq": 95.8,
             "ps": "__NRJ___",
             "rt": "NRJ HIT MUSIC ONLY !",
@@ -9099,6 +9159,35 @@
               96.8,
               103.4,
               103.7
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 96.7,
+            "ps": "__RCF___",
+            "rt": "La Joie se partage",
+            "pi": "622A",
+            "pty": 7,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 38,
+            "station": {
+              "name": "RCF Belvénie",
+              "city": "Vendôme",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 8,
+              "erp": 0.5
+            },
+            "mount": "https://rcfing.streamakaci.com/rcfbruxelles.mp3 ",
+            "logo": "https://tef.noobish.eu/logos/BEL/6220.png",
+            "af": [
+              96.7,
+              98.7,
+              106.7
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
@@ -9149,6 +9238,37 @@
             "af": [
               96.9,
               97.7,
+              100.7,
+              102.2
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 100.7,
+            "ps": "CONTACT",
+            "rt": "RADIO CONTACT FEELGOOD!",
+            "pi": "6215",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "Radio Contact",
+              "city": "Vendôme",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 8,
+              "erp": 1
+            },
+            "mount": "https://radiocontact.ice.infomaniak.ch/radiocontact-mp3-192.mp3 ",
+            "signal": 41,
+            "logo": "https://i.soupco.net/raw/h0Y13n.png",
+            "af": [
+              96.9,
+              97.7,
+              100.7,
               102.2
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
@@ -9209,6 +9329,7 @@
             "mount": "https://rcfing.streamakaci.com/rcfbruxelles.mp3 ",
             "logo": "https://tef.noobish.eu/logos/BEL/6220.png",
             "af": [
+              96.7,
               98.7,
               106.7
             ],
@@ -9243,6 +9364,35 @@
               105.3
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 100,
+            "ps": "__MOUV'_",
+            "rt": "MOUV' - CULTURE ET FLOW",
+            "pi": "6297",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "station": {
+              "name": "Mouv'",
+              "city": "Vendôme",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 8,
+              "erp": 0.2
+            },
+            "mount": "https://icecast.radiofrance.fr/mouv-hifi.aac",
+            "af": [
+              100.3,
+              102.7
+            ],
+            "logo": "https://i.soupco.net/u/vAzM7p.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "signal": 7,
+            "rdsDisabled": true
           },
           {
             "freq": 100.3,
@@ -9383,6 +9533,7 @@
             "logo": "https://tef.noobish.eu/logos/F/F22C.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "af": [
+              91.4,
               100.8,
               102.7
             ]
@@ -9418,6 +9569,34 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "freq": 104.3,
+            "ps": "_F_U_N__",
+            "rt": "Enjoy Dance Music !",
+            "pi": "6217",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 41,
+            "station": {
+              "name": "Fun Radio",
+              "city": "Vendôme",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 8
+            },
+            "mount": "https://funradiobe.ice.infomaniak.ch/funradiobe-high.mp3",
+            "logo": "https://tef.noobish.eu/logos/BEL/6217.png",
+            "af": [
+              104.3,
+              107.1
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
             "freq": 105.6,
             "ps": [
               "4s:ANTENNE",
@@ -9444,6 +9623,36 @@
             ],
             "signal": 96,
             "mount": "https://francais.stream.laut.fm/francais"
+          },
+          {
+            "freq": 106,
+            "ps": "__NRJ___",
+            "pi": "6220",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 41,
+            "station": {
+              "name": "NRJ Belvénie",
+              "city": "Vendôme",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 8
+            },
+            "mount": "https://stream.rcs.revma.com/xh00fwuptg0uv ",
+            "logo": "https://tef.noobish.eu/logos/BEL/6381.png",
+            "rt": "NRJ HIT MUSIC ONLY !",
+            "af": [
+              95.8,
+              96.8,
+              103.7,
+              106
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           }
         ],
         "presets": []
