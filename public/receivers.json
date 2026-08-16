@@ -8140,6 +8140,35 @@
             ]
           },
           {
+            "ps": [
+              "3.5s:>BLAHAJ>",
+              "3.5s:<BLAHAJ<"
+            ],
+            "rt": "%MD%",
+            "pi": "6063",
+            "pty": 0,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 81,
+            "station": {
+              "name": "Blahaj FM",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 16,
+              "azimuth": 320
+            },
+            "freq": 89.9,
+            "mount": "blahajfm",
+            "af": [
+              89.9
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
             "freq": 90.5,
             "ps": "5s:CLASS.21",
             "rt": "%MD%",
@@ -8169,6 +8198,27 @@
             ],
             "logo": "https://i.soupco.net/raw/uUzicS.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 81,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 91.3
           },
           {
             "pi": "6219",
@@ -8235,6 +8285,48 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 81,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 93.6
+          },
+          {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 81,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 94.7
+          },
+          {
             "freq": 95.7,
             "ps": "ROCK_FM_",
             "rt": "(ALLCAPS)%MD%",
@@ -8259,6 +8351,27 @@
               95.7
             ],
             "logo": "https://i.soupco.net/raw/UwwsrC.png"
+          },
+          {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 81,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 96.6
           },
           {
             "freq": 96.9,
@@ -8355,6 +8468,54 @@
             "rt": "10s:Viva Bruxelles - Ma radio complicite"
           },
           {
+            "freq": 98.8,
+            "ps": "K-Love",
+            "rt": "%MD%",
+            "pi": "6102",
+            "pty": 20,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 77.5,
+            "station": {
+              "name": "K-Love Bruxelles",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "pol": "H",
+              "distance": 12,
+              "azimuth": 153,
+              "erp": 0.63
+            },
+            "mount": "oklv",
+            "logo": "https://tef.noobish.eu/logos/USA/110F.png",
+            "af": [
+              98.8
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 81,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "freq": 99.7
+          },
+          {
             "freq": 100.4,
             "ps": "NOSTALGI",
             "rt": "%MD%",
@@ -8406,6 +8567,33 @@
               102.7
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "ps": "_Gay_FM_",
+            "rt": "Pure Dance",
+            "pi": "6077",
+            "pty": 0,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 81,
+            "station": {
+              "name": "Gay FM",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 16,
+              "azimuth": 320
+            },
+            "freq": 101.4,
+            "mount": "https://icepool.silvacast.com/GAYFM.mp3",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              101.4
+            ],
+            "logo": "https://i.soupco.net/u/Axzd1C.png"
           },
           {
             "freq": 102.2,
@@ -8550,6 +8738,33 @@
             ]
           },
           {
+            "freq": 105.7,
+            "ps": "RTO R1 D",
+            "rt": "RTO R1 Dance -> %MD%",
+            "pi": "6103",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "RTO Radio 1 Dance [F]",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 17,
+              "azimuth": 149
+            },
+            "mount": "rtor1dance",
+            "signal": 78,
+            "logo": "https://i.soupco.net/u/YnDQDg.png",
+            "af": [
+              105.7
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
             "freq": 106.2,
             "pi": "6E35",
             "pty": 10,
@@ -8578,197 +8793,6 @@
               106.2,
               106.6
             ]
-          },
-          {
-            "freq": 107.1,
-            "ps": "_F_U_N__",
-            "rt": [
-              "10s:Enjoy Dance Music !",
-              "10s:%MD%"
-            ],
-            "pi": "6217",
-            "pty": 10,
-            "tp": true,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 78,
-            "station": {
-              "name": "Fun Radio",
-              "city": "Bruxelles",
-              "itu": "BX",
-              "erp": 4,
-              "pol": "V",
-              "distance": 21,
-              "azimuth": 80
-            },
-            "mount": "https://funradiobe.ice.infomaniak.ch/funradiobe-high.mp3",
-            "logo": "https://tef.noobish.eu/logos/BEL/6217.png",
-            "af": [
-              107.1
-            ],
-            "flag": "https://i.soupco.net/raw/qrIs9T.png"
-          },
-          {
-            "ps": [
-              "3.5s:>BLAHAJ>",
-              "3.5s:<BLAHAJ<"
-            ],
-            "rt": "%MD%",
-            "pi": "6063",
-            "pty": 0,
-            "tp": true,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 81,
-            "station": {
-              "name": "Blahaj FM",
-              "city": "Bruxelles",
-              "itu": "BX",
-              "erp": 1,
-              "pol": "V",
-              "distance": 16,
-              "azimuth": 320
-            },
-            "freq": 89.9,
-            "mount": "blahajfm",
-            "af": [
-              89.9
-            ],
-            "flag": "https://i.soupco.net/raw/qrIs9T.png"
-          },
-          {
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
-            "pty": 0,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 81,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            },
-            "freq": 91.3
-          },
-          {
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
-            "pty": 0,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 81,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            },
-            "freq": 93.6
-          },
-          {
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
-            "pty": 0,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 81,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            },
-            "freq": 94.7
-          },
-          {
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
-            "pty": 0,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 81,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            },
-            "freq": 96.6
-          },
-          {
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
-            "pty": 0,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 81,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            },
-            "freq": 99.7
-          },
-          {
-            "ps": "_Gay_FM_",
-            "rt": "Pure Dance",
-            "pi": "6077",
-            "pty": 0,
-            "tp": true,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 81,
-            "station": {
-              "name": "Gay FM",
-              "city": "Bruxelles",
-              "itu": "BX",
-              "erp": 1,
-              "pol": "V",
-              "distance": 16,
-              "azimuth": 320
-            },
-            "freq": 101.4,
-            "mount": "https://icepool.silvacast.com/GAYFM.mp3",
-            "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "af": [
-              101.4
-            ],
-            "logo": "https://i.soupco.net/u/Axzd1C.png"
           },
           {
             "freq": 106.7,
@@ -8802,31 +8826,55 @@
             "audibleBandwidth": 0.25
           },
           {
-            "freq": 98.8,
-            "ps": "K-Love",
-            "rt": "%MD%",
-            "pi": "6102",
-            "pty": 20,
+            "freq": 107.1,
+            "ps": "_F_U_N__",
+            "rt": [
+              "10s:Enjoy Dance Music !",
+              "10s:%MD%"
+            ],
+            "pi": "6217",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 78,
+            "station": {
+              "name": "Fun Radio",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 4,
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 80
+            },
+            "mount": "https://funradiobe.ice.infomaniak.ch/funradiobe-high.mp3",
+            "logo": "https://tef.noobish.eu/logos/BEL/6217.png",
+            "af": [
+              107.1
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 100,
+            "ps": "        ",
+            "rt": "",
+            "pi": "0000",
+            "pty": 0,
             "tp": false,
             "ta": false,
             "ms": "M",
-            "stereo": false,
-            "signal": 77.5,
+            "stereo": true,
+            "signal": 80,
             "station": {
-              "name": "K-Love Bruxelles",
-              "city": "Bruxelles",
-              "itu": "BX",
-              "pol": "H",
-              "distance": 12,
-              "azimuth": 153,
-              "erp": 0.63
-            },
-            "mount": "oklv",
-            "logo": "https://tef.noobish.eu/logos/USA/110F.png",
-            "af": [
-              98.8
-            ],
-            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            }
           }
         ],
         "presets": []
