@@ -8881,27 +8881,6 @@
               107.1
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
-          },
-          {
-            "freq": 100,
-            "ps": "        ",
-            "rt": "",
-            "pi": "0000",
-            "pty": 0,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 80,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            }
           }
         ],
         "presets": []
