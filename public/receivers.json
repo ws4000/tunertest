@@ -8285,25 +8285,42 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
+            "ps": [
+              "1s:BruxLati",
+              "1s:ruxLatin",
+              "1s:uxLatina",
+              "1s:xLatina",
+              "1s:Latina B",
+              "1s:atina Br",
+              "1s:tina Bru",
+              "1s:ina Brux",
+              "1s:na BruxL",
+              "1s:a BruxLa",
+              "1s:_BruxLat"
+            ],
+            "pi": "6060",
             "pty": 0,
-            "tp": false,
+            "tp": true,
             "ta": false,
             "ms": "M",
             "stereo": true,
             "signal": 81,
             "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
+              "name": "BruxLatina",
+              "city": "Bruxelles",
+              "itu": "BX",
               "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
+              "pol": "V",
+              "distance": 16,
+              "azimuth": 320
             },
-            "freq": 93.6
+            "freq": 93.6,
+            "mount": "https://breakbeatradio.stream.laut.fm/breakbeatradio",
+            "af": [
+              93.6
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "rt": "BRUXLATINA"
           },
           {
             "ps": "        ",
@@ -8353,25 +8370,30 @@
             "logo": "https://i.soupco.net/raw/UwwsrC.png"
           },
           {
-            "ps": "        ",
+            "ps": "CAMPUSBX",
             "rt": "",
-            "pi": "",
-            "pty": 0,
+            "pi": "60A6",
+            "pty": 5,
             "tp": false,
             "ta": false,
             "ms": "M",
             "stereo": true,
             "signal": 81,
             "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
+              "name": "Radio Campus Bruxelles",
+              "city": "Bruxelles",
+              "itu": "BX",
               "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
+              "pol": "V",
+              "distance": 16,
+              "azimuth": 320
             },
-            "freq": 96.6
+            "freq": 96.6,
+            "mount": "https://www.radiocampus.be/stream/stream_hi.ogg",
+            "af": [
+              96.6
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 96.9,
@@ -8495,25 +8517,30 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
-            "pty": 0,
+            "ps": "TRIX FM",
+            "rt": "%MD%",
+            "pi": "6092",
+            "pty": 10,
             "tp": false,
             "ta": false,
             "ms": "M",
             "stereo": true,
             "signal": 81,
             "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
+              "name": "Trix FM",
+              "city": "Bruxelles",
+              "itu": "BX",
               "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
+              "pol": "V",
+              "distance": 16,
+              "azimuth": 320
             },
-            "freq": 99.7
+            "freq": 99.7,
+            "mount": "https://dnbzone.stream.laut.fm/dnbzone",
+            "af": [
+              99.7
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 100.4,
