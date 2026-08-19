@@ -8235,25 +8235,30 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
-            "pty": 0,
-            "tp": false,
+            "ps": "CZ WAVE",
+            "rt": "Czech Wave v Bruselu - Pouze ceska hudba, na 91,3",
+            "pi": "60A1",
+            "pty": 10,
+            "tp": true,
             "ta": false,
             "ms": "M",
             "stereo": true,
             "signal": 81,
             "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
+              "name": "Czech Wave",
+              "city": "Bruxelles",
+              "itu": "BX",
               "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
+              "pol": "V",
+              "distance": 16,
+              "azimuth": 320
             },
-            "freq": 91.3
+            "freq": 91.3,
+            "mount": "https://ice4.radia.cz/coop128.mp3 ",
+            "af": [
+              91.3
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "pi": "6219",
