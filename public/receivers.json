@@ -4389,9 +4389,12 @@
             "pi": "8E11",
             "pty": 27,
             "af": [
+              89.5,
               "90.8",
               "90.9",
-              "105.5"
+              "105.5",
+              105.7,
+              106.7
             ],
             "tp": false,
             "ta": false,
@@ -8140,6 +8143,38 @@
             ]
           },
           {
+            "freq": 89.5,
+            "ps": "_RTO_R2_",
+            "pi": "6102",
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "RTO Radio 2 [F]",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 6.384,
+              "pol": "M",
+              "distance": 17,
+              "azimuth": 149
+            },
+            "mount": "rtor2",
+            "signal": 81,
+            "logo": "https://i.soupco.net/u/NoR7lq.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "pty": 27,
+            "rt": "RTO Radio 2 -> %MD%",
+            "af": [
+              89.5,
+              90.8,
+              90.9,
+              105.5,
+              105.7,
+              106.7
+            ]
+          },
+          {
             "ps": [
               "3.5s:>BLAHAJ>",
               "3.5s:<BLAHAJ<"
@@ -8766,26 +8801,26 @@
           },
           {
             "freq": 105.7,
-            "ps": "RTO R1 D",
-            "rt": "RTO R1 Dance -> %MD%",
-            "pi": "6103",
+            "ps": " R F I  ",
+            "rt": "RFI Bruxelles 105.7",
+            "pi": "61F1",
             "pty": 10,
             "tp": true,
             "ta": false,
             "ms": "M",
             "stereo": true,
             "station": {
-              "name": "RTO Radio 1 Dance [F]",
+              "name": "RFI",
               "city": "Bruxelles",
               "itu": "BX",
-              "erp": 1,
+              "erp": 4,
               "pol": "V",
               "distance": 17,
               "azimuth": 149
             },
-            "mount": "rtor1dance",
+            "mount": "https://rfimonde-96k.ice.infomaniak.ch/rfimonde-96k.mp3",
             "signal": 78,
-            "logo": "https://i.soupco.net/u/YnDQDg.png",
+            "logo": "https://i.soupco.net/u/x0Pvqw.png",
             "af": [
               105.7
             ],
