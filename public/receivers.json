@@ -8325,28 +8325,15 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
-            "ps": [
-              "1s:BruxLati",
-              "1s:ruxLatin",
-              "1s:uxLatina",
-              "1s:xLatina",
-              "1s:Latina B",
-              "1s:atina Br",
-              "1s:tina Bru",
-              "1s:ina Brux",
-              "1s:na BruxL",
-              "1s:a BruxLa",
-              "1s:_BruxLat"
-            ],
-            "pi": "6060",
-            "pty": 0,
+            "pi": "622B",
+            "pty": 10,
             "tp": true,
             "ta": false,
             "ms": "M",
             "stereo": true,
             "signal": 81,
             "station": {
-              "name": "BruxLatina",
+              "name": "Hitradio",
               "city": "Bruxelles",
               "itu": "BX",
               "erp": 1,
@@ -8355,12 +8342,14 @@
               "azimuth": 320
             },
             "freq": 93.6,
-            "mount": "https://breakbeatradio.stream.laut.fm/breakbeatradio",
+            "mount": "https://25643.live.streamtheworld.com/HITRADIO_CITY_PRAHA.aac",
             "af": [
               93.6
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "rt": "BRUXLATINA"
+            "rt": "%MD%",
+            "ps": "HITRADIO",
+            "logo": "https://i.soupco.net/u/6ojpf6.png"
           },
           {
             "ps": "        ",
