@@ -975,6 +975,29 @@
             "mount": "https://stream.jeyradio.nl/JEY",
             "logo": "https://i.soupco.net/u/Hqs99I.png",
             "flag": "https://i.soupco.net/raw/aqJ9Ug.png"
+          },
+          {
+            "freq": 103.5,
+            "ps": "Z103.5 %MD%",
+            "rt": "%MD%",
+            "pi": "9584",
+            "pty": 0,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 68,
+            "station": {
+              "name": "CIDC-FM",
+              "city": "Gluckstadt",
+              "itu": "OR",
+              "erp": 298,
+              "pol": "M",
+              "distance": 40,
+              "azimuth": 285
+            },
+            "mount": "z1035brokenarrow",
+            "logo": "https://tef.noobish.eu/logos/CAN/C6D6.png"
           }
         ],
         "presets": []
@@ -8293,7 +8316,7 @@
           },
           {
             "ps": "MUSIQ 3",
-            "rt": "%MD%",
+            "rt": "Musiq 3 - Changez d'airs",
             "pi": "6203",
             "pty": 14,
             "tp": true,
@@ -9128,7 +9151,7 @@
           },
           {
             "ps": "MUSIQ 3",
-            "rt": "%MD%",
+            "rt": "Musiq 3 - Changez d'airs",
             "pi": "6203",
             "pty": 14,
             "tp": true,
@@ -9161,7 +9184,6 @@
           },
           {
             "ps": "MUSIQ 3",
-            "rt": "%MD%",
             "pi": "6203",
             "pty": 14,
             "tp": true,
@@ -9190,7 +9212,8 @@
               94.2
             ],
             "logo": "https://i.soupco.net/raw/k5zlLh.png",
-            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "rt": "Musiq 3 - Changez d'airs"
           },
           {
             "freq": 93.2,
