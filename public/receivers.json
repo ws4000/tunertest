@@ -8106,7 +8106,8 @@
             "mount": "https://redbeemedia.streamabc.net/redbm-tipik-mp3-160-1909468",
             "signal": 83,
             "af": [
-              88
+              88,
+              99.6
             ],
             "logo": "https://i.soupco.net/u/aV108t.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
@@ -8569,7 +8570,7 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
-            "ps": "TRIX FM",
+            "ps": "_PAN!K__",
             "rt": "%MD%",
             "pi": "6092",
             "pty": 10,
@@ -8579,7 +8580,7 @@
             "stereo": true,
             "signal": 81,
             "station": {
-              "name": "Trix FM",
+              "name": "Pan!k",
               "city": "Bruxelles",
               "itu": "BX",
               "erp": 1,
@@ -8588,11 +8589,12 @@
               "azimuth": 320
             },
             "freq": 99.7,
-            "mount": "https://dnbzone.stream.laut.fm/dnbzone",
+            "mount": "panik",
             "af": [
               99.7
             ],
-            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "logo": "https://i.soupco.net/u/nx57uJ.png"
           },
           {
             "freq": 100.4,
@@ -8643,7 +8645,8 @@
             "af": [
               91.4,
               100.8,
-              102.7
+              102.7,
+              103
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
@@ -9050,6 +9053,35 @@
             "rdsDisabled": true
           },
           {
+            "freq": 89.8,
+            "ps": "100/100_",
+            "rt": "100% LES TUBES ET L'INFO DE BALAGNE",
+            "pi": "6692",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "100% Radio",
+              "city": "Vendôme",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 38,
+              "azimuth": 353
+            },
+            "signal": 11,
+            "mount": "https://100radio-herault.ice.infomaniak.ch/100radio-herault-128.mp3",
+            "logo": "https://i.soupco.net/u/yyEnQQ.png",
+            "af": [
+              89.8,
+              98
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "rdsDisabled": true
+          },
+          {
             "freq": 90.1,
             "ps": "        ",
             "rt": "",
@@ -9245,6 +9277,30 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "freq": 93.4,
+            "ps": "HITRADIO",
+            "rt": "%MD%",
+            "pi": "622B",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 88,
+            "station": {
+              "name": "Hitradio",
+              "city": "Jamagne",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "H",
+              "distance": 8,
+              "azimuth": 105
+            },
+            "mount": "https://25643.live.streamtheworld.com/HITRADIO_CITY_PRAHA.aac",
+            "logo": "https://i.soupco.net/u/6ojpf6.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
             "freq": 95.8,
             "ps": "__NRJ___",
             "rt": "NRJ HIT MUSIC ONLY !",
@@ -9356,32 +9412,30 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
-            "freq": 100.7,
-            "ps": "CONTACT",
-            "rt": "RADIO CONTACT FEELGOOD!",
-            "pi": "6215",
+            "freq": 98,
+            "ps": "100/100_",
+            "rt": "100% LES TUBES ET L'INFO DE VENDOME",
+            "pi": "6692",
             "pty": 10,
-            "tp": true,
+            "tp": false,
             "ta": false,
             "ms": "M",
             "stereo": true,
             "station": {
-              "name": "Radio Contact",
+              "name": "100% Radio",
               "city": "Vendôme",
               "itu": "BX",
+              "erp": 1,
               "pol": "V",
-              "distance": 21,
-              "azimuth": 8,
-              "erp": 1
+              "distance": 38,
+              "azimuth": 353
             },
-            "mount": "https://radiocontact.ice.infomaniak.ch/radiocontact-mp3-192.mp3 ",
-            "signal": 41,
-            "logo": "https://i.soupco.net/raw/h0Y13n.png",
+            "signal": 27,
+            "mount": "https://100radio-herault.ice.infomaniak.ch/100radio-herault-128.mp3",
+            "logo": "https://i.soupco.net/u/yyEnQQ.png",
             "af": [
-              96.9,
-              97.7,
-              100.7,
-              102.2
+              89.8,
+              98
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
@@ -9478,6 +9532,34 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "freq": 99.6,
+            "ps": "_Tipik__",
+            "rt": "Tipik - Keep It Pop !",
+            "pi": "6205",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 70,
+            "station": {
+              "name": "OBRT Tipik",
+              "city": "Saint-Remy-la-Forêt",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 31,
+              "azimuth": 213
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-tipik-mp3-160-1909468",
+            "logo": "https://i.soupco.net/u/aV108t.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              88,
+              99.6
+            ]
+          },
+          {
             "freq": 100,
             "ps": "__MOUV'_",
             "rt": "MOUV' - CULTURE ET FLOW",
@@ -9532,6 +9614,36 @@
               102.7
             ],
             "logo": "https://i.soupco.net/u/vAzM7p.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 100.7,
+            "ps": "CONTACT",
+            "rt": "RADIO CONTACT FEELGOOD!",
+            "pi": "6215",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "Radio Contact",
+              "city": "Vendôme",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 21,
+              "azimuth": 8,
+              "erp": 1
+            },
+            "mount": "https://radiocontact.ice.infomaniak.ch/radiocontact-mp3-192.mp3 ",
+            "signal": 41,
+            "logo": "https://i.soupco.net/raw/h0Y13n.png",
+            "af": [
+              96.9,
+              97.7,
+              100.7,
+              102.2
+            ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
@@ -9765,63 +9877,6 @@
               106
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
-          },
-          {
-            "freq": 98,
-            "ps": "100/100_",
-            "rt": "100% LES TUBES ET L'INFO DE VENDOME",
-            "pi": "6692",
-            "pty": 10,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "station": {
-              "name": "100% Radio",
-              "city": "Vendôme",
-              "itu": "BX",
-              "erp": 1,
-              "pol": "V",
-              "distance": 38,
-              "azimuth": 353
-            },
-            "signal": 27,
-            "mount": "https://100radio-herault.ice.infomaniak.ch/100radio-herault-128.mp3",
-            "logo": "https://i.soupco.net/u/yyEnQQ.png",
-            "af": [
-              89.8,
-              98
-            ],
-            "flag": "https://i.soupco.net/raw/qrIs9T.png"
-          },
-          {
-            "freq": 89.8,
-            "ps": "100/100_",
-            "rt": "100% LES TUBES ET L'INFO DE BALAGNE",
-            "pi": "6692",
-            "pty": 10,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "station": {
-              "name": "100% Radio",
-              "city": "Vendôme",
-              "itu": "BX",
-              "erp": 1,
-              "pol": "V",
-              "distance": 38,
-              "azimuth": 353
-            },
-            "signal": 11,
-            "mount": "https://100radio-herault.ice.infomaniak.ch/100radio-herault-128.mp3",
-            "logo": "https://i.soupco.net/u/yyEnQQ.png",
-            "af": [
-              89.8,
-              98
-            ],
-            "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "rdsDisabled": true
           }
         ],
         "presets": []
