@@ -8114,6 +8114,33 @@
             "pty": 10
           },
           {
+            "freq": 88.5,
+            "ps": "JUNIOR__",
+            "rt": "%MD%",
+            "pi": "6023",
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "Radio Junior",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 15,
+              "azimuth": 143
+            },
+            "mount": "https://stream.votreradiosurlenet.eu/radiojunior.mp3",
+            "signal": 83,
+            "logo": "https://i.soupco.net/u/02YjpH.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "pty": 10,
+            "af": [
+              88.5
+            ]
+          },
+          {
             "freq": 88.8,
             "pi": "6E35",
             "pty": 10,
@@ -9815,6 +9842,7 @@
             "mount": "funbelvenia",
             "logo": "https://i.soupco.net/u/uSWSQj.png",
             "af": [
+              92.2,
               104.3,
               107.1
             ],
