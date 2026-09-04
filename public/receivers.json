@@ -8086,32 +8086,35 @@
             "pty": 3
           },
           {
-            "freq": 107.1,
-            "ps": "_Tipik__",
-            "rt": "Tipik - Keep It Pop !",
-            "pi": "6205",
+            "freq": 88,
+            "ps": "_F_U_N__",
+            "rt": [
+              "10s:Enjoy Dance Music !",
+              "10s:%MD%"
+            ],
+            "pi": "6217",
+            "pty": 10,
             "tp": true,
             "ta": false,
             "ms": "M",
             "stereo": true,
+            "signal": 78,
             "station": {
-              "name": "OBRT Tipik",
+              "name": "Fun Radio",
               "city": "Bruxelles",
               "itu": "BX",
-              "erp": 1,
+              "erp": 8,
               "pol": "V",
-              "distance": 5,
-              "azimuth": 54
+              "distance": 21,
+              "azimuth": 80
             },
-            "mount": "https://redbeemedia.streamabc.net/redbm-tipik-mp3-160-1909468",
-            "signal": 83,
-            "af": [
-              99.6,
-              107.1
-            ],
-            "logo": "https://i.soupco.net/u/aV108t.png",
+            "mount": "funbelvenia",
+            "logo": "https://i.soupco.net/u/uSWSQj.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "pty": 10
+            "af": [
+              88,
+              104.3
+            ]
           },
           {
             "freq": 88.5,
@@ -9009,87 +9012,32 @@
             ]
           },
           {
-            "freq": 106.7,
-            "ps": "RCF_BX__",
-            "rt": "La Joie se partage",
-            "pi": "622A",
-            "pty": 7,
-            "tp": false,
-            "ta": false,
-            "ms": "S",
-            "stereo": false,
-            "signal": 76,
-            "station": {
-              "name": "RCF Belvénie",
-              "city": "Bruxelles",
-              "itu": "BX",
-              "pol": "H",
-              "distance": 12,
-              "azimuth": 153,
-              "erp": 0.4
-            },
-            "logo": "https://tef.noobish.eu/logos/BEL/6220.png",
-            "mount": "https://rcfing.streamakaci.com/rcfbruxelles.mp3 ",
-            "af": [
-              96.7,
-              98.7,
-              106.7
-            ],
-            "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "volume": 1,
-            "audibleBandwidth": 0.25
-          },
-          {
-            "freq": 88,
-            "ps": "_F_U_N__",
-            "rt": [
-              "10s:Enjoy Dance Music !",
-              "10s:%MD%"
-            ],
-            "pi": "6217",
-            "pty": 10,
+            "freq": 107.1,
+            "ps": "_Tipik__",
+            "rt": "Tipik - Keep It Pop !",
+            "pi": "6205",
             "tp": true,
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 78,
             "station": {
-              "name": "Fun Radio",
+              "name": "OBRT Tipik",
               "city": "Bruxelles",
               "itu": "BX",
-              "erp": 4,
-              "pol": "V",
-              "distance": 21,
-              "azimuth": 80
-            },
-            "mount": "funbelvenia",
-            "logo": "https://i.soupco.net/u/uSWSQj.png",
-            "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "af": [
-              88,
-              104.3
-            ]
-          },
-          {
-            "freq": 100,
-            "ps": "        ",
-            "rt": "",
-            "pi": "0000",
-            "pty": 0,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 80,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
               "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            }
+              "pol": "V",
+              "distance": 5,
+              "azimuth": 54
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-tipik-mp3-160-1909468",
+            "signal": 83,
+            "af": [
+              99.6,
+              107.1
+            ],
+            "logo": "https://i.soupco.net/u/aV108t.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "pty": 10
           }
         ],
         "presets": []
@@ -9709,8 +9657,8 @@
             "logo": "https://i.soupco.net/u/aV108t.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "af": [
-              88,
-              99.6
+              99.6,
+              107.1
             ]
           },
           {
