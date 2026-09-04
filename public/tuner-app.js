@@ -1408,8 +1408,6 @@
     const sig = Math.max(0, base + jitter);
 
     $("#data-frequency").textContent = fmt3(currentFreq);
-    const ci = $("#commandinput");
-    if (ci && document.activeElement !== ci) ci.value = fmt3(currentFreq);
     const sigInt = Math.floor(sig);
     const sigDec = Math.round((sig - sigInt) * 10);
     $("#data-signal").textContent = sigInt;
@@ -1737,7 +1735,7 @@
       if (v > 10000) v = v / 1000;
       else if (v > 1000) v = v / 100;
       else if (v > 200) v = v / 10;
-      tuneTo(v); ci2.blur();
+      tuneTo(v); ci2.value = ""; ci2.blur();
     });
     // ---- Play / pause across ALL .playbutton instances (desktop + mobile tray) ----
     // The original FM-DX shipping HTML installs a jQuery handler that opens a
