@@ -1408,8 +1408,6 @@
     const sig = Math.max(0, base + jitter);
 
     $("#data-frequency").textContent = fmt3(currentFreq);
-    const ci = $("#commandinput");
-    if (ci && document.activeElement !== ci) ci.value = fmt3(currentFreq);
     const sigInt = Math.floor(sig);
     const sigDec = Math.round((sig - sigInt) * 10);
     $("#data-signal").textContent = sigInt;
