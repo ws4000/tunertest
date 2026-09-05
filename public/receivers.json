@@ -8098,7 +8098,7 @@
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 80,
+            "signal": 78,
             "station": {
               "name": "Fun Radio",
               "city": "Bruxelles",
@@ -8113,6 +8113,8 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "af": [
               88,
+              92,
+              103,
               104.3
             ]
           },
@@ -9266,6 +9268,39 @@
             ]
           },
           {
+            "freq": 92,
+            "ps": "_F_U_N__",
+            "rt": [
+              "10s:Enjoy Dance Music !",
+              "10s:%MD%"
+            ],
+            "pi": "6217",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 76,
+            "station": {
+              "name": "Fun Radio",
+              "city": "Jamagne",
+              "itu": "BX",
+              "pol": "H",
+              "distance": 8,
+              "azimuth": 105,
+              "erp": 0.3
+            },
+            "mount": "funbelvenia",
+            "logo": "https://i.soupco.net/u/uSWSQj.png",
+            "af": [
+              88,
+              92,
+              92.2,
+              104.3
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
             "pi": "",
             "tp": false,
             "ta": false,
@@ -9897,7 +9932,10 @@
           {
             "freq": 104.3,
             "ps": "_F_U_N__",
-            "rt": "Enjoy Dance Music !",
+            "rt": [
+              "10s:Enjoy Dance Music !",
+              "10s:%MD%"
+            ],
             "pi": "6217",
             "pty": 10,
             "tp": true,
@@ -9918,6 +9956,7 @@
             "logo": "https://i.soupco.net/u/uSWSQj.png",
             "af": [
               88,
+              92,
               92.2,
               104.3
             ],
