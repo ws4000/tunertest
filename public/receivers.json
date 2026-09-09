@@ -181,7 +181,7 @@
             "ms": "M",
             "stereo": true,
             "signal": 95,
-            "logo": "http://i.soupco.net/u/Bd7FQU.png",
+            "logo": "https://i.soupco.net/u/oslnfT.png",
             "station": {
               "name": "ORTO-FM r:RTO Radio 1",
               "city": "Springton",
@@ -3654,7 +3654,7 @@
               "azimuth": 3
             },
             "mount": "rtor1",
-            "logo": "https://i.soupco.net/u/Bd7FQU.png"
+            "logo": "https://i.soupco.net/u/oslnfT.png"
           },
           {
             "freq": 105.9,
@@ -3677,7 +3677,7 @@
               "erp": 0.2
             },
             "mount": "rtor1",
-            "logo": "https://i.soupco.net/u/Bd7FQU.png"
+            "logo": "https://i.soupco.net/u/oslnfT.png"
           },
           {
             "freq": 98,
@@ -4747,7 +4747,7 @@
             },
             "mount": "rtor1",
             "volume": 1,
-            "logo": "https://i.soupco.net/u/Bd7FQU.png",
+            "logo": "https://i.soupco.net/u/oslnfT.png",
             "signal": 93
           },
           {
@@ -6030,7 +6030,7 @@
               105.9
             ],
             "signal": 84,
-            "logo": "https://i.soupco.net/u/Bd7FQU.png"
+            "logo": "https://i.soupco.net/u/oslnfT.png"
           },
           {
             "freq": 98.9,
@@ -8613,7 +8613,7 @@
               "azimuth": 149
             },
             "mount": "rtor1",
-            "logo": "https://i.soupco.net/u/Bd7FQU.png",
+            "logo": "https://i.soupco.net/u/oslnfT.png",
             "af": [
               89.8,
               90,
