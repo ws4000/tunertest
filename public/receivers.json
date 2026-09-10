@@ -10386,7 +10386,7 @@
             "freq": 94.3,
             "ps": "_MIQRA__",
             "rt": "",
-            "pi": "0000",
+            "pi": "622A",
             "pty": 7,
             "tp": true,
             "ta": false,
@@ -10766,7 +10766,7 @@
             "stereo": true,
             "station": {
               "name": "OBRT La Première",
-              "city": "Jamagne",
+              "city": "Doullens",
               "itu": "BX",
               "erp": 6.3,
               "pol": "M",
