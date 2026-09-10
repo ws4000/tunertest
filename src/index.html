@@ -84,6 +84,36 @@
     #sidebar.collapsed { transform: translateX(84vw); }
     #toggle { right: 84vw; }
   }
+
+  /* Receiver detail overlay */
+  #overlay { position:fixed; inset:0; z-index:900; background:rgba(0,0,0,0.55);
+    display:flex; align-items:center; justify-content:center; }
+  #overlay[hidden] { display:none; }
+  .detail { width:400px; max-width:92vw; background:#1e1e1e; color:#ddd;
+    border:1px solid rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;
+    box-shadow:0 12px 40px rgba(0,0,0,0.6); text-align:center; }
+  .detail .d-head { padding:34px 20px 0; }
+  .detail .d-name { font-size:26px; font-weight:300; color:#fff; }
+  .detail .d-sub { margin-top:14px; font-size:12px; color:#9aa; }
+  .detail .d-band { margin-top:18px; background:#2a2a2a; padding:14px 18px;
+    display:flex; align-items:center; gap:14px; text-align:left; font-size:14px; }
+  .detail .d-band .flag { width:40px; height:28px; flex:none; border-radius:2px;
+    background:#143534; display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:#68f7ee; border:1px solid rgba(104,247,238,0.25); }
+  .detail .d-band b { color:#fff; font-weight:600; }
+  .detail .d-desc { padding:26px 24px 4px; }
+  .detail .d-desc h3 { font-size:22px; font-weight:300; color:#ccc; margin:0 0 10px; }
+  .detail .d-desc p { font-size:14px; line-height:1.5; color:#bbb; margin:0; }
+  .detail .d-owner { padding:26px 24px; }
+  .detail .d-owner h3 { font-size:22px; font-weight:300; color:#ccc; margin:0 0 6px; }
+  .detail .d-owner span { font-size:14px; color:#bbb; }
+  .detail .d-connect { display:block; background:#7a7a7a; color:#fff;
+    text-decoration:none; text-align:center; padding:16px; font-size:14px;
+    letter-spacing:2px; font-weight:500; }
+  .detail .d-connect:hover { background:#68f7ee; color:#0c1c1b; }
+  .detail .d-close { position:absolute; top:14px; right:18px; background:none;
+    border:none; color:#888; font-size:22px; cursor:pointer; }
+  .detail .d-close:hover { color:#fff; }
 </style>
 </head>
 <body>
@@ -102,6 +132,32 @@
   <div class="sb-foot"><div><b id="foot-count">0</b>Available</div></div>
 </aside>
 <button id="toggle" title="Toggle receivers panel">›</button>
+
+<div id="overlay" hidden>
+  <div class="detail" role="dialog" aria-modal="true" style="position:relative">
+    <button class="d-close" id="d-close" aria-label="Close">×</button>
+    <div class="d-head">
+      <div class="d-name" id="d-name"></div>
+      <div class="d-sub">FM-DX Webserver <span id="d-loc"></span></div>
+    </div>
+    <div class="d-band">
+      <div class="flag">FM</div>
+      <div>
+        <div><b>Tune limit:</b> <span id="d-limit"></span></div>
+        <div style="margin-top:4px"><b>Device:</b> <span id="d-device"></span></div>
+      </div>
+    </div>
+    <div class="d-desc" id="d-descwrap">
+      <h3>Description:</h3>
+      <p id="d-desc"></p>
+    </div>
+    <div class="d-owner" id="d-ownerwrap">
+      <h3>Owner contact:</h3>
+      <span id="d-owner"></span>
+    </div>
+    <a class="d-connect" id="d-connect" href="#">CONNECT</a>
+  </div>
+</div>
 
 <script>
 (async () => {
@@ -129,19 +185,45 @@
       listEl.innerHTML = '<div class="sb-empty">No receivers.<br><a href="/admin" style="color:#68f7ee">Open admin →</a></div>';
       return;
     }
-    listEl.innerHTML = rows.map(r => {
-      const stations = r.config?.stations?.length ? ` · ${r.config.stations.length} stations` : "";
-      return `<a class="sb-item" href="/${encodeURIComponent(r.slug)}">
+    listEl.innerHTML = rows.map((r) => {
+      const i = receivers.indexOf(r);
+      return `<button class="sb-item" data-i="${i}" type="button" style="width:100%;background:none;border:none;text-align:left;font:inherit">
         <div class="flag">FM</div>
         <div class="info">
           <div class="n">${esc(r.name || r.slug)}</div>
-          <div class="l">${esc(r.location || "")}${stations}</div>
+          <div class="l">${esc(r.location || "")}</div>
         </div>
-      </a>`;
+      </button>`;
     }).join("");
+    listEl.querySelectorAll(".sb-item").forEach(el =>
+      el.addEventListener("click", () => showDetail(receivers[+el.dataset.i])));
   }
   render("");
   qEl.addEventListener("input", () => render(qEl.value));
+
+  // ---------- Receiver detail overlay ----------
+  const overlay = document.getElementById("overlay");
+  function showDetail(r) {
+    if (!r) return;
+    const c = r.config || {};
+    document.getElementById("d-name").textContent = r.name || c.tunerName || r.slug;
+    document.getElementById("d-loc").textContent = r.location ? "• " + r.location : "";
+    const mn = c.tuningMin, mx = c.tuningMax;
+    document.getElementById("d-limit").textContent =
+      (typeof mn === "number" && typeof mx === "number") ? `${mn} - ${mx} MHz` : "—";
+    document.getElementById("d-device").textContent = c.tunerDevice || "Virtual TEF668x";
+    const desc = c.tunerDescription || "";
+    document.getElementById("d-descwrap").style.display = desc ? "" : "none";
+    document.getElementById("d-desc").textContent = desc;
+    const owner = c.ownerContact || "";
+    document.getElementById("d-ownerwrap").style.display = owner ? "" : "none";
+    document.getElementById("d-owner").textContent = owner;
+    document.getElementById("d-connect").href = "/" + encodeURIComponent(r.slug);
+    overlay.hidden = false;
+  }
+  document.getElementById("d-close").addEventListener("click", () => overlay.hidden = true);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.hidden = true; });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") overlay.hidden = true; });
 
   // Sidebar collapse
   const sb = document.getElementById("sidebar");
@@ -184,7 +266,7 @@
     const m = L.marker(toLatLng(r), { icon }).addTo(map);
     m.bindTooltip(esc(r.name || r.slug), {
       direction:"top", offset:[0,-8], className:"tuner-tip", opacity:1 });
-    m.on("click", () => { window.location.href = "/" + encodeURIComponent(r.slug); });
+    m.on("click", () => showDetail(r));
   });
   if (pts.length === 1) map.setView(toLatLng(pts[0]), 2);
   else if (pts.length > 1) map.fitBounds(L.latLngBounds(pts.map(toLatLng)).pad(0.4));
