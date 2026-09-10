@@ -4073,7 +4073,7 @@
             "freq": 69.26,
             "ps": "        ",
             "rt": "",
-            "pi": "",
+            "pi": "0000",
             "pty": 0,
             "tp": false,
             "ta": false,
@@ -4096,7 +4096,7 @@
             "freq": 70.43,
             "ps": "        ",
             "rt": "",
-            "pi": "",
+            "pi": "0000",
             "pty": 0,
             "tp": false,
             "ta": false,
@@ -4118,7 +4118,7 @@
           {
             "ps": "        ",
             "rt": "",
-            "pi": "",
+            "pi": "0000",
             "pty": 0,
             "tp": false,
             "ta": false,
@@ -4142,7 +4142,7 @@
             "freq": 72.11,
             "ps": "        ",
             "rt": "",
-            "pi": "",
+            "pi": "0000",
             "pty": 0,
             "tp": false,
             "ta": false,
@@ -4165,7 +4165,7 @@
             "freq": 72.89,
             "ps": "        ",
             "rt": "",
-            "pi": "",
+            "pi": "0000",
             "pty": 0,
             "tp": false,
             "ta": false,
@@ -8784,7 +8784,12 @@
             "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
             "logo": "https://tef.noobish.eu/logos/F/F22C.png",
             "af": [
+              88.8,
+              90.3,
               91.4,
+              98.1,
+              98.7,
+              100.5,
               100.8,
               102.7,
               103
@@ -8871,6 +8876,9 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "freq": 102.7,
             "af": [
+              100,
+              100.3,
+              102.5,
               102.7
             ],
             "rt": "MOUV' - CULTURE ET FLOW"
@@ -9279,7 +9287,7 @@
             "signal": 74.5,
             "station": {
               "name": "OBRT Classic 21",
-              "city": "Bruxelles",
+              "city": "Jamagne",
               "itu": "BX",
               "erp": 5,
               "pol": "M",
@@ -9340,9 +9348,15 @@
             "logo": "https://tef.noobish.eu/logos/F/F22C.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "af": [
+              88.8,
+              90.3,
               91.4,
+              98.1,
+              98.7,
+              100.5,
               100.8,
-              102.7
+              102.7,
+              103
             ]
           },
           {
@@ -9548,6 +9562,7 @@
             "af": [
               95.8,
               96.8,
+              103,
               103.4,
               103.7
             ],
@@ -9630,7 +9645,8 @@
               96.9,
               97.7,
               100.7,
-              102.2
+              102.2,
+              102.3
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
@@ -9803,7 +9819,11 @@
             },
             "mount": "https://icecast.radiofrance.fr/mouv-hifi.aac",
             "af": [
+              92.1,
+              98.7,
+              100,
               100.3,
+              102.5,
               102.7
             ],
             "logo": "https://i.soupco.net/u/vAzM7p.png",
@@ -9833,7 +9853,11 @@
             },
             "mount": "https://icecast.radiofrance.fr/mouv-hifi.aac",
             "af": [
+              92.1,
+              98.7,
+              100,
               100.3,
+              102.5,
               102.7
             ],
             "logo": "https://i.soupco.net/u/vAzM7p.png",
@@ -9865,7 +9889,8 @@
               96.9,
               97.7,
               100.7,
-              102.2
+              102.2,
+              102.3
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
@@ -9980,9 +10005,15 @@
             "logo": "https://tef.noobish.eu/logos/F/F22C.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "af": [
+              88.8,
+              90.3,
               91.4,
+              98.1,
+              98.7,
+              100.5,
               100.8,
-              102.7
+              102.7,
+              103
             ]
           },
           {
@@ -10101,6 +10132,7 @@
             "af": [
               95.8,
               96.8,
+              103,
               103.7,
               106
             ],
@@ -10354,7 +10386,7 @@
             "freq": 94.3,
             "ps": "_MIQRA__",
             "rt": "",
-            "pi": "622A",
+            "pi": "0000",
             "pty": 7,
             "tp": true,
             "ta": false,
@@ -10591,6 +10623,883 @@
             "logo": "https://tef.noobish.eu/logos/RUS/7760_EUROPAPLUS.png",
             "af": [
               106.2
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          }
+        ],
+        "presets": []
+      }
+    },
+    {
+      "slug": "doullens",
+      "name": "Doullens",
+      "location": "",
+      "mc": {
+        "x": 7949,
+        "z": -18627
+      },
+      "config": {
+        "tunerName": "Doullens",
+        "tunerDescription": "",
+        "tunerDevice": "Virtual TEF668x",
+        "ownerContact": "weizkule",
+        "rdsMode": "rds",
+        "tuningMin": 87.5,
+        "tuningMax": 108,
+        "tuningStep": 0.1,
+        "defaultFrequency": 98.1,
+        "noiseFloorDbf": 1,
+        "audibleBandwidth": 0.2,
+        "audioDelayMs": 800,
+        "stations": [
+          {
+            "freq": 87.6,
+            "ps": "La 1ere",
+            "rt": "LA 1ERE - L'esprit clair",
+            "pi": "6201",
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "OBRT La Première",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 68,
+              "pol": "M",
+              "distance": 111,
+              "azimuth": 43
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-lapremiere-mp3-160-7134387",
+            "signal": 26,
+            "af": [
+              87.6,
+              88.3,
+              89.4,
+              90.1,
+              91.3,
+              102.7,
+              103.5
+            ],
+            "logo": "https://i.soupco.net/raw/KCXRmf.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "pty": 3
+          },
+          {
+            "freq": 88.3,
+            "ps": "La 1ere",
+            "rt": "LA 1ERE - L'esprit clair",
+            "pi": "6201",
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "OBRT La Première",
+              "city": "Jamagne",
+              "itu": "BX",
+              "erp": 40,
+              "pol": "M",
+              "distance": 59,
+              "azimuth": 303
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-lapremiere-mp3-160-7134387",
+            "signal": 47,
+            "af": [
+              87.6,
+              88.3,
+              89.4,
+              90.1,
+              91.3,
+              102.7,
+              103.5
+            ],
+            "logo": "https://i.soupco.net/raw/KCXRmf.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "pty": 3
+          },
+          {
+            "ps": "MUSIQ 3",
+            "rt": "Musiq 3 - Changez d'airs",
+            "pi": "6203",
+            "pty": 14,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 44,
+            "station": {
+              "name": "OBRT Musiq 3",
+              "city": "Namur",
+              "itu": "BX",
+              "erp": 158,
+              "pol": "M",
+              "distance": 99,
+              "azimuth": 207
+            },
+            "freq": 88.7,
+            "mount": "https://redbeemedia.streamabc.net/redbm-musiq3-aac-256-1558698",
+            "af": [
+              88.7,
+              92.1,
+              92.6,
+              92.8,
+              93.2,
+              93.7,
+              94.2,
+              96.2,
+              96.7,
+              97.2,
+              105.8
+            ],
+            "logo": "https://i.soupco.net/raw/k5zlLh.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 89.3,
+            "ps": "La 1ere",
+            "rt": "LA 1ERE - L'esprit clair",
+            "pi": "6201",
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "OBRT La Première",
+              "city": "Jamagne",
+              "itu": "BX",
+              "erp": 6.3,
+              "pol": "M",
+              "distance": 36,
+              "azimuth": 183
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-lapremiere-mp3-160-7134387",
+            "signal": 76,
+            "af": [
+              87.6,
+              88.3,
+              89.4,
+              90.1,
+              91.3,
+              102.7,
+              103.5
+            ],
+            "logo": "https://i.soupco.net/raw/KCXRmf.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "pty": 3
+          },
+          {
+            "freq": 90.1,
+            "ps": "La 1ere",
+            "rt": "LA 1ERE - L'esprit clair",
+            "pi": "6201",
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "OBRT La Première",
+              "city": "Namur",
+              "itu": "BX",
+              "erp": 158,
+              "pol": "M",
+              "distance": 99,
+              "azimuth": 207
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-lapremiere-mp3-160-7134387",
+            "signal": 44,
+            "af": [
+              87.6,
+              88.3,
+              89.4,
+              90.1,
+              91.3,
+              102.7,
+              103.5
+            ],
+            "logo": "https://i.soupco.net/raw/KCXRmf.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "pty": 3
+          },
+          {
+            "freq": 90.8,
+            "ps": "CLASS.21",
+            "rt": "%MD%",
+            "pi": "6204",
+            "pty": 11,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 45,
+            "station": {
+              "name": "OBRT Classic 21",
+              "city": "Jamagne",
+              "itu": "BX",
+              "erp": 5,
+              "pol": "M",
+              "distance": 59,
+              "azimuth": 303
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-classic21-aac-128-5744784 ",
+            "logo": "https://i.soupco.net/raw/uUzicS.png",
+            "af": [
+              90.5,
+              90.8,
+              92.5,
+              94.2,
+              99
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 91.3,
+            "ps": "VIVACITE",
+            "rt": "Viva Jamagne - Ma radio complicite",
+            "pi": "6202",
+            "pty": 9,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 76,
+            "station": {
+              "name": "OBRT Vivacité",
+              "city": "Doullens",
+              "itu": "BX",
+              "erp": 6.3,
+              "pol": "M",
+              "distance": 36,
+              "azimuth": 183
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-vivabxl-aac-128-1428473 ",
+            "logo": "https://i.soupco.net/raw/csaQau.png",
+            "af": [
+              89.1,
+              96.8,
+              97.2,
+              98.3,
+              99,
+              101.6,
+              103.6
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 92.1,
+            "ps": "__MOUV'_",
+            "rt": "MOUV' - CULTURE ET FLOW",
+            "pi": "6297",
+            "pty": 0,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 81,
+            "station": {
+              "name": "Mouv'",
+              "city": "Doullens",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 12,
+              "azimuth": 123,
+              "erp": 0.5
+            },
+            "mount": "https://icecast.radiofrance.fr/mouv-hifi.aac",
+            "af": [
+              92.1,
+              98.7,
+              100,
+              100.3
+            ],
+            "logo": "https://i.soupco.net/u/vAzM7p.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "ps": "MUSIQ 3",
+            "rt": "Musiq 3 - Changez d'airs",
+            "pi": "6203",
+            "pty": 14,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 47,
+            "station": {
+              "name": "OBRT Musiq 3",
+              "city": "Jamagne",
+              "itu": "BX",
+              "erp": 40,
+              "pol": "M",
+              "distance": 59,
+              "azimuth": 303
+            },
+            "freq": 92.6,
+            "mount": "https://redbeemedia.streamabc.net/redbm-musiq3-aac-256-1558698",
+            "af": [
+              88.7,
+              92.1,
+              92.6,
+              92.8,
+              93.2,
+              93.7,
+              94.2,
+              96.2,
+              96.7,
+              97.2,
+              105.8
+            ],
+            "logo": "https://i.soupco.net/raw/k5zlLh.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "ps": "MUSIQ 3",
+            "rt": "Musiq 3 - Changez d'airs",
+            "pi": "6203",
+            "pty": 14,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 26,
+            "station": {
+              "name": "OBRT Musiq 3",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 68,
+              "pol": "M",
+              "distance": 111,
+              "azimuth": 43
+            },
+            "freq": 92.8,
+            "mount": "https://redbeemedia.streamabc.net/redbm-musiq3-aac-256-1558698",
+            "af": [
+              88.7,
+              92.1,
+              92.6,
+              92.8,
+              93.2,
+              93.7,
+              94.2,
+              96.2,
+              96.7,
+              97.2,
+              105.8
+            ],
+            "logo": "https://i.soupco.net/raw/k5zlLh.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 93.4,
+            "ps": "        ",
+            "rt": "",
+            "pi": "0000",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 5,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "rdsDisabled": true,
+            "mount": "https://25643.live.streamtheworld.com/HITRADIO_CITY_PRAHA.aac"
+          },
+          {
+            "freq": 95.4,
+            "rt": "(ALLCAPS)%MD%",
+            "pi": "69B7",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 87,
+            "station": {
+              "name": "Radio Chanson",
+              "city": "Doullens",
+              "itu": "BX",
+              "pol": "V",
+              "azimuth": 146,
+              "erp": 0.1,
+              "distance": 3
+            },
+            "ps": "CHANSON_",
+            "af": [
+              95.4
+            ],
+            "mount": "https://radiofrance.stream.laut.fm/radiofrance",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 95.8,
+            "ps": "        ",
+            "rt": "",
+            "pi": "0000",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 6,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "mount": "https://stream.rcs.revma.com/xh00fwuptg0uv ",
+            "rdsDisabled": true
+          },
+          {
+            "ps": "MUSIQ 3",
+            "rt": "Musiq 3 - Changez d'airs",
+            "pi": "6203",
+            "pty": 14,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 76,
+            "station": {
+              "name": "OBRT Musiq 3",
+              "city": "Doullens",
+              "itu": "BX",
+              "erp": 6.3,
+              "pol": "M",
+              "distance": 36,
+              "azimuth": 183
+            },
+            "freq": 96.7,
+            "mount": "https://redbeemedia.streamabc.net/redbm-musiq3-aac-256-1558698",
+            "af": [
+              88.7,
+              92.1,
+              92.6,
+              92.8,
+              93.2,
+              93.7,
+              94.2,
+              96.2,
+              96.7,
+              97.2,
+              105.8
+            ],
+            "logo": "https://i.soupco.net/raw/k5zlLh.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 97.2,
+            "ps": "        ",
+            "rt": "",
+            "pi": "0000",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 13,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "rdsDisabled": true,
+            "mount": "https://redbeemedia.streamabc.net/redbm-vivabxl-aac-128-1428473 "
+          },
+          {
+            "freq": 97.5,
+            "ps": "NOSTALGI",
+            "rt": "%MD%",
+            "pi": "6214",
+            "pty": 0,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 81,
+            "station": {
+              "name": "Nostalgie Belvénie",
+              "city": "Doullens",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 12,
+              "azimuth": 123,
+              "erp": 0.5
+            },
+            "mount": "https://stream.rcs.revma.com/5gd04cwptg0uv ",
+            "logo": "https://tef.noobish.eu/logos/F/F218.svg",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              90.3,
+              93.2,
+              97.5,
+              101.1
+            ]
+          },
+          {
+            "freq": 98.1,
+            "ps": "__FG.___",
+            "rt": "FG. DJ Radio",
+            "pi": "622C",
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 84,
+            "station": {
+              "name": "Radio FG.",
+              "city": "Doullens",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 12,
+              "azimuth": 123
+            },
+            "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
+            "logo": "https://tef.noobish.eu/logos/F/F22C.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              88.8,
+              90.3,
+              91.4,
+              98.1,
+              98.7,
+              100.5,
+              100.8,
+              102.7,
+              103
+            ]
+          },
+          {
+            "ps": "VIVACITE",
+            "pi": "6202",
+            "pty": 9,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 26,
+            "station": {
+              "name": "OBRT Vivacité",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 68,
+              "pol": "M",
+              "distance": 111,
+              "azimuth": 43
+            },
+            "freq": 98.3,
+            "mount": "https://redbeemedia.streamabc.net/redbm-vivabxl-aac-128-1428473 ",
+            "af": [
+              89.1,
+              96.8,
+              97.2,
+              98.3,
+              99,
+              101.6,
+              103.6
+            ],
+            "logo": "https://i.soupco.net/raw/csaQau.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "rt": "10s:Viva Bruxelles - Ma radio complicite"
+          },
+          {
+            "pi": "6218",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "BX RTL",
+              "city": "Doullens",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 12,
+              "azimuth": 123,
+              "erp": 0.5
+            },
+            "mount": "https://belrtl.ice.infomaniak.ch/belrtl-mp3-192.mp3",
+            "ps": "3s:BX_!_RTL",
+            "logo": "https://i.soupco.net/u/1ua88T.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "signal": 81,
+            "af": [
+              90.1,
+              91.1,
+              99.1,
+              105.3
+            ],
+            "freq": 98.5
+          },
+          {
+            "pi": "6218",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "station": {
+              "name": "BX RTL",
+              "city": "Jamagne",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 57,
+              "azimuth": 329,
+              "erp": 0.5
+            },
+            "mount": "https://belrtl.ice.infomaniak.ch/belrtl-mp3-192.mp3",
+            "ps": "3s:BX_!_RTL",
+            "logo": "https://i.soupco.net/u/1ua88T.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "signal": 6,
+            "af": [
+              90.1,
+              91.1,
+              99.1,
+              105.3
+            ],
+            "freq": 99.1,
+            "rdsDisabled": true
+          },
+          {
+            "freq": 99.6,
+            "ps": "_Tipik__",
+            "rt": "Tipik - Keep It Pop !",
+            "pi": "6205",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 42,
+            "station": {
+              "name": "OBRT Tipik",
+              "city": "Saint-Remy-la-Forêt",
+              "itu": "BX",
+              "erp": 2,
+              "pol": "V",
+              "distance": 51,
+              "azimuth": 293
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-tipik-mp3-160-1909468",
+            "logo": "https://i.soupco.net/u/aV108t.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              99.6,
+              107.1
+            ]
+          },
+          {
+            "freq": 101.6,
+            "ps": "VIVACITE",
+            "rt": "Viva Jamagne - Ma radio complicite",
+            "pi": "6202",
+            "pty": 9,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 76,
+            "station": {
+              "name": "OBRT Vivacité",
+              "city": "Jamagne",
+              "itu": "BX",
+              "erp": 40,
+              "pol": "M",
+              "distance": 59,
+              "azimuth": 303
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-vivabxl-aac-128-1428473 ",
+            "logo": "https://i.soupco.net/raw/csaQau.png",
+            "af": [
+              89.1,
+              96.8,
+              97.2,
+              98.3,
+              99,
+              101.6,
+              103.6
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 102.1,
+            "ps": "        ",
+            "rt": "",
+            "pi": "0000",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 5,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "rdsDisabled": true,
+            "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac"
+          },
+          {
+            "freq": 102.3,
+            "ps": "CONTACT",
+            "rt": "RADIO CONTACT FEELGOOD!",
+            "pi": "6215",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "Radio Contact",
+              "city": "Doullens",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 12,
+              "azimuth": 123,
+              "erp": 0.5
+            },
+            "mount": "https://radiocontact.ice.infomaniak.ch/radiocontact-mp3-192.mp3 ",
+            "signal": 81,
+            "logo": "https://i.soupco.net/raw/h0Y13n.png",
+            "af": [
+              96.9,
+              97.7,
+              100.7,
+              102.2,
+              102.3
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 102.7,
+            "ps": "        ",
+            "rt": "",
+            "pi": "0000",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 5,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "rdsDisabled": true,
+            "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv"
+          },
+          {
+            "freq": 103,
+            "ps": "__NRJ___",
+            "rt": "NRJ HIT MUSIC ONLY !",
+            "pi": "8220",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "NRJ Belvénie",
+              "city": "Doullens",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 12,
+              "azimuth": 123,
+              "erp": 0.5
+            },
+            "mount": "https://stream.rcs.revma.com/xh00fwuptg0uv ",
+            "signal": 81,
+            "logo": "https://tef.noobish.eu/logos/BEL/6381.png",
+            "af": [
+              95.8,
+              96.8,
+              103,
+              103.4,
+              103.7
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 103.5,
+            "ps": "ATMO_FM_",
+            "rt": "%MD%",
+            "pi": "6988",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 83,
+            "station": {
+              "name": "Atmo FM",
+              "city": "Doullens",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 11,
+              "azimuth": 114
+            },
+            "mount": "https://atmo-france.stream.laut.fm/atmo-france",
+            "af": [
+              103.5
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 104.3,
+            "ps": "_F_U_N__",
+            "rt": [
+              "10s:Enjoy Dance Music !",
+              "10s:%MD%"
+            ],
+            "pi": "6217",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 82,
+            "station": {
+              "name": "Fun Radio",
+              "city": "Doullens",
+              "itu": "BX",
+              "pol": "V",
+              "azimuth": 114,
+              "erp": 0.5,
+              "distance": 11
+            },
+            "mount": "funbelvenia",
+            "logo": "https://i.soupco.net/u/uSWSQj.png",
+            "af": [
+              88,
+              92,
+              92.2,
+              104.3
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           }
