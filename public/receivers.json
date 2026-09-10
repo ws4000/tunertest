@@ -10686,6 +10686,29 @@
             "pty": 3
           },
           {
+            "freq": 87.9,
+            "ps": "FLAIX FM",
+            "rt": [
+              "6s:%MD%",
+              "6s:FLAIX FM el poder del ritme"
+            ],
+            "pi": "E199",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 99,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "pol": "M"
+            },
+            "mount": "http://public-icy-ingest.scorchy.net:8080/flaixfmfr",
+            "rdsDisabled": false
+          },
+          {
             "freq": 88.3,
             "ps": "La 1ere",
             "rt": "LA 1ERE - L'esprit clair",
