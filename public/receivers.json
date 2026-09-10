@@ -1844,6 +1844,37 @@
             ]
           },
           {
+            "freq": 98.1,
+            "ps": "NOSTALGI",
+            "rt": "%MD%",
+            "pi": "8213",
+            "pty": 27,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 80,
+            "station": {
+              "name": "Nostalgie",
+              "city": "Bolsrade",
+              "itu": "SP",
+              "pol": "V",
+              "distance": 7,
+              "azimuth": 71,
+              "erp": 0.2
+            },
+            "mount": "https://28553.live.streamtheworld.com/NOSTALGIEWHATAFEELING.mp3",
+            "logo": "https://tef.noobish.eu/logos/F/F218.svg",
+            "af": [
+              91.5,
+              92.2,
+              97.5,
+              99.1,
+              99.5,
+              107.2
+            ]
+          },
+          {
             "freq": 98.5,
             "ps": " SPO P3 ",
             "rt": "SPO P3",
@@ -2615,37 +2646,6 @@
             "mount": "https://goedverstaanbaar.stream.laut.fm/goedverstaanbaar",
             "pty": 9,
             "signal": 70
-          },
-          {
-            "freq": 98.1,
-            "ps": "NOSTALGI",
-            "rt": "%MD%",
-            "pi": "8213",
-            "pty": 27,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 80,
-            "station": {
-              "name": "Nostalgie",
-              "city": "Bolsrade",
-              "itu": "SP",
-              "pol": "V",
-              "distance": 7,
-              "azimuth": 71,
-              "erp": 0.2
-            },
-            "mount": "https://28553.live.streamtheworld.com/NOSTALGIEWHATAFEELING.mp3",
-            "logo": "https://tef.noobish.eu/logos/F/F218.svg",
-            "af": [
-              91.5,
-              92.2,
-              97.5,
-              99.1,
-              99.5,
-              107.2
-            ]
           }
         ],
         "presets": []
@@ -10103,6 +10103,494 @@
               96.8,
               103.7,
               106
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          }
+        ],
+        "presets": []
+      }
+    },
+    {
+      "slug": "katzrin",
+      "name": "קצרין",
+      "location": "Katzrin, Bagelland",
+      "mc": {
+        "x": -2117,
+        "z": -4159
+      },
+      "config": {
+        "tunerName": "קצרין",
+        "tunerDescription": "",
+        "tunerDevice": "Virtual TEF668x",
+        "ownerContact": "",
+        "rdsMode": "rds",
+        "tuningMin": 87.5,
+        "tuningMax": 108,
+        "tuningStep": 0.1,
+        "defaultFrequency": 87.5,
+        "noiseFloorDbf": 6,
+        "audibleBandwidth": 0.2,
+        "audioDelayMs": 800,
+        "stations": [
+          {
+            "freq": 87.9,
+            "ps": "SHATZAV1",
+            "rt": "-> Shatzav Radio 1 <-",
+            "pi": "6201",
+            "pty": 9,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79,
+            "station": {
+              "name": "Shatzav Radio 1",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 158,
+              "pol": "H",
+              "distance": 36,
+              "azimuth": 313
+            },
+            "af": [
+              87.9,
+              88.3,
+              89.4,
+              94.3
+            ],
+            "mount": "https://27793.live.streamtheworld.com/KAN_MORESHET.mp3",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 88.9,
+            "ps": "SHATZAV2",
+            "rt": "-> Shatzav Radio 2 <-",
+            "pi": "6201",
+            "pty": 14,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 58,
+            "station": {
+              "name": "Shatzav Radio 2",
+              "city": "Bet Shemesh",
+              "itu": "BK",
+              "erp": 5,
+              "pol": "V",
+              "distance": 73,
+              "azimuth": 20
+            },
+            "mount": "https://29083.live.streamtheworld.com/KAN_KOL_HAMUSICA.mp3",
+            "af": [
+              88.9,
+              90.9,
+              91.7,
+              92.9
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 90,
+            "ps": "__80s90s",
+            "rt": "(ALLCAPS)%MD%",
+            "pi": "66A7",
+            "pty": 27,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 78,
+            "station": {
+              "name": "Radio 80s90s",
+              "city": "Katzrin",
+              "itu": "BK",
+              "pol": "V",
+              "distance": 16,
+              "azimuth": 85,
+              "erp": 0.5
+            },
+            "mount": "https://80s-90s.stream.laut.fm/80s-90s",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              90
+            ]
+          },
+          {
+            "freq": 90.7,
+            "ps": "_R_F_I__",
+            "rt": "",
+            "pi": "FFFF",
+            "pty": 1,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 83,
+            "station": {
+              "name": "RFI",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 2,
+              "pol": "C",
+              "distance": 6,
+              "azimuth": 50
+            },
+            "mount": "https://rfimonde-96k.ice.infomaniak.ch/rfimonde-96k.mp3",
+            "af": [
+              90.7
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "logo": "https://i.soupco.net/u/x0Pvqw.png"
+          },
+          {
+            "ps": "Jazzy___",
+            "rt": "%MD%",
+            "pi": "6218",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 83,
+            "station": {
+              "name": "Radio Jazzy",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 2,
+              "pol": "C",
+              "distance": 6,
+              "azimuth": 50
+            },
+            "freq": 91.3,
+            "mount": "https://jazzworld.stream.laut.fm/jazz_world",
+            "af": [
+              91.3
+            ]
+          },
+          {
+            "freq": 91.7,
+            "ps": "SHATZAV2",
+            "rt": "-> Shatzav Radio 2 <-",
+            "pi": "6201",
+            "pty": 14,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79,
+            "station": {
+              "name": "Shatzav Radio 2",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 158,
+              "pol": "H",
+              "distance": 36,
+              "azimuth": 313
+            },
+            "mount": "https://29083.live.streamtheworld.com/KAN_KOL_HAMUSICA.mp3",
+            "af": [
+              88.9,
+              90.9,
+              91.7,
+              92.9
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 92.5,
+            "ps": "_PYCCKOE",
+            "rt": "",
+            "pi": "6631",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 75,
+            "station": {
+              "name": "Russkoye Radio",
+              "city": "Katzrin",
+              "itu": "BK",
+              "pol": "V",
+              "distance": 7,
+              "azimuth": 56,
+              "erp": 0.5
+            },
+            "logo": "https://tef.noobish.eu/logos/RUS/7201_RUSSKOERADIO.png",
+            "mount": "https://listen.vdfm.ru:8000/rusradio",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 93.5,
+            "ps": "SHATZAV3",
+            "rt": "",
+            "pi": "6203",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79,
+            "station": {
+              "name": "Shatzav Radio 3",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 158,
+              "pol": "H",
+              "distance": 36,
+              "azimuth": 313
+            },
+            "mount": "https://stream.laut.fm/agfm",
+            "af": [
+              93.5,
+              96.5,
+              97.8,
+              99.5
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 94.3,
+            "ps": "_MIQRA__",
+            "rt": "",
+            "pi": "0000",
+            "pty": 7,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "Radio Miqra",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 2,
+              "pol": "C",
+              "distance": 6,
+              "azimuth": 50
+            },
+            "mount": "https://cdn.cybercdn.live/Radio2000/MP3/icecast.audio ",
+            "af": [
+              94.3
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "signal": 83
+          },
+          {
+            "freq": 97.6,
+            "rt": "RTO Radio 1 -> %MD%",
+            "pi": "6101",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 83,
+            "station": {
+              "name": "RTO Radio 1 [F]",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 2,
+              "pol": "C",
+              "distance": 6,
+              "azimuth": 50
+            },
+            "mount": "rtor1",
+            "ps": "_RTO_R1_",
+            "logo": "https://i.soupco.net/u/oslnfT.png",
+            "af": [
+              89.8,
+              90,
+              90.7,
+              94.1,
+              97.6,
+              102.7,
+              105.9
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 98.3,
+            "ps": "_EMOTION",
+            "rt": "%MD%",
+            "pi": "662B",
+            "pty": 9,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 83,
+            "station": {
+              "name": "Emotion 98,3",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 2,
+              "pol": "C",
+              "distance": 6,
+              "azimuth": 50
+            },
+            "mount": "https://radio-smooth.stream.laut.fm/radio-smooth",
+            "af": [
+              98.3
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 99.7,
+            "ps": "__NRJ___",
+            "rt": "NRJ : Hit Music Only",
+            "pi": "6224",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 83,
+            "station": {
+              "name": "NRJ Bagelland",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 2,
+              "pol": "C",
+              "distance": 6,
+              "azimuth": 50
+            },
+            "mount": "https://frontend.streamonkey.net/energy-muenchen/stream/mp3 ",
+            "logo": "https://tef.noobish.eu/logos/BEL/6381.png",
+            "af": [
+              99.7
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 101.6,
+            "ps": "HAMUSIKA",
+            "pi": "6219",
+            "pty": 7,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79,
+            "station": {
+              "name": "Radio HaMusika",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 1,
+              "pol": "C",
+              "distance": 6,
+              "azimuth": 50
+            },
+            "mount": "https://stream.jewishmusicstream.com:8000/;",
+            "af": [
+              101.6
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 102.4,
+            "ps": "DANCE FM",
+            "pi": "66A8",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 83,
+            "station": {
+              "name": "Dance FM",
+              "city": "Katzrin",
+              "itu": "BK",
+              "pol": "C",
+              "distance": 6,
+              "azimuth": 50,
+              "erp": 2
+            },
+            "mount": "http://b8e00b2e5592.sn.mynetname.net:8000/onefm",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "rt": "DANCE FM",
+            "af": [
+              102.4
+            ]
+          },
+          {
+            "freq": 102.9,
+            "ps": "KOLKTZRN",
+            "rt": "",
+            "pi": "66A8",
+            "pty": 2,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 80,
+            "station": {
+              "name": "Kol Ktzrin",
+              "city": "Katzrin",
+              "itu": "BK",
+              "pol": "V",
+              "distance": 16,
+              "azimuth": 85,
+              "erp": 0.63
+            },
+            "mount": "https://1062onair.runi.ac.il/idc123.mp3",
+            "af": [
+              102.9
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 105.1,
+            "ps": "SHATZAV HADASHOT",
+            "rt": "-> Shatzav Radio Hadashot <-",
+            "pi": "6204",
+            "pty": 1,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 78.5,
+            "station": {
+              "name": "Shatzav Radio Hadashot",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 79,
+              "pol": "H",
+              "distance": 36,
+              "azimuth": 313
+            },
+            "mount": "https://28993.live.streamtheworld.com/KAN_MORESHET.mp3",
+            "af": [
+              104.7,
+              104.9,
+              105.1
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 106.2,
+            "ps": "EUROPA_+",
+            "rt": "Bolshe Hitov Bolshe Muziky",
+            "pi": "6632",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 78,
+            "station": {
+              "name": "Europa Plus",
+              "city": "Katzrin",
+              "itu": "BK",
+              "erp": 1,
+              "pol": "V",
+              "distance": 7,
+              "azimuth": 56
+            },
+            "mount": "https://ep128server.streamr.ru:8030/ep128",
+            "logo": "https://tef.noobish.eu/logos/RUS/1000_EVROPAPLUS.png",
+            "af": [
+              106.2
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           }
