@@ -201,6 +201,30 @@
   render("");
   qEl.addEventListener("input", () => render(qEl.value));
 
+  // ---------- Receiver detail overlay ----------
+  const overlay = document.getElementById("overlay");
+  function showDetail(r) {
+    if (!r) return;
+    const c = r.config || {};
+    document.getElementById("d-name").textContent = r.name || c.tunerName || r.slug;
+    document.getElementById("d-loc").textContent = r.location ? "• " + r.location : "";
+    const mn = c.tuningMin, mx = c.tuningMax;
+    document.getElementById("d-limit").textContent =
+      (typeof mn === "number" && typeof mx === "number") ? `${mn} - ${mx} MHz` : "—";
+    document.getElementById("d-device").textContent = c.tunerDevice || "Virtual TEF668x";
+    const desc = c.tunerDescription || "";
+    document.getElementById("d-descwrap").style.display = desc ? "" : "none";
+    document.getElementById("d-desc").textContent = desc;
+    const owner = c.ownerContact || "";
+    document.getElementById("d-ownerwrap").style.display = owner ? "" : "none";
+    document.getElementById("d-owner").textContent = owner;
+    document.getElementById("d-connect").href = "/" + encodeURIComponent(r.slug);
+    overlay.hidden = false;
+  }
+  document.getElementById("d-close").addEventListener("click", () => overlay.hidden = true);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.hidden = true; });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") overlay.hidden = true; });
+
   // Sidebar collapse
   const sb = document.getElementById("sidebar");
   const tog = document.getElementById("toggle");
