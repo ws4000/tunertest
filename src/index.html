@@ -185,16 +185,18 @@
       listEl.innerHTML = '<div class="sb-empty">No receivers.<br><a href="/admin" style="color:#68f7ee">Open admin →</a></div>';
       return;
     }
-    listEl.innerHTML = rows.map(r => {
-      const stations = r.config?.stations?.length ? ` · ${r.config.stations.length} stations` : "";
-      return `<a class="sb-item" href="/${encodeURIComponent(r.slug)}">
+    listEl.innerHTML = rows.map((r) => {
+      const i = receivers.indexOf(r);
+      return `<button class="sb-item" data-i="${i}" type="button" style="width:100%;background:none;border:none;text-align:left;font:inherit">
         <div class="flag">FM</div>
         <div class="info">
           <div class="n">${esc(r.name || r.slug)}</div>
-          <div class="l">${esc(r.location || "")}${stations}</div>
+          <div class="l">${esc(r.location || "")}</div>
         </div>
-      </a>`;
+      </button>`;
     }).join("");
+    listEl.querySelectorAll(".sb-item").forEach(el =>
+      el.addEventListener("click", () => showDetail(receivers[+el.dataset.i])));
   }
   render("");
   qEl.addEventListener("input", () => render(qEl.value));
@@ -240,7 +242,7 @@
     const m = L.marker(toLatLng(r), { icon }).addTo(map);
     m.bindTooltip(esc(r.name || r.slug), {
       direction:"top", offset:[0,-8], className:"tuner-tip", opacity:1 });
-    m.on("click", () => { window.location.href = "/" + encodeURIComponent(r.slug); });
+    m.on("click", () => showDetail(r));
   });
   if (pts.length === 1) map.setView(toLatLng(pts[0]), 2);
   else if (pts.length > 1) map.fitBounds(L.latLngBounds(pts.map(toLatLng)).pad(0.4));
