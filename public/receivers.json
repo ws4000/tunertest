@@ -8417,7 +8417,11 @@
               92.8,
               93.2,
               93.7,
-              94.2
+              94.2,
+              96.2,
+              96.7,
+              97.2,
+              105.8
             ],
             "logo": "https://i.soupco.net/raw/k5zlLh.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
@@ -9091,10 +9095,17 @@
             "logo": "https://i.soupco.net/raw/KCXRmf.png",
             "af": [
               87.6,
+              87.8,
               88.3,
+              89.3,
               89.4,
               90.1,
+              90.3,
               91.3,
+              91.5,
+              92.1,
+              97,
+              97.1,
               102.7,
               103.5
             ],
@@ -9124,10 +9135,17 @@
             "logo": "https://i.soupco.net/raw/KCXRmf.png",
             "af": [
               87.6,
+              87.8,
               88.3,
+              89.3,
               89.4,
               90.1,
+              90.3,
               91.3,
+              91.5,
+              92.1,
+              97,
+              97.1,
               102.7,
               103.5
             ],
@@ -9155,6 +9173,46 @@
             "signal": 7,
             "mount": "https://redbeemedia.streamabc.net/redbm-musiq3-aac-256-1558698",
             "rdsDisabled": true
+          },
+          {
+            "freq": 89.3,
+            "ps": "La_1ere_",
+            "rt": "LA 1ERE - L'esprit clair",
+            "pi": "6201",
+            "pty": 1,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "OBRT La Première",
+              "city": "Doullens",
+              "itu": "BX",
+              "erp": 6.3,
+              "pol": "M",
+              "distance": 87,
+              "azimuth": 161
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-lapremiere-mp3-160-7134387",
+            "logo": "https://i.soupco.net/raw/KCXRmf.png",
+            "af": [
+              87.6,
+              87.8,
+              88.3,
+              89.3,
+              89.4,
+              90.1,
+              90.3,
+              91.3,
+              91.5,
+              92.1,
+              97,
+              97.1,
+              102.7,
+              103.5
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "signal": 39
           },
           {
             "freq": 89.8,
@@ -9238,6 +9296,26 @@
               99
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 91.3,
+            "rt": "FG. DJ Radio",
+            "pi": "",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 7,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "pol": "V"
+            },
+            "mount": "https://redbeemedia.streamabc.net/redbm-vivabxl-aac-128-1428473 ",
+            "logo": "",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "rdsDisabled": true
           },
           {
             "freq": 91.4,
@@ -9346,7 +9424,11 @@
               92.8,
               93.2,
               93.7,
-              94.2
+              94.2,
+              96.2,
+              96.7,
+              97.2,
+              105.8
             ],
             "logo": "https://i.soupco.net/raw/k5zlLh.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
@@ -9378,7 +9460,11 @@
               92.8,
               93.2,
               93.7,
-              94.2
+              94.2,
+              96.2,
+              96.7,
+              97.2,
+              105.8
             ],
             "logo": "https://i.soupco.net/raw/k5zlLh.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
