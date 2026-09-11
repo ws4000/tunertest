@@ -257,7 +257,10 @@
     crs: DynmapCRS, minZoom:-3, maxZoom:4,
     zoomControl:true, attributionControl:false,
   });
-  new DynmapLayer("", { tileSize:128, minZoom:-3, maxZoom:4, noWrap:true }).addTo(map);
+  // maxNativeZoom keeps Leaflet requesting the tiles that actually exist
+  // (native zoom 2) and upscaling them when zoomed in past that, instead of
+  // requesting nonexistent finer tiles and rendering nothing.
+  new DynmapLayer("", { tileSize:128, minZoom:-3, maxZoom:4, maxNativeZoom:2, noWrap:true }).addTo(map);
 
   const pts = receivers.filter(r => r.mc && typeof r.mc.x === "number" && typeof r.mc.z === "number");
   const toLatLng = (r) => L.latLng(-r.mc.z, r.mc.x);
