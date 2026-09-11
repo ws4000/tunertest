@@ -193,6 +193,38 @@
             }
           },
           {
+            "freq": 94.5,
+            "ps": [
+              "3s: K-LOVE",
+              "1s:(ALLCAPS)%MD%"
+            ],
+            "rt": [
+              "10s:(ALLCAPS)%MD%",
+              "10s:K-LOVE - POSITIVE, ENCOURAGING"
+            ],
+            "pi": "2B98",
+            "pty": 19,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79.9,
+            "station": {
+              "name": "OKLS-FM",
+              "city": "Springton",
+              "itu": "OR",
+              "erp": 10,
+              "pol": "C",
+              "distance": 29,
+              "azimuth": 336
+            },
+            "mount": "oklv",
+            "logo": "https://tef.noobish.eu/logos/USA/110F.png",
+            "af": [
+              94.5
+            ]
+          },
+          {
             "freq": 94.9,
             "mount": "949thebullsprington",
             "pi": "14B7",
@@ -408,38 +440,6 @@
             "logo": "https://tef.noobish.eu/logos/IRL/23E2.svg",
             "af": [
               107.1
-            ]
-          },
-          {
-            "freq": 94.5,
-            "ps": [
-              "3s: K-LOVE",
-              "1s:(ALLCAPS)%MD%"
-            ],
-            "rt": [
-              "10s:(ALLCAPS)%MD%",
-              "10s:K-LOVE - POSITIVE, ENCOURAGING"
-            ],
-            "pi": "2B98",
-            "pty": 19,
-            "tp": true,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 79.9,
-            "station": {
-              "name": "OKLS-FM",
-              "city": "Springton",
-              "itu": "OR",
-              "erp": 10,
-              "pol": "C",
-              "distance": 29,
-              "azimuth": 336
-            },
-            "mount": "oklv",
-            "logo": "https://tef.noobish.eu/logos/USA/110F.png",
-            "af": [
-              94.5
             ]
           }
         ],
@@ -742,6 +742,52 @@
             "volume": 1
           },
           {
+            "ps": " J E Y  ",
+            "rt": "%MD%",
+            "pi": "2844",
+            "pty": 9,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 93,
+            "station": {
+              "name": "O122JY-FM",
+              "city": "Broken Arrow",
+              "itu": "ORL",
+              "erp": 0.1,
+              "pol": "V",
+              "distance": 2,
+              "azimuth": 229
+            },
+            "freq": 97.1,
+            "mount": "https://stream.jeyradio.nl/JEY",
+            "logo": "https://i.soupco.net/u/Hqs99I.png",
+            "flag": "https://i.soupco.net/raw/aqJ9Ug.png"
+          },
+          {
+            "freq": 98.1,
+            "ps": "        ",
+            "rt": "",
+            "pi": "",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 32,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "mount": "https://26383.live.streamtheworld.com/WCTKFMAAC.aac",
+            "rdsDisabled": true
+          },
+          {
             "freq": 99.3,
             "ps": " FUEGO  ",
             "rt": "Radio FUEGO on FM and on the RadioPlay Orland App !",
@@ -838,6 +884,29 @@
             "volume": 1
           },
           {
+            "freq": 103.5,
+            "ps": "Z103.5 %MD%",
+            "rt": "%MD%",
+            "pi": "9584",
+            "pty": 0,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 68,
+            "station": {
+              "name": "CIDC-FM",
+              "city": "Gluckstadt",
+              "itu": "OR",
+              "erp": 298,
+              "pol": "M",
+              "distance": 40,
+              "azimuth": 285
+            },
+            "mount": "z1035brokenarrow",
+            "logo": "https://tef.noobish.eu/logos/CAN/C6D6.png"
+          },
+          {
             "freq": 105.5,
             "ps": " COMEDY ",
             "rt": "OPB Comedy",
@@ -908,28 +977,6 @@
             "volume": 1
           },
           {
-            "freq": 98.1,
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": false,
-            "signal": 32,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            },
-            "mount": "https://26383.live.streamtheworld.com/WCTKFMAAC.aac",
-            "rdsDisabled": true
-          },
-          {
             "freq": 107.7,
             "ps": "r 107.7",
             "rt": "",
@@ -951,53 +998,6 @@
             "mount": "https://listen.radioking.com/radio/475283/stream/531509",
             "volume": 1,
             "signal": 54
-          },
-          {
-            "ps": " J E Y  ",
-            "rt": "%MD%",
-            "pi": "2844",
-            "pty": 9,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 93,
-            "station": {
-              "name": "O122JY-FM",
-              "city": "Broken Arrow",
-              "itu": "ORL",
-              "erp": 0.1,
-              "pol": "V",
-              "distance": 2,
-              "azimuth": 229
-            },
-            "freq": 97.1,
-            "mount": "https://stream.jeyradio.nl/JEY",
-            "logo": "https://i.soupco.net/u/Hqs99I.png",
-            "flag": "https://i.soupco.net/raw/aqJ9Ug.png"
-          },
-          {
-            "freq": 103.5,
-            "ps": "Z103.5 %MD%",
-            "rt": "%MD%",
-            "pi": "9584",
-            "pty": 0,
-            "tp": true,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 68,
-            "station": {
-              "name": "CIDC-FM",
-              "city": "Gluckstadt",
-              "itu": "OR",
-              "erp": 298,
-              "pol": "M",
-              "distance": 40,
-              "azimuth": 285
-            },
-            "mount": "z1035brokenarrow",
-            "logo": "https://tef.noobish.eu/logos/CAN/C6D6.png"
           }
         ],
         "presets": []
@@ -1152,26 +1152,6 @@
             "rdsDisabled": true
           },
           {
-            "freq": 106.7,
-            "ps": "",
-            "rt": "",
-            "pi": "",
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": false,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "pol": "V"
-            },
-            "mount": "https://stream.jeyradio.nl/JEY",
-            "logo": "",
-            "signal": 13,
-            "rdsDisabled": true
-          },
-          {
             "freq": 89.4,
             "ps": "  FG.   ",
             "rt": "FG. DJ Radio",
@@ -1249,6 +1229,44 @@
             "pty": 11
           },
           {
+            "freq": 90.2,
+            "ps": " SPO P1 ",
+            "rt": "SPO P1 : %ICEMD%",
+            "pi": "8201",
+            "pty": 9,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 67,
+            "station": {
+              "name": "SPO P1",
+              "city": "Pijnacker Zendmast",
+              "itu": "SP",
+              "pol": "C",
+              "distance": 41,
+              "azimuth": 26,
+              "erp": 15
+            },
+            "mount": "https://icecast.omroep.nl/radio1-bb-mp3",
+            "logo": "https://i.soupco.net/raw/KIEZky.png",
+            "volume": 1,
+            "af": [
+              87.6,
+              87.9,
+              88,
+              88.1,
+              88.3,
+              88.7,
+              90.1,
+              90.2,
+              90.5,
+              90.8,
+              91.7,
+              94.4
+            ]
+          },
+          {
             "freq": 90.5,
             "ps": "",
             "rt": "",
@@ -1322,44 +1340,6 @@
               "distance": 99,
               "azimuth": 229,
               "erp": 18
-            },
-            "mount": "https://icecast.omroep.nl/radio1-bb-mp3",
-            "logo": "https://i.soupco.net/raw/KIEZky.png",
-            "volume": 1,
-            "af": [
-              87.6,
-              87.9,
-              88,
-              88.1,
-              88.3,
-              88.7,
-              90.1,
-              90.2,
-              90.5,
-              90.8,
-              91.7,
-              94.4
-            ]
-          },
-          {
-            "freq": 90.2,
-            "ps": " SPO P1 ",
-            "rt": "SPO P1 : %ICEMD%",
-            "pi": "8201",
-            "pty": 9,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 67,
-            "station": {
-              "name": "SPO P1",
-              "city": "Pijnacker Zendmast",
-              "itu": "SP",
-              "pol": "C",
-              "distance": 41,
-              "azimuth": 26,
-              "erp": 15
             },
             "mount": "https://icecast.omroep.nl/radio1-bb-mp3",
             "logo": "https://i.soupco.net/raw/KIEZky.png",
@@ -2554,6 +2534,26 @@
             "rdsDisabled": true
           },
           {
+            "freq": 106.7,
+            "ps": "",
+            "rt": "",
+            "pi": "",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "pol": "V"
+            },
+            "mount": "https://stream.jeyradio.nl/JEY",
+            "logo": "",
+            "signal": 13,
+            "rdsDisabled": true
+          },
+          {
             "freq": 106.9,
             "ps": "VIBRA fm",
             "rt": "",
@@ -2749,6 +2749,28 @@
             ]
           },
           {
+            "freq": 88,
+            "ps": "",
+            "rt": "",
+            "pi": "",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 7,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "rdsDisabled": true,
+            "mount": "https://29103.live.streamtheworld.com/100PNL_MP3_SC"
+          },
+          {
             "freq": 88.3,
             "ps": " SPO P1 ",
             "rt": "SPO P1 : %ICEMD%",
@@ -2823,66 +2845,6 @@
               91.7,
               94.4
             ]
-          },
-          {
-            "freq": 90.2,
-            "ps": " SPO P1 ",
-            "rt": "SPO P1 : %ICEMD%",
-            "pi": "8201",
-            "pty": 9,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 50,
-            "station": {
-              "name": "SPO P1",
-              "city": "Pijnacker Zendmast",
-              "itu": "SP",
-              "erp": 97,
-              "pol": "H",
-              "distance": 50,
-              "azimuth": 50
-            },
-            "mount": "https://icecast.omroep.nl/radio1-bb-mp3",
-            "logo": "https://i.soupco.net/raw/KIEZky.png",
-            "rdsDisabled": false,
-            "af": [
-              87.6,
-              87.9,
-              88,
-              88.1,
-              88.3,
-              88.7,
-              90.1,
-              90.2,
-              90.5,
-              90.8,
-              91.7,
-              94.4
-            ]
-          },
-          {
-            "freq": 88,
-            "ps": "",
-            "rt": "",
-            "pi": "",
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 7,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            },
-            "rdsDisabled": true,
-            "mount": "https://29103.live.streamtheworld.com/100PNL_MP3_SC"
           },
           {
             "freq": 89.1,
@@ -2975,6 +2937,77 @@
             "signal": 62
           },
           {
+            "freq": 90.2,
+            "ps": " SPO P1 ",
+            "rt": "SPO P1 : %ICEMD%",
+            "pi": "8201",
+            "pty": 9,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 50,
+            "station": {
+              "name": "SPO P1",
+              "city": "Pijnacker Zendmast",
+              "itu": "SP",
+              "erp": 97,
+              "pol": "H",
+              "distance": 50,
+              "azimuth": 50
+            },
+            "mount": "https://icecast.omroep.nl/radio1-bb-mp3",
+            "logo": "https://i.soupco.net/raw/KIEZky.png",
+            "rdsDisabled": false,
+            "af": [
+              87.6,
+              87.9,
+              88,
+              88.1,
+              88.3,
+              88.7,
+              90.1,
+              90.2,
+              90.5,
+              90.8,
+              91.7,
+              94.4
+            ]
+          },
+          {
+            "freq": 90.4,
+            "ps": "POWER FM",
+            "rt": "",
+            "pi": "82E2",
+            "pty": 15,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 71,
+            "station": {
+              "name": "Power FM",
+              "city": "Emmelburg",
+              "itu": "SP",
+              "pol": "V",
+              "distance": 10,
+              "azimuth": 67,
+              "erp": 0.2
+            },
+            "mount": "https://mediaserv73.live-streams.nl:18044/stream",
+            "af": [
+              90.4,
+              91.3,
+              94.1,
+              95,
+              95.2,
+              97.3,
+              97.5,
+              98.5,
+              100.5
+            ]
+          },
+          {
             "freq": 90.6,
             "ps": " SPO P2 ",
             "rt": "SPO P2 : Haal adem, je luistert naar P2",
@@ -3011,6 +3044,29 @@
             "signal": 63
           },
           {
+            "freq": 91.5,
+            "ps": "TOPradio",
+            "rt": "",
+            "pi": "82DF",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 80,
+            "station": {
+              "name": "TOPradio",
+              "city": "Emmelburg",
+              "itu": "SP",
+              "erp": 1,
+              "pol": "V",
+              "distance": 13,
+              "azimuth": 95
+            },
+            "mount": "https://live.advailo.com/topradio/live/playlist.m3u8",
+            "logo": "https://tef.noobish.eu/logos/LVA/924A.png"
+          },
+          {
             "freq": 92.6,
             "ps": " SPO P2 ",
             "rt": "SPO P2 : Haal adem, je luistert naar P2",
@@ -3045,134 +3101,6 @@
               104.2
             ],
             "signal": 76
-          },
-          {
-            "freq": 93.5,
-            "ps": " SPO P2 ",
-            "rt": "SPO P2 : Haal adem, je luistert naar P2",
-            "pi": "8202",
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "station": {
-              "name": "SPO P2",
-              "city": "Pijnacker Zendmast",
-              "itu": "SP",
-              "erp": 15,
-              "pol": "C",
-              "azimuth": 50,
-              "distance": 50
-            },
-            "mount": "https://icecast.omroep.nl/radio4-sb-mp3",
-            "logo": "https://i.soupco.net/raw/QSdqFl.png",
-            "af": [
-              90,
-              90.5,
-              90.6,
-              92.6,
-              93.1,
-              93.5,
-              94.7,
-              96.4,
-              96.6,
-              96.8,
-              104.2
-            ],
-            "signal": 50,
-            "pty": 14
-          },
-          {
-            "freq": 104.2,
-            "ps": " SPO P2 ",
-            "rt": "SPO P2 : Haal adem, je luistert naar P2",
-            "pi": "8202",
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "station": {
-              "name": "SPO P2",
-              "city": "Nijselt Zendmast",
-              "itu": "SP",
-              "erp": 12,
-              "pol": "H",
-              "azimuth": 124,
-              "distance": 88
-            },
-            "mount": "https://icecast.omroep.nl/radio4-sb-mp3",
-            "logo": "https://i.soupco.net/raw/QSdqFl.png",
-            "af": [
-              90,
-              90.5,
-              90.6,
-              92.6,
-              93.1,
-              93.5,
-              94.7,
-              96.4,
-              96.6,
-              96.8,
-              104.2
-            ],
-            "signal": 58,
-            "pty": 14
-          },
-          {
-            "freq": 90.4,
-            "ps": "POWER FM",
-            "rt": "",
-            "pi": "82E2",
-            "pty": 15,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 71,
-            "station": {
-              "name": "Power FM",
-              "city": "Emmelburg",
-              "itu": "SP",
-              "pol": "V",
-              "distance": 10,
-              "azimuth": 67,
-              "erp": 0.2
-            },
-            "mount": "https://mediaserv73.live-streams.nl:18044/stream",
-            "af": [
-              90.4,
-              91.3,
-              94.1,
-              95,
-              95.2,
-              97.3,
-              97.5,
-              98.5,
-              100.5
-            ]
-          },
-          {
-            "freq": 91.5,
-            "ps": "TOPradio",
-            "rt": "",
-            "pi": "82DF",
-            "pty": 0,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 80,
-            "station": {
-              "name": "TOPradio",
-              "city": "Emmelburg",
-              "itu": "SP",
-              "erp": 1,
-              "pol": "V",
-              "distance": 13,
-              "azimuth": 95
-            },
-            "mount": "https://live.advailo.com/topradio/live/playlist.m3u8",
-            "logo": "https://tef.noobish.eu/logos/LVA/924A.png"
           },
           {
             "freq": 93,
@@ -3228,59 +3156,6 @@
             ]
           },
           {
-            "freq": 100.8,
-            "ps": "  FG.   ",
-            "rt": "FG. DJ Radio",
-            "pi": "822C",
-            "pty": 0,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 43,
-            "station": {
-              "name": "Radio FG.",
-              "city": "Doetinlingen",
-              "itu": "SP",
-              "erp": 8,
-              "pol": "V",
-              "distance": 76,
-              "azimuth": 3
-            },
-            "logo": "https://tef.noobish.eu/logos/F/F22C.png",
-            "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
-            "af": [
-              88.8,
-              89,
-              89.4,
-              89.7,
-              90,
-              91.2,
-              91.4,
-              91.8,
-              93,
-              93.2,
-              93.4,
-              94.7,
-              94.9,
-              97.8,
-              98.1,
-              98.7,
-              100.2,
-              100.5,
-              100.8,
-              100.9,
-              101,
-              101.1,
-              101.2,
-              103,
-              103.4,
-              103.7,
-              106.9,
-              107.6
-            ]
-          },
-          {
             "freq": 93.3,
             "ps": " K-Mix  ",
             "rt": "%ICEMD%",
@@ -3301,6 +3176,42 @@
               "azimuth": 4
             },
             "mount": "kqzg"
+          },
+          {
+            "freq": 93.5,
+            "ps": " SPO P2 ",
+            "rt": "SPO P2 : Haal adem, je luistert naar P2",
+            "pi": "8202",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "SPO P2",
+              "city": "Pijnacker Zendmast",
+              "itu": "SP",
+              "erp": 15,
+              "pol": "C",
+              "azimuth": 50,
+              "distance": 50
+            },
+            "mount": "https://icecast.omroep.nl/radio4-sb-mp3",
+            "logo": "https://i.soupco.net/raw/QSdqFl.png",
+            "af": [
+              90,
+              90.5,
+              90.6,
+              92.6,
+              93.1,
+              93.5,
+              94.7,
+              96.4,
+              96.6,
+              96.8,
+              104.2
+            ],
+            "signal": 50,
+            "pty": 14
           },
           {
             "freq": 93.8,
@@ -3382,75 +3293,6 @@
             ]
           },
           {
-            "freq": 105.1,
-            "ps": "SPO NWS",
-            "rt": "SPO Nieuws",
-            "pi": "8204",
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "station": {
-              "name": "SPO Nieuws",
-              "city": "Rottingem Zendmast",
-              "itu": "SP",
-              "pol": "H",
-              "erp": 79,
-              "distance": 50,
-              "azimuth": 50
-            },
-            "mount": "https://vrt.streamabc.net/vrt-radio1-mp3-128-9751183",
-            "logo": "https://i.soupco.net/raw/lAvSb1.png",
-            "rdsDisabled": false,
-            "signal": 57,
-            "pty": 1,
-            "af": [
-              91.3,
-              94.7,
-              103.5,
-              104.9,
-              105.1,
-              105.3,
-              105.6,
-              105.7,
-              107.3
-            ]
-          },
-          {
-            "freq": 105.6,
-            "ps": "SPO NWS",
-            "rt": "SPO Nieuws",
-            "pi": "8204",
-            "pty": 1,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 60,
-            "station": {
-              "name": "SPO Nieuws",
-              "city": "Stawijk Zendmast",
-              "itu": "SP",
-              "erp": 17,
-              "pol": "V",
-              "distance": 86,
-              "azimuth": 219
-            },
-            "mount": "https://vrt.streamabc.net/vrt-radio1-mp3-128-9751183",
-            "logo": "https://i.soupco.net/raw/lAvSb1.png",
-            "af": [
-              91.3,
-              94.7,
-              103.5,
-              104.9,
-              105.1,
-              105.3,
-              105.6,
-              105.7,
-              107.3
-            ]
-          },
-          {
             "freq": 95.1,
             "ps": "        ",
             "rt": "",
@@ -3471,6 +3313,29 @@
             "signal": 6,
             "rdsDisabled": true,
             "mount": "https://listen.vdfm.ru:8000/rusradio"
+          },
+          {
+            "ps": "RusUrban 95.3 FM",
+            "rt": "",
+            "pi": "82A4",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79,
+            "station": {
+              "name": "Radio Russkiy Urban",
+              "city": "Emmelburg",
+              "itu": "SP",
+              "pol": "V",
+              "distance": 6,
+              "azimuth": 120,
+              "erp": 0.1
+            },
+            "mount": "https://stream03.pcradio.app/Rap-med",
+            "freq": 95.3,
+            "logo": "https://i.soupco.net/raw/gHbrBQ.png"
           },
           {
             "freq": 96,
@@ -3542,98 +3407,6 @@
             "logo": "https://i.soupco.net/raw/93N3bw.png"
           },
           {
-            "freq": 97.8,
-            "ps": " SPO P3 ",
-            "rt": "SPO P3",
-            "pi": "8203",
-            "pty": 10,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 58,
-            "station": {
-              "name": "SPO P3",
-              "city": "Nijselt Zendmast",
-              "itu": "SP",
-              "erp": 12,
-              "pol": "H",
-              "distance": 88,
-              "azimuth": 124
-            },
-            "mount": "https://icecast.omroep.nl/3fm-bb-mp3",
-            "logo": "https://i.soupco.net/raw/93N3bw.png"
-          },
-          {
-            "freq": 98.7,
-            "ps": " SPO P3 ",
-            "rt": "SPO P3",
-            "pi": "8203",
-            "pty": 10,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 63,
-            "station": {
-              "name": "SPO P3",
-              "city": "Stawijk Zendmast",
-              "itu": "SP",
-              "erp": 20,
-              "pol": "V",
-              "distance": 86,
-              "azimuth": 219
-            },
-            "mount": "https://icecast.omroep.nl/3fm-bb-mp3",
-            "logo": "https://i.soupco.net/raw/93N3bw.png"
-          },
-          {
-            "freq": 99.7,
-            "ps": " SPO P3 ",
-            "rt": "SPO P3",
-            "pi": "8203",
-            "pty": 10,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "station": {
-              "name": "SPO P3",
-              "city": "Rottingem Zendmast",
-              "itu": "SP",
-              "erp": 97,
-              "pol": "H",
-              "azimuth": 50,
-              "distance": 50
-            },
-            "mount": "https://icecast.omroep.nl/3fm-bb-mp3",
-            "logo": "https://i.soupco.net/raw/93N3bw.png",
-            "signal": 62
-          },
-          {
-            "ps": "RusUrban 95.3 FM",
-            "rt": "",
-            "pi": "82A4",
-            "pty": 0,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 79,
-            "station": {
-              "name": "Radio Russkiy Urban",
-              "city": "Emmelburg",
-              "itu": "SP",
-              "pol": "V",
-              "distance": 6,
-              "azimuth": 120,
-              "erp": 0.1
-            },
-            "mount": "https://stream03.pcradio.app/Rap-med",
-            "freq": 95.3,
-            "logo": "https://i.soupco.net/raw/gHbrBQ.png"
-          },
-          {
             "freq": 97.6,
             "ps": " RTO R1 ",
             "rt": "RTO Radio 1 -> %ICEMD%",
@@ -3657,27 +3430,27 @@
             "logo": "https://i.soupco.net/u/oslnfT.png"
           },
           {
-            "freq": 105.9,
-            "ps": " RTO R1 ",
-            "rt": "RTO Radio 1 -> %ICEMD%",
-            "pi": "8E10",
+            "freq": 97.8,
+            "ps": " SPO P3 ",
+            "rt": "SPO P3",
+            "pi": "8203",
             "pty": 10,
             "tp": false,
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 71,
+            "signal": 58,
             "station": {
-              "name": "RTO Radio 1 [F]",
-              "city": "Emmelburg",
+              "name": "SPO P3",
+              "city": "Nijselt Zendmast",
               "itu": "SP",
-              "pol": "V",
-              "distance": 10,
-              "azimuth": 67,
-              "erp": 0.2
+              "erp": 12,
+              "pol": "H",
+              "distance": 88,
+              "azimuth": 124
             },
-            "mount": "rtor1",
-            "logo": "https://i.soupco.net/u/oslnfT.png"
+            "mount": "https://icecast.omroep.nl/3fm-bb-mp3",
+            "logo": "https://i.soupco.net/raw/93N3bw.png"
           },
           {
             "freq": 98,
@@ -3730,34 +3503,27 @@
             ]
           },
           {
-            "freq": 107.3,
-            "ps": " HOBOE  ",
-            "rt": "HOBOE",
-            "pi": "82C3",
-            "pty": 0,
+            "freq": 98.7,
+            "ps": " SPO P3 ",
+            "rt": "SPO P3",
+            "pi": "8203",
+            "pty": 10,
             "tp": false,
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 80,
+            "signal": 63,
             "station": {
-              "name": "Novoye Radio Sveland",
-              "city": "Emmelburg",
+              "name": "SPO P3",
+              "city": "Stawijk Zendmast",
               "itu": "SP",
-              "erp": 1,
+              "erp": 20,
               "pol": "V",
-              "distance": 13,
-              "azimuth": 95
+              "distance": 86,
+              "azimuth": 219
             },
-            "logo": "https://tef.noobish.eu/logos/RUS/3173_NOVOYERADIO.png",
-            "mount": "https://icecast-newradio.cdnvideo.ru/newradio3",
-            "af": [
-              87.7,
-              93.1,
-              96.7,
-              98.2,
-              107.3
-            ]
+            "mount": "https://icecast.omroep.nl/3fm-bb-mp3",
+            "logo": "https://i.soupco.net/raw/93N3bw.png"
           },
           {
             "freq": 99.1,
@@ -3781,6 +3547,110 @@
             },
             "logo": "https://tef.noobish.eu/logos/F/F218.svg",
             "mount": "https://28553.live.streamtheworld.com/NOSTALGIEWHATAFEELING.mp3"
+          },
+          {
+            "freq": 99.7,
+            "ps": " SPO P3 ",
+            "rt": "SPO P3",
+            "pi": "8203",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "SPO P3",
+              "city": "Rottingem Zendmast",
+              "itu": "SP",
+              "erp": 97,
+              "pol": "H",
+              "azimuth": 50,
+              "distance": 50
+            },
+            "mount": "https://icecast.omroep.nl/3fm-bb-mp3",
+            "logo": "https://i.soupco.net/raw/93N3bw.png",
+            "signal": 62
+          },
+          {
+            "freq": 100.5,
+            "ps": "J A Z Z",
+            "rt": "",
+            "pi": "82FC",
+            "pty": 24,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 82,
+            "station": {
+              "name": "Jazz Radio",
+              "city": "Emmelburg",
+              "itu": "SP",
+              "erp": 1,
+              "pol": "V",
+              "distance": 10,
+              "azimuth": 67
+            },
+            "mount": "http://mediaserv73.live-streams.nl:8027/stream",
+            "af": [
+              100.7,
+              101.7,
+              104.7,
+              105.2
+            ]
+          },
+          {
+            "freq": 100.8,
+            "ps": "  FG.   ",
+            "rt": "FG. DJ Radio",
+            "pi": "822C",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 43,
+            "station": {
+              "name": "Radio FG.",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 8,
+              "pol": "V",
+              "distance": 76,
+              "azimuth": 3
+            },
+            "logo": "https://tef.noobish.eu/logos/F/F22C.png",
+            "mount": "https://n09-eu.rcs.revma.com/7081n2b6p98uv",
+            "af": [
+              88.8,
+              89,
+              89.4,
+              89.7,
+              90,
+              91.2,
+              91.4,
+              91.8,
+              93,
+              93.2,
+              93.4,
+              94.7,
+              94.9,
+              97.8,
+              98.1,
+              98.7,
+              100.2,
+              100.5,
+              100.8,
+              100.9,
+              101,
+              101.1,
+              101.2,
+              103,
+              103.4,
+              103.7,
+              106.9,
+              107.6
+            ]
           },
           {
             "freq": 101.2,
@@ -3937,31 +3807,161 @@
             ]
           },
           {
-            "freq": 100.5,
-            "ps": "J A Z Z",
-            "rt": "",
-            "pi": "82FC",
-            "pty": 24,
+            "freq": 104.2,
+            "ps": " SPO P2 ",
+            "rt": "SPO P2 : Haal adem, je luistert naar P2",
+            "pi": "8202",
             "tp": false,
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 82,
             "station": {
-              "name": "Jazz Radio",
+              "name": "SPO P2",
+              "city": "Nijselt Zendmast",
+              "itu": "SP",
+              "erp": 12,
+              "pol": "H",
+              "azimuth": 124,
+              "distance": 88
+            },
+            "mount": "https://icecast.omroep.nl/radio4-sb-mp3",
+            "logo": "https://i.soupco.net/raw/QSdqFl.png",
+            "af": [
+              90,
+              90.5,
+              90.6,
+              92.6,
+              93.1,
+              93.5,
+              94.7,
+              96.4,
+              96.6,
+              96.8,
+              104.2
+            ],
+            "signal": 58,
+            "pty": 14
+          },
+          {
+            "freq": 105.1,
+            "ps": "SPO NWS",
+            "rt": "SPO Nieuws",
+            "pi": "8204",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "SPO Nieuws",
+              "city": "Rottingem Zendmast",
+              "itu": "SP",
+              "pol": "H",
+              "erp": 79,
+              "distance": 50,
+              "azimuth": 50
+            },
+            "mount": "https://vrt.streamabc.net/vrt-radio1-mp3-128-9751183",
+            "logo": "https://i.soupco.net/raw/lAvSb1.png",
+            "rdsDisabled": false,
+            "signal": 57,
+            "pty": 1,
+            "af": [
+              91.3,
+              94.7,
+              103.5,
+              104.9,
+              105.1,
+              105.3,
+              105.6,
+              105.7,
+              107.3
+            ]
+          },
+          {
+            "freq": 105.6,
+            "ps": "SPO NWS",
+            "rt": "SPO Nieuws",
+            "pi": "8204",
+            "pty": 1,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 60,
+            "station": {
+              "name": "SPO Nieuws",
+              "city": "Stawijk Zendmast",
+              "itu": "SP",
+              "erp": 17,
+              "pol": "V",
+              "distance": 86,
+              "azimuth": 219
+            },
+            "mount": "https://vrt.streamabc.net/vrt-radio1-mp3-128-9751183",
+            "logo": "https://i.soupco.net/raw/lAvSb1.png",
+            "af": [
+              91.3,
+              94.7,
+              103.5,
+              104.9,
+              105.1,
+              105.3,
+              105.6,
+              105.7,
+              107.3
+            ]
+          },
+          {
+            "freq": 105.9,
+            "ps": " RTO R1 ",
+            "rt": "RTO Radio 1 -> %ICEMD%",
+            "pi": "8E10",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 71,
+            "station": {
+              "name": "RTO Radio 1 [F]",
+              "city": "Emmelburg",
+              "itu": "SP",
+              "pol": "V",
+              "distance": 10,
+              "azimuth": 67,
+              "erp": 0.2
+            },
+            "mount": "rtor1",
+            "logo": "https://i.soupco.net/u/oslnfT.png"
+          },
+          {
+            "freq": 107.3,
+            "ps": " HOBOE  ",
+            "rt": "HOBOE",
+            "pi": "82C3",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 80,
+            "station": {
+              "name": "Novoye Radio Sveland",
               "city": "Emmelburg",
               "itu": "SP",
               "erp": 1,
               "pol": "V",
-              "distance": 10,
-              "azimuth": 67
+              "distance": 13,
+              "azimuth": 95
             },
-            "mount": "http://mediaserv73.live-streams.nl:8027/stream",
+            "logo": "https://tef.noobish.eu/logos/RUS/3173_NOVOYERADIO.png",
+            "mount": "https://icecast-newradio.cdnvideo.ru/newradio3",
             "af": [
-              100.7,
-              101.7,
-              104.7,
-              105.2
+              87.7,
+              93.1,
+              96.7,
+              98.2,
+              107.3
             ]
           },
           {
@@ -4046,6 +4046,28 @@
         "audibleBandwidth": 0.2,
         "audioDelayMs": 800,
         "stations": [
+          {
+            "freq": 66.32,
+            "ps": "",
+            "rt": "",
+            "pi": "",
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 81,
+            "station": {
+              "name": "",
+              "city": "",
+              "itu": "",
+              "erp": 1,
+              "pol": "M",
+              "distance": 0,
+              "azimuth": 0
+            },
+            "mount": "https://stream.jeyradio.nl/JEY",
+            "rdsDisabled": true
+          },
           {
             "freq": 67.22,
             "ps": "        ",
@@ -4806,6 +4828,36 @@
             "pty": 0
           },
           {
+            "freq": 99.3,
+            "ps": "EVASION EVASION EVASION %MD%",
+            "rt": "",
+            "pi": "83E2",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 87,
+            "station": {
+              "name": "Evasion",
+              "city": "Doetinlingen",
+              "itu": "SP",
+              "erp": 2.786,
+              "pol": "V",
+              "distance": 5,
+              "azimuth": 169
+            },
+            "af": [
+              94.4,
+              99.3,
+              103.1,
+              103.4,
+              106.2
+            ],
+            "logo": "https://i.soupco.net/u/Jl4cxv.png",
+            "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac"
+          },
+          {
             "freq": 99.7,
             "ps": " SPO P3 ",
             "rt": "SPO P3",
@@ -5287,58 +5339,6 @@
             "mount": "https://icecast.omroep.nl/funx-amsterdam-bb-mp3",
             "volume": 1,
             "logo": "https://i.soupco.net/u/avrEfV.png"
-          },
-          {
-            "freq": 66.32,
-            "ps": "",
-            "rt": "",
-            "pi": "",
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": false,
-            "signal": 81,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            },
-            "mount": "https://stream.jeyradio.nl/JEY",
-            "rdsDisabled": true
-          },
-          {
-            "freq": 99.3,
-            "ps": "EVASION EVASION EVASION %MD%",
-            "rt": "",
-            "pi": "83E2",
-            "pty": 10,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 87,
-            "station": {
-              "name": "Evasion",
-              "city": "Doetinlingen",
-              "itu": "SP",
-              "erp": 2.786,
-              "pol": "V",
-              "distance": 5,
-              "azimuth": 169
-            },
-            "af": [
-              94.4,
-              99.3,
-              103.1,
-              103.4,
-              106.2
-            ],
-            "logo": "https://i.soupco.net/u/Jl4cxv.png",
-            "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac"
           }
         ],
         "presets": []
@@ -5488,27 +5488,36 @@
             ]
           },
           {
-            "freq": 90.4,
-            "ps": "S.RAVE",
-            "rt": "STUDIO RAVE. VOOR REACTIES : 0248862",
-            "pi": "8742",
-            "pty": 0,
+            "freq": 89.8,
+            "ps": " RTO R1 ",
+            "rt": "RTO Radio 1 -> %ICEMD%",
+            "pi": "8E10",
+            "pty": 10,
             "tp": false,
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 79,
             "station": {
-              "name": "Studio Rave",
+              "name": "RTO Radio 1 [F]",
               "city": "Omigrad",
               "itu": "SP",
               "pol": "V",
               "distance": 11,
               "azimuth": 269,
-              "erp": 0.1
+              "erp": 0.5
             },
-            "logo": "https://i.soupco.net/u/f0qlLr.png",
-            "mount": "https://hard-fm.stream.laut.fm/hard-fm"
+            "mount": "rtor1",
+            "af": [
+              89.8,
+              90,
+              90.7,
+              94.1,
+              97.6,
+              102.7,
+              105.9
+            ],
+            "signal": 84,
+            "logo": "https://i.soupco.net/u/oslnfT.png"
           },
           {
             "freq": 90.1,
@@ -5546,6 +5555,29 @@
               94.4
             ],
             "signal": 57
+          },
+          {
+            "freq": 90.4,
+            "ps": "S.RAVE",
+            "rt": "STUDIO RAVE. VOOR REACTIES : 0248862",
+            "pi": "8742",
+            "pty": 0,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 79,
+            "station": {
+              "name": "Studio Rave",
+              "city": "Omigrad",
+              "itu": "SP",
+              "pol": "V",
+              "distance": 11,
+              "azimuth": 269,
+              "erp": 0.1
+            },
+            "logo": "https://i.soupco.net/u/f0qlLr.png",
+            "mount": "https://hard-fm.stream.laut.fm/hard-fm"
           },
           {
             "freq": 90.8,
@@ -5641,27 +5673,33 @@
             ]
           },
           {
-            "freq": 103.6,
-            "ps": " HIT FM ",
+            "freq": 92.4,
+            "ps": "OMIGRAD",
             "rt": "",
-            "pi": "8777",
-            "pty": 10,
+            "pi": "84C1",
             "tp": false,
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 54,
+            "signal": 80,
             "station": {
-              "name": "Hit FM",
-              "city": "Kaluga",
+              "name": "Radio Omigrad",
+              "city": "Ivanovskoe 2",
               "itu": "SP",
-              "erp": 1,
-              "pol": "V",
-              "distance": 38,
-              "azimuth": 64
+              "erp": 6.3,
+              "pol": "C",
+              "distance": 8,
+              "azimuth": 305
             },
-            "mount": "https://rusradio.hostingradio.ru/hitfm128.mp3",
-            "logo": "https://tef.noobish.eu/logos/RUS/7000_HITFM.png"
+            "pty": 1,
+            "mount": "https://n0b.radiojar.com/hcrb063nn3quv",
+            "af": [
+              92.4,
+              92.7,
+              98.1,
+              104.1
+            ],
+            "logo": "https://i.soupco.net/u/8kahhZ.png"
           },
           {
             "freq": 93.1,
@@ -5683,42 +5721,6 @@
               "azimuth": 221
             },
             "signal": 93,
-            "mount": "https://icecast.omroep.nl/radio4-sb-mp3",
-            "af": [
-              90,
-              90.5,
-              90.6,
-              92.6,
-              93.1,
-              93.5,
-              94.7,
-              96.4,
-              96.6,
-              96.8,
-              104.2
-            ],
-            "logo": "https://i.soupco.net/raw/QSdqFl.png"
-          },
-          {
-            "freq": 94.7,
-            "ps": " SPO P2 ",
-            "rt": "SPO P2 : Haal adem, je luistert naar P2",
-            "pi": "8202",
-            "pty": 14,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "station": {
-              "name": "SPO P2",
-              "city": "Zoetergraaf Zendmast",
-              "itu": "SP",
-              "erp": 10,
-              "pol": "H",
-              "distance": 67,
-              "azimuth": 358
-            },
-            "signal": 57,
             "mount": "https://icecast.omroep.nl/radio4-sb-mp3",
             "af": [
               90,
@@ -5826,6 +5828,42 @@
             ],
             "mount": "https://everestcast.live-streams.nl:8816/stream",
             "logo": "https://i.soupco.net/u/dwpsYd.svg"
+          },
+          {
+            "freq": 94.7,
+            "ps": " SPO P2 ",
+            "rt": "SPO P2 : Haal adem, je luistert naar P2",
+            "pi": "8202",
+            "pty": 14,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "station": {
+              "name": "SPO P2",
+              "city": "Zoetergraaf Zendmast",
+              "itu": "SP",
+              "erp": 10,
+              "pol": "H",
+              "distance": 67,
+              "azimuth": 358
+            },
+            "signal": 57,
+            "mount": "https://icecast.omroep.nl/radio4-sb-mp3",
+            "af": [
+              90,
+              90.5,
+              90.6,
+              92.6,
+              93.1,
+              93.5,
+              94.7,
+              96.4,
+              96.6,
+              96.8,
+              104.2
+            ],
+            "logo": "https://i.soupco.net/raw/QSdqFl.png"
           },
           {
             "freq": 95,
@@ -5970,67 +6008,6 @@
               100.5
             ],
             "mount": "https://mediaserv73.live-streams.nl:18044/stream"
-          },
-          {
-            "freq": 92.4,
-            "ps": "OMIGRAD",
-            "rt": "",
-            "pi": "84C1",
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 80,
-            "station": {
-              "name": "Radio Omigrad",
-              "city": "Ivanovskoe 2",
-              "itu": "SP",
-              "erp": 6.3,
-              "pol": "C",
-              "distance": 8,
-              "azimuth": 305
-            },
-            "pty": 1,
-            "mount": "https://n0b.radiojar.com/hcrb063nn3quv",
-            "af": [
-              92.4,
-              92.7,
-              98.1,
-              104.1
-            ],
-            "logo": "https://i.soupco.net/u/8kahhZ.png"
-          },
-          {
-            "freq": 89.8,
-            "ps": " RTO R1 ",
-            "rt": "RTO Radio 1 -> %ICEMD%",
-            "pi": "8E10",
-            "pty": 10,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "station": {
-              "name": "RTO Radio 1 [F]",
-              "city": "Omigrad",
-              "itu": "SP",
-              "pol": "V",
-              "distance": 11,
-              "azimuth": 269,
-              "erp": 0.5
-            },
-            "mount": "rtor1",
-            "af": [
-              89.8,
-              90,
-              90.7,
-              94.1,
-              97.6,
-              102.7,
-              105.9
-            ],
-            "signal": 84,
-            "logo": "https://i.soupco.net/u/oslnfT.png"
           },
           {
             "freq": 98.9,
@@ -6246,42 +6223,6 @@
             ]
           },
           {
-            "freq": 103.2,
-            "ps": " SPO P3 ",
-            "rt": "SPO P3",
-            "pi": "8203",
-            "pty": 10,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 93,
-            "station": {
-              "name": "SPO P3",
-              "city": "Appingemeer Zendmast",
-              "itu": "SP",
-              "erp": 18,
-              "pol": "V",
-              "azimuth": 221,
-              "distance": 5
-            },
-            "mount": "https://icecast.omroep.nl/3fm-bb-mp3",
-            "logo": "https://i.soupco.net/raw/93N3bw.png",
-            "af": [
-              95.8,
-              96.9,
-              97.2,
-              97.8,
-              98.5,
-              98.7,
-              99.1,
-              99.5,
-              99.7,
-              101.7,
-              103.2
-            ]
-          },
-          {
             "freq": 101.9,
             "ps": "PERVOE  SETEVOE 101.9 FM",
             "rt": "%MD%",
@@ -6363,6 +6304,65 @@
               102.6,
               102.7
             ]
+          },
+          {
+            "freq": 103.2,
+            "ps": " SPO P3 ",
+            "rt": "SPO P3",
+            "pi": "8203",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 93,
+            "station": {
+              "name": "SPO P3",
+              "city": "Appingemeer Zendmast",
+              "itu": "SP",
+              "erp": 18,
+              "pol": "V",
+              "azimuth": 221,
+              "distance": 5
+            },
+            "mount": "https://icecast.omroep.nl/3fm-bb-mp3",
+            "logo": "https://i.soupco.net/raw/93N3bw.png",
+            "af": [
+              95.8,
+              96.9,
+              97.2,
+              97.8,
+              98.5,
+              98.7,
+              99.1,
+              99.5,
+              99.7,
+              101.7,
+              103.2
+            ]
+          },
+          {
+            "freq": 103.6,
+            "ps": " HIT FM ",
+            "rt": "",
+            "pi": "8777",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 54,
+            "station": {
+              "name": "Hit FM",
+              "city": "Kaluga",
+              "itu": "SP",
+              "erp": 1,
+              "pol": "V",
+              "distance": 38,
+              "azimuth": 64
+            },
+            "mount": "https://rusradio.hostingradio.ru/hitfm128.mp3",
+            "logo": "https://tef.noobish.eu/logos/RUS/7000_HITFM.png"
           },
           {
             "freq": 103.9,
@@ -7867,6 +7867,36 @@
             "rdsDisabled": true
           },
           {
+            "freq": 106.2,
+            "ps": "EVASION EVASION EVASION %MD%",
+            "rt": "",
+            "pi": "83E2",
+            "pty": 10,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 78.7,
+            "station": {
+              "name": "Evasion",
+              "city": "Vilren",
+              "itu": "SP",
+              "pol": "V",
+              "distance": 4,
+              "azimuth": 19,
+              "erp": 0.1
+            },
+            "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac",
+            "logo": "https://i.soupco.net/u/Jl4cxv.png",
+            "af": [
+              94.4,
+              99.3,
+              103.1,
+              103.4,
+              106.2
+            ]
+          },
+          {
             "freq": 106.6,
             "ps": "VIBRA fm",
             "rt": "",
@@ -7995,36 +8025,6 @@
             },
             "mount": "https://goedverstaanbaar.stream.laut.fm/goedverstaanbaar",
             "signal": 73
-          },
-          {
-            "freq": 106.2,
-            "ps": "EVASION EVASION EVASION %MD%",
-            "rt": "",
-            "pi": "83E2",
-            "pty": 10,
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": true,
-            "signal": 78.7,
-            "station": {
-              "name": "Evasion",
-              "city": "Vilren",
-              "itu": "SP",
-              "pol": "V",
-              "distance": 4,
-              "azimuth": 19,
-              "erp": 0.1
-            },
-            "mount": "https://evasion75.ice.infomaniak.ch/evasion75-96.aac",
-            "logo": "https://i.soupco.net/u/Jl4cxv.png",
-            "af": [
-              94.4,
-              99.3,
-              103.1,
-              103.4,
-              106.2
-            ]
           }
         ],
         "presets": []
@@ -8730,7 +8730,7 @@
               "azimuth": 320
             },
             "freq": 99.7,
-            "mount": "panik",
+            "mount": "https://hardstylefm.stream.laut.fm/hardstylefm",
             "af": [
               99.7
             ],
@@ -8939,6 +8939,35 @@
               103.4,
               103.7
             ]
+          },
+          {
+            "freq": 104.5,
+            "ps": [
+              "4s:TheEagle",
+              "4s:New",
+              "4s:Country",
+              "4s:104.5"
+            ],
+            "rt": "%MD%",
+            "pi": "6090",
+            "pty": 25,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 82,
+            "station": {
+              "name": "The Eagle",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 3,
+              "azimuth": 346,
+              "erp": 0.3
+            },
+            "mount": "https://countrymusicnewsinternational.stream.laut.fm/countrymusicnewsinternational",
+            "logo": "https://i.soupco.net/u/CW01ui.jpg",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 105.3,
