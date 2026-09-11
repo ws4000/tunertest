@@ -9026,6 +9026,35 @@
             ]
           },
           {
+            "freq": 106.7,
+            "ps": "_RCF_BX_",
+            "rt": "La Joie se partage",
+            "pi": "622A",
+            "pty": 7,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 78,
+            "station": {
+              "name": "RCF Belvénie",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "pol": "H",
+              "distance": 12,
+              "azimuth": 153,
+              "erp": 0.4
+            },
+            "mount": "https://rcfing.streamakaci.com/rcfbruxelles.mp3 ",
+            "logo": "https://tef.noobish.eu/logos/BEL/6220.png",
+            "af": [
+              96.7,
+              98.7,
+              106.7
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
             "freq": 107.1,
             "ps": "_Tipik__",
             "rt": "Tipik - Keep It Pop !",
@@ -11523,6 +11552,62 @@
               92,
               92.2,
               104.3
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 105.5,
+            "ps": "ROCK_FM_",
+            "rt": "(ALLCAPS)%MD%",
+            "pi": "621C",
+            "pty": 11,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 78,
+            "station": {
+              "name": "Rock FM",
+              "city": "Doullens",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 16,
+              "azimuth": 272,
+              "erp": 0.5
+            },
+            "mount": "https://metal.stream.laut.fm/metal",
+            "af": [
+              95.7,
+              105.5
+            ],
+            "logo": "https://i.soupco.net/raw/UwwsrC.png"
+          },
+          {
+            "freq": 106.6,
+            "ps": "__RCF___",
+            "rt": "La Joie se partage",
+            "pi": "622A",
+            "pty": 7,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": false,
+            "signal": 82,
+            "station": {
+              "name": "RCF Belvénie",
+              "city": "Doullens",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 11,
+              "azimuth": 114,
+              "erp": 0.5
+            },
+            "mount": "https://rcfing.streamakaci.com/rcfbruxelles.mp3 ",
+            "logo": "https://tef.noobish.eu/logos/BEL/6220.png",
+            "af": [
+              96.7,
+              98.7,
+              106.7
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           }
