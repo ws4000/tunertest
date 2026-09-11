@@ -1542,7 +1542,13 @@
     CFG = await loadConfig();
     if (!CFG) return;
     audioDelayS = (typeof CFG.audioDelayMs === "number" ? CFG.audioDelayMs : 800) / 1000;
-    currentFreq = CFG.defaultFrequency;
+    // If no (valid) default frequency is configured, start mid-band and
+    // make sure no stale RDS is shown for it.
+    const df = CFG.defaultFrequency;
+    const dfValid = typeof df === "number" && isFinite(df) && df > 0;
+    const bandLo = typeof CFG.tuningMin === "number" ? CFG.tuningMin : 87.5;
+    const bandHi = typeof CFG.tuningMax === "number" ? CFG.tuningMax : 108;
+    currentFreq = dfValid ? df : (bandLo + bandHi) / 2;
 
     document.title = `${CFG.tunerName} - FM-DX Webserver`;
     const titleSpan = $("#tuner-name .text-200-px");
@@ -1901,7 +1907,8 @@
     }
 
     bgPSInitAll();
-    tuneTo(CFG.defaultFrequency);
+    tuneTo(currentFreq);
+    if (!dfValid) { clearRDS(); clearTX(); }
     setInterval(paint, 250);
     setInterval(rdsGroup, GROUP_MS);
     setInterval(psFastFillTick, 125);
