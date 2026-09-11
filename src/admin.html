@@ -222,6 +222,8 @@ function renderMain() {
   const r = data.receivers[activeIdx];
   r.config = r.config || {};
   r.config.stations = r.config.stations || [];
+  // Keep the station list orderly: always sorted by frequency.
+  r.config.stations.sort((a, b) => (a.freq ?? 0) - (b.freq ?? 0));
   r.config.presets = r.config.presets || [];
   r.mc = r.mc || { x: 0, z: 0 };
 
@@ -850,6 +852,9 @@ $("reset").addEventListener("click", () => {
   renderSidebar(); renderMain(); setStatus("Reset.");
 });
 $("download").addEventListener("click", () => {
+  (data.receivers || []).forEach(rcv => {
+    if (Array.isArray(rcv.config?.stations)) rcv.config.stations.sort((a, b) => (a.freq ?? 0) - (b.freq ?? 0));
+  });
   const blob = new Blob([JSON.stringify(data, null, 2)], { type:"application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
