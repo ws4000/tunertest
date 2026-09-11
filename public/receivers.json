@@ -297,6 +297,29 @@
             }
           },
           {
+            "freq": 99.1,
+            "ps": "OSPR99.1",
+            "rt": "OSPR 99.1 Springton's Sports Station",
+            "pi": "411F",
+            "pty": 3,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 93,
+            "station": {
+              "name": "OSPR-FM",
+              "city": "Springton",
+              "itu": "OR",
+              "erp": 100,
+              "pol": "C",
+              "distance": 21,
+              "azimuth": 358
+            },
+            "mount": "https://27053.live.streamtheworld.com/WXOSFM.mp3",
+            "logo": "https://i.soupco.net/u/hZeEPQ.png"
+          },
+          {
             "freq": 102.1,
             "mount": "opbradio3",
             "pi": "5203",
