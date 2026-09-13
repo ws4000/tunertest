@@ -10923,6 +10923,34 @@
             "pty": 3
           },
           {
+            "freq": 89.7,
+            "pi": "6902",
+            "pty": 9,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 27,
+            "station": {
+              "name": "Radio Lac r:Léaz",
+              "city": "Léaz",
+              "itu": "BX",
+              "pol": "C",
+              "distance": 25,
+              "azimuth": 354,
+              "erp": 0.1
+            },
+            "mount": "https://icy-zurich.mpbnl.nl/radiolac/doullens.aac",
+            "ps": "_R.LAC__",
+            "rt": "%MD%",
+            "logo": "https://i.soupco.net/u/QLTyuW.png",
+            "af": [
+              89.7,
+              94.5
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
             "freq": 90.1,
             "ps": "La 1ere",
             "rt": "LA 1ERE - L'esprit clair",
@@ -11145,6 +11173,34 @@
             },
             "rdsDisabled": true,
             "mount": "https://25643.live.streamtheworld.com/HITRADIO_CITY_PRAHA.aac"
+          },
+          {
+            "freq": 94.5,
+            "pi": "6902",
+            "pty": 9,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 86,
+            "station": {
+              "name": "Radio Lac r:Doullens",
+              "city": "Doullens",
+              "itu": "BX",
+              "pol": "C",
+              "distance": 6,
+              "azimuth": 105,
+              "erp": 0.1
+            },
+            "mount": "https://icy-zurich.mpbnl.nl/radiolac/doullens.aac",
+            "ps": "_R.Lac__",
+            "rt": "%MD%",
+            "logo": "https://i.soupco.net/u/QLTyuW.png",
+            "af": [
+              89.7,
+              94.5
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 95.4,
