@@ -1020,7 +1020,8 @@
             "pty": 2,
             "mount": "https://listen.radioking.com/radio/475283/stream/531509",
             "volume": 1,
-            "signal": 54
+            "signal": 54,
+            "logo": "https://i.soupco.net/u/Ur45mP.png"
           }
         ],
         "presets": []
@@ -9133,6 +9134,29 @@
             "logo": "https://i.soupco.net/u/aV108t.png",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
             "pty": 10
+          },
+          {
+            "freq": 107.7,
+            "ps": "r 107.7",
+            "pi": "6222",
+            "pty": 0,
+            "tp": true,
+            "ta": true,
+            "ms": "M",
+            "stereo": true,
+            "signal": 57,
+            "station": {
+              "name": "Radio Belvénie Trafic",
+              "city": "Bruxelles 2",
+              "itu": "BX",
+              "pol": "V",
+              "distance": 9,
+              "azimuth": 324,
+              "erp": 0.05
+            },
+            "mount": "https://sc.creacast.com/rva-asf-sud",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "logo": "https://i.soupco.net/u/Ur45mP.png"
           }
         ],
         "presets": []
