@@ -8363,27 +8363,6 @@
           },
           {
             "freq": 91.8,
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
-            "tp": false,
-            "ta": false,
-            "ms": "M",
-            "stereo": false,
-            "signal": 77,
-            "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
-              "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
-            },
-            "rdsDisabled": true
-          },
-          {
-            "freq": 91.8,
             "ps": "METROPOL",
             "rt": "LA MEILLEURE MUSIQUE",
             "pi": "6059",
