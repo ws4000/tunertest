@@ -8383,6 +8383,32 @@
             "rdsDisabled": true
           },
           {
+            "freq": 91.8,
+            "ps": "METROPOL",
+            "rt": "LA MEILLEURE MUSIQUE",
+            "pi": "6059",
+            "pty": 0,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 77,
+            "station": {
+              "name": "Métropole Radio",
+              "city": "Bruxelles",
+              "itu": "BX",
+              "erp": 1,
+              "pol": "V",
+              "distance": 15,
+              "azimuth": 143
+            },
+            "mount": "https://metropoleradio.ice.infomaniak.ch/metropoleradio-192.mp3",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "af": [
+              91.8
+            ]
+          },
+          {
             "pi": "6219",
             "tp": true,
             "ta": false,
