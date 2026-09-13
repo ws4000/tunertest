@@ -10940,7 +10940,7 @@
               "azimuth": 354,
               "erp": 0.1
             },
-            "mount": "https://icy-zurich.mpbnl.nl/radiolac/doullens.aac",
+            "mount": "https://icy-zurich.mpbnl.nl/radiolac/leaz.aac",
             "ps": "_R.LAC__",
             "rt": "%MD%",
             "logo": "https://i.soupco.net/u/QLTyuW.png",
