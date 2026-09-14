@@ -8527,24 +8527,32 @@
           },
           {
             "freq": 95.3,
-            "ps": "        ",
-            "rt": "",
-            "pi": "",
+            "ps": "_R.Lac__",
+            "rt": "%MD%",
+            "pi": "6902",
+            "pty": 9,
             "tp": false,
-            "ta": false,
+            "ta": true,
             "ms": "M",
-            "stereo": false,
+            "stereo": true,
             "signal": 77,
             "station": {
-              "name": "",
-              "city": "",
-              "itu": "",
+              "name": "Radio Lac r:Bruxelles",
+              "city": "Bruxelles",
+              "itu": "BX",
               "erp": 1,
-              "pol": "M",
-              "distance": 0,
-              "azimuth": 0
+              "pol": "V",
+              "distance": 15,
+              "azimuth": 143
             },
-            "rdsDisabled": true
+            "mount": "https://icy-zurich.mpbnl.nl/radiolac/bruxelles.aac",
+            "af": [
+              89.7,
+              94.5,
+              95.3
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "logo": "https://i.soupco.net/u/QLTyuW.png"
           },
           {
             "freq": 95.7,
@@ -10946,7 +10954,8 @@
             "logo": "https://i.soupco.net/u/QLTyuW.png",
             "af": [
               89.7,
-              94.5
+              94.5,
+              95.3
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
@@ -11198,7 +11207,8 @@
             "logo": "https://i.soupco.net/u/QLTyuW.png",
             "af": [
               89.7,
-              94.5
+              94.5,
+              95.3
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
