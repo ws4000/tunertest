@@ -787,7 +787,7 @@ function buildPickerLayer() {
       const dtx = c.x * scale, dty = -c.y * scale;
       const regX = Math.floor(dtx / 32), regY = Math.floor(dty / 32);
       const prefix = zoomOut > 0 ? "z".repeat(zoomOut) + "_" : "";
-      return `https://weimctxmap.weizkule.xyz/tiles/world/flat/${regX}_${regY}/${prefix}${dtx}_${dty}.jpg`;
+      return `https://weimctxmap.weizkule.be/tiles/world/flat/${regX}_${regY}/${prefix}${dtx}_${dty}.jpg`;
     },
   });
   return new Layer("", { tileSize:128, minZoom:-3, maxZoom:4, noWrap:true });
