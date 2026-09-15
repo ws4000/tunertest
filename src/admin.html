@@ -639,6 +639,16 @@ function bindStationInputs(r, s, i) {
     });
   });
 
+  // ---- RegPI show/hide toggle ----
+  const regPiToggle = document.querySelector(`[data-regpi-toggle="${i}"]`);
+  if (regPiToggle) {
+    regPiToggle.addEventListener("change", () => {
+      const wrap = document.querySelector(`[data-regpi-wrap="${i}"]`);
+      if (wrap) wrap.style.display = regPiToggle.checked ? "contents" : "none";
+      persist(true);
+    });
+  }
+
   // ---- RegPI editor (comma separated "HH:MM-HH:MM:PI[:Timezone]") ----
   const regPiInput = document.querySelector(`[data-regpi="${i}"]`);
   if (regPiInput) {
