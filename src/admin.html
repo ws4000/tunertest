@@ -615,6 +615,17 @@ function bindStationInputs(r, s, i) {
     });
   });
 
+  // ---- RegPI editor (comma separated "HH:MM-HH:MM:PI[:Timezone]") ----
+  const regPiInput = document.querySelector(`[data-regpi="${i}"]`);
+  if (regPiInput) {
+    regPiInput.addEventListener("input", () => {
+      const list = parseRegPiText(regPiInput.value);
+      if (list.length) s.regPi = list; else delete s.regPi;
+      persist(true);
+    });
+  }
+
+
   // ---- AF chip editor ----
   const afContainer = document.getElementById(`af-list-${i}`);
   const rerenderAF = () => {
