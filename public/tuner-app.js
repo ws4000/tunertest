@@ -1527,7 +1527,8 @@
         if (lockedStation === lockSnap) {
           const el = $("#data-pi");
           if (el) {
-            if (lockSnap.pi) el.textContent = lockSnap.pi.toUpperCase();
+            const p = effectivePI(lockSnap);
+            if (p) el.textContent = p.toUpperCase();
             else el.innerHTML = PI_EMPTY_HTML;
           }
           piShown = true;
