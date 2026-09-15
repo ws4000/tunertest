@@ -21,7 +21,7 @@
         "noiseFloorDbf": 8,
         "audibleBandwidth": 0.2,
         "customFlags": {
-          "ORL": "https://weimcwiki.weizkule.xyz/lib/exe/fetch.php?cache=&media=ocostan.png"
+          "ORL": "https://weimcwiki.weizkule.be/lib/exe/fetch.php?cache=&media=ocostan.png"
         },
         "stations": [
           {
@@ -285,7 +285,7 @@
             "ms": "M",
             "stereo": true,
             "signal": 98,
-            "logo": "https://weimcwiki.weizkule.xyz/lib/exe/fetch.php?cache=&media=oauz.png",
+            "logo": "https://weimcwiki.weizkule.be/lib/exe/fetch.php?cache=&media=oauz.png",
             "station": {
               "name": "OAUZ-FM",
               "city": "Springton",
@@ -714,7 +714,7 @@
             },
             "mount": "https://tunein.cdnstream1.com/3511_96.mp3",
             "volume": 1,
-            "logo": "https://weimcwiki.weizkule.xyz/lib/exe/fetch.php?cache=&media=onwf.png"
+            "logo": "https://weimcwiki.weizkule.be/lib/exe/fetch.php?cache=&media=onwf.png"
           },
           {
             "freq": 95.9,
@@ -738,7 +738,7 @@
             },
             "mount": "https://oldies.stream.laut.fm/oldies",
             "volume": 1,
-            "logo": "https://weimcwiki.weizkule.xyz/lib/exe/fetch.php?w=40&tok=25147f&media=ocll.png"
+            "logo": "https://weimcwiki.weizkule.be/lib/exe/fetch.php?w=40&tok=25147f&media=ocll.png"
           },
           {
             "freq": 96.7,
@@ -1722,7 +1722,7 @@
               "azimuth": 207,
               "erp": 0.5
             },
-            "logo": "https://uploads.weizkule.xyz/u/f6HSj7.png",
+            "logo": "https://uploads.weizkule.be/u/f6HSj7.png",
             "mount": "https://29103.live.streamtheworld.com/100PNL_MP3_SC",
             "af": [
               88,
@@ -3382,7 +3382,7 @@
               "azimuth": 95
             },
             "mount": "https://29103.live.streamtheworld.com/100PNL_MP3_SC",
-            "logo": "https://uploads.weizkule.xyz/u/f6HSj7.png"
+            "logo": "https://uploads.weizkule.be/u/f6HSj7.png"
           },
           {
             "freq": 96.9,
@@ -4294,7 +4294,7 @@
             },
             "mount": "https://29103.live.streamtheworld.com/100PNL_MP3_SC",
             "signal": 85,
-            "logo": "https://uploads.weizkule.xyz/u/f6HSj7.png",
+            "logo": "https://uploads.weizkule.be/u/f6HSj7.png",
             "volume": 1
           },
           {
@@ -5808,7 +5808,7 @@
             },
             "signal": 78,
             "mount": "https://29103.live.streamtheworld.com/100PNL_MP3_SC",
-            "logo": "https://uploads.weizkule.xyz/u/f6HSj7.png",
+            "logo": "https://uploads.weizkule.be/u/f6HSj7.png",
             "af": [
               88,
               88.3,
@@ -7111,7 +7111,7 @@
               97
             ],
             "mount": "https://29103.live.streamtheworld.com/100PNL_MP3_SC",
-            "logo": "https://uploads.weizkule.xyz/u/f6HSj7.png"
+            "logo": "https://uploads.weizkule.be/u/f6HSj7.png"
           },
           {
             "freq": 93.5,
