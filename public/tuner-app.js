@@ -1537,6 +1537,17 @@
     }
   }
 
+  // A regional PI window can open or close while we stay tuned, so re-check
+  // periodically and repaint the PI field if the active code changed.
+  setInterval(() => {
+    if (!piShown || !lockedStation) return;
+    const el = $("#data-pi");
+    if (!el) return;
+    const p = effectivePI(lockedStation);
+    const shown = (el.textContent || "").trim().toUpperCase();
+    if (p && p.toUpperCase() !== shown) el.textContent = p.toUpperCase();
+  }, 15000);
+
   // ---------- tuning ----------
   // OIRT band (65.9-74.0 MHz) uses a 30 kHz raster (65.9 → 65.93 → 65.96 …).
   // Outside OIRT, the configured tuning step (default 100 kHz) applies.
