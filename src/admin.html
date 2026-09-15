@@ -443,8 +443,13 @@ function stationForm(s, i) {
     <div class="subhead">RDS</div>
     <div class="grid">
       <div class="field"><label>PI code (hex)</label><input data-s="${i}" data-k="pi" value="${esc(s.pi || "")}"></div>
-      <div class="field"><label>Timezone (for RegPI)</label><input data-s="${i}" data-k="timezone" placeholder="Europe/Amsterdam" value="${esc(s.timezone || "")}"></div>
-      <div class="field" style="grid-column:1/-1"><label>RegPI windows — one per line: 06:00-18:00:D3B1 (optional 4th part = timezone)</label><input data-regpi="${i}" placeholder="06:00-18:00:D3B1, 22:00-02:00:D3B9" value="${esc(regPiToText(s.regPi))}"></div>
+      <div class="field" style="justify-content:flex-end">
+        <label class="regpi-toggle"><input type="checkbox" data-regpi-toggle="${i}"${(s.regPi && s.regPi.length) || s.timezone ? " checked" : ""}> Enable RegPI (scheduled PI codes)</label>
+      </div>
+      <div class="regpi-wrap" data-regpi-wrap="${i}" style="grid-column:1/-1;display:${(s.regPi && s.regPi.length) || s.timezone ? "contents" : "none"}">
+        <div class="field"><label>Timezone (for RegPI)</label><input data-s="${i}" data-k="timezone" placeholder="Europe/Amsterdam" value="${esc(s.timezone || "")}"></div>
+        <div class="field"><label>RegPI windows — one per line: 06:00-18:00:D3B1 (optional 4th part = timezone)</label><input data-regpi="${i}" placeholder="06:00-18:00:D3B1, 22:00-02:00:D3B9" value="${esc(regPiToText(s.regPi))}"></div>
+      </div>
       <div class="field"><label>PTY (0-31)</label><input data-s="${i}" data-k="pty" type="number" min="0" max="31" value="${s.pty ?? 0}"></div>
       <div class="field"><label>M/S</label>
         <select data-s="${i}" data-k="ms">
