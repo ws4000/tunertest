@@ -861,7 +861,8 @@
   function showBasicRDS(st) {
     const piEl1 = $("#data-pi");
     if (piEl1) {
-      if (st.pi) piEl1.textContent = st.pi.toUpperCase();
+      const pi1 = effectivePI(st);
+      if (pi1) piEl1.textContent = pi1.toUpperCase();
       else piEl1.innerHTML = PI_EMPTY_HTML;
     }
     const PTY = getPTYList();
