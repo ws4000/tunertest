@@ -334,6 +334,67 @@
     const p = (pi || "").toUpperCase();
     return !p || p === "0000" || p === "FFFF";
   }
+  // ---------- Regional PI (RegPI) ----------
+  // A station may carry alternate PI codes that are only transmitted during
+  // certain local hours (regional programming windows). Config shape:
+  //   regPi: [
+  //     { pi: "D3B1", from: "06:00", to: "18:00", tz: "Europe/Amsterdam" },
+  //     "22:00-02:00:D3B9"                      // shorthand, uses station tz
+  //   ]
+  // Outside every window we fall back to the station's normal `pi`.
+  function parseHHMM(v) {
+    const m = /^\s*(\d{1,2})[:.]?(\d{2})\s*$/.exec(String(v || ""));
+    if (!m) return null;
+    const h = +m[1], mi = +m[2];
+    if (h > 23 || mi > 59) return null;
+    return h * 60 + mi;
+  }
+  function minutesInTz(tz) {
+    try {
+      const parts = new Intl.DateTimeFormat("en-GB", {
+        timeZone: tz || undefined, hour: "2-digit", minute: "2-digit", hour12: false,
+      }).formatToParts(new Date());
+      const h = +(parts.find((p) => p.type === "hour")?.value ?? NaN);
+      const mi = +(parts.find((p) => p.type === "minute")?.value ?? NaN);
+      if (Number.isNaN(h) || Number.isNaN(mi)) throw new Error("bad");
+      return (h % 24) * 60 + mi;
+    } catch (e) {
+      const d = new Date();
+      return d.getHours() * 60 + d.getMinutes();
+    }
+  }
+  function normalizeRegPi(entry, st) {
+    if (!entry) return null;
+    if (typeof entry === "string") {
+      // "06:00-18:00:D3B1" or "06:00-18:00 D3B1"
+      const m = /^\s*(\d{1,2}[:.]?\d{2})\s*-\s*(\d{1,2}[:.]?\d{2})\s*[:\s]\s*([0-9a-fA-F]{4})\s*$/.exec(entry);
+      if (!m) return null;
+      return { pi: m[3], from: m[1], to: m[2], tz: st && st.timezone };
+    }
+    if (typeof entry !== "object") return null;
+    return {
+      pi: entry.pi,
+      from: entry.from,
+      to: entry.to,
+      tz: entry.tz || entry.timezone || (st && st.timezone),
+    };
+  }
+  function effectivePI(st) {
+    if (!st) return "";
+    const list = Array.isArray(st.regPi) ? st.regPi : [];
+    for (const raw of list) {
+      const e = normalizeRegPi(raw, st);
+      if (!e || !e.pi) continue;
+      const from = parseHHMM(e.from), to = parseHHMM(e.to);
+      if (from === null || to === null) continue;
+      const now = minutesInTz(e.tz);
+      const active = from === to ? true
+        : from < to ? (now >= from && now < to)
+        : (now >= from || now < to); // window wraps past midnight
+      if (active) return String(e.pi);
+    }
+    return st.pi || "";
+  }
   // A station has RDS as long as it's not explicitly disabled. A null/0000/FFFF
   // PI just means we can't display a PI code — PS/RT/PTY still decode normally.
   function hasRDS(st) { return !!(st && !st.rdsDisabled); }
