@@ -249,6 +249,29 @@
             }
           },
           {
+            "freq": 96.9,
+            "ps": "NEWSTALK",
+            "rt": "",
+            "pi": "52A1",
+            "pty": 1,
+            "tp": false,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 98,
+            "station": {
+              "name": "Newstalk",
+              "city": "Springton",
+              "itu": "ORL",
+              "erp": 100,
+              "pol": "M",
+              "distance": 32.9,
+              "azimuth": 270
+            },
+            "mount": "https://live-bauerie.sharp-stream.com/NTAAC",
+            "logo": "https://tef.noobish.eu/logos/IRL/2206.svg"
+          },
+          {
             "freq": 97.5,
             "mount": "opbclassical",
             "pi": "5203",
