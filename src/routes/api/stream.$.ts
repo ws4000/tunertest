@@ -63,7 +63,7 @@ export const Route = createFileRoute("/api/stream/$")({
           return new Response(res.body, { status: res.status === 206 ? 206 : 200, headers: outHeaders });
         } catch (err) {
           console.error("stream proxy failed", upstream, err);
-          return fail("Upstream stream unavailable");
+          return silent();
         }
       },
     },
