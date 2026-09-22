@@ -1391,18 +1391,31 @@
 
     const fMin = CFG.tuningMin, fMax = CFG.tuningMax;
     _spectrumGeom = { gx, gw, fMin, fMax };
-    // Sample dB at every 0.05 MHz across the band
-    const stepF = 0.05;
+    // Draw at roughly one sample per screen pixel. Each configured station is
+    // rendered as a narrow, irregular cluster rather than a smooth bell.
+    const stepF = Math.max(0.008, (fMax - fMin) / Math.max(320, gw));
     const samples = [];
+    const noiseTick = Math.floor(performance.now() / 180);
     for (let f = fMin; f <= fMax + 1e-6; f += stepF) {
-      let best = CFG.noiseFloorDbf;
+      const floorTexture = Math.sin(f * 157.3 + noiseTick * 0.17) * 0.45
+        + Math.sin(f * 619.7 - noiseTick * 0.11) * 0.22;
+      let best = Math.max(0, CFG.noiseFloorDbf + floorTexture);
       CFG.stations.forEach((st) => {
-        const v = baseSignal(st, f - st.freq);
+        const off = f - st.freq;
+        const bw = Math.max(0.065, audibleBwFor(st));
+        if (Math.abs(off) > bw * 1.65) return;
+
+        const strength = Math.max(0, st.signal - CFG.noiseFloorDbf);
+        const envelope = Math.exp(-Math.pow(off / (bw * 0.72), 2) * 1.7);
+        const phase = st.freq * 11.731;
+        const teeth = Math.pow(Math.abs(Math.cos(off * Math.PI / 0.027 + phase)), 7);
+        const fine = Math.pow(Math.abs(Math.sin(off * Math.PI / 0.011 - phase)), 13);
+        const carrier = Math.exp(-Math.pow(off / 0.012, 2) * 2.4);
+        const texture = 0.24 + teeth * 0.58 + fine * 0.18;
+        const v = CFG.noiseFloorDbf + strength * envelope * Math.min(1, texture + carrier * 0.72);
         if (v > best) best = v;
       });
-      // Add small "static" jitter at noise floor
-      const jit = (Math.random() - 0.5) * 1.2;
-      samples.push({ f, db: Math.max(0, best + jit) });
+      samples.push({ f, db: best });
     }
     const maxDb = samples.reduce((m, s) => s.db > m ? s.db : m, CFG.noiseFloorDbf + 10);
     const top = niceCeil(maxDb + 4);
@@ -1433,11 +1446,16 @@
       ctx.fillText(f.toFixed(0), x, gy + gh + 4);
     }
 
-    // Spectrum filled area
-    const col = getComputedStyle(document.documentElement).getPropertyValue("--color-main-bright").trim() || "#68f7ee";
-    ctx.fillStyle = col + "33";
-    ctx.strokeStyle = col;
-    ctx.lineWidth = 1.4;
+    // Spectrum filled area: cool noise floor, green body, warm peak tips.
+    const spectrumFill = ctx.createLinearGradient(0, gy + gh, 0, gy);
+    spectrumFill.addColorStop(0, "rgba(0, 90, 104, 0.88)");
+    spectrumFill.addColorStop(0.38, "rgba(0, 180, 111, 0.94)");
+    spectrumFill.addColorStop(0.70, "rgba(128, 218, 42, 0.98)");
+    spectrumFill.addColorStop(0.88, "rgba(248, 212, 35, 1)");
+    spectrumFill.addColorStop(1, "rgba(241, 139, 63, 1)");
+    ctx.fillStyle = spectrumFill;
+    ctx.strokeStyle = "rgba(255, 205, 67, 0.82)";
+    ctx.lineWidth = 0.75;
     ctx.beginPath();
     ctx.moveTo(gx, gy + gh);
     samples.forEach((s) => {
