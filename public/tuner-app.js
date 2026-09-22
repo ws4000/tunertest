@@ -1461,16 +1461,16 @@
       ctx.fillText(f.toFixed(0), x, gy + gh + 4);
     }
 
-    // Spectrum filled area: teal base -> green body -> yellow tips, orange edge.
+    // Spectrum filled area: blue base -> teal -> green body -> yellow tips.
     const spectrumFill = ctx.createLinearGradient(0, gy + gh, 0, gy);
-    spectrumFill.addColorStop(0, "rgba(10, 70, 78, 0.85)");
-    spectrumFill.addColorStop(0.30, "rgba(16, 148, 120, 0.9)");
-    spectrumFill.addColorStop(0.55, "rgba(52, 190, 90, 0.94)");
-    spectrumFill.addColorStop(0.75, "rgba(140, 214, 44, 0.97)");
-    spectrumFill.addColorStop(0.88, "rgba(240, 220, 50, 1)");
-    spectrumFill.addColorStop(1, "rgba(238, 150, 60, 1)");
+    spectrumFill.addColorStop(0, "rgba(12, 44, 96, 0.9)");
+    spectrumFill.addColorStop(0.22, "rgba(10, 110, 130, 0.92)");
+    spectrumFill.addColorStop(0.45, "rgba(20, 180, 95, 0.95)");
+    spectrumFill.addColorStop(0.68, "rgba(120, 212, 46, 0.97)");
+    spectrumFill.addColorStop(0.85, "rgba(245, 224, 52, 1)");
+    spectrumFill.addColorStop(1, "rgba(242, 168, 62, 1)");
     ctx.fillStyle = spectrumFill;
-    ctx.strokeStyle = "rgba(232, 163, 61, 0.9)";
+    ctx.strokeStyle = "rgba(246, 226, 90, 0.85)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(gx, gy + gh);
