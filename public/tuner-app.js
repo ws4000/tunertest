@@ -1429,10 +1429,10 @@
     const top = niceCeil(maxDb + 4);
     const bottom = 0;
 
-    // Plot background: dark teal field like the real spectrum plugin.
+    // Plot background: deep navy-black field like the real spectrum plugin.
     const bgGrad = ctx.createLinearGradient(0, gy, 0, gy + gh);
-    bgGrad.addColorStop(0, "#071417");
-    bgGrad.addColorStop(1, "#0b1f22");
+    bgGrad.addColorStop(0, "#070b12");
+    bgGrad.addColorStop(1, "#0a1018");
     ctx.fillStyle = bgGrad;
     ctx.fillRect(gx, gy, gw, gh);
 
