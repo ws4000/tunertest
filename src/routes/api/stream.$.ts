@@ -19,11 +19,13 @@ export const Route = createFileRoute("/api/stream/$")({
         const headers: Record<string, string> = { "User-Agent": "Mozilla/5.0 (FakeTuner)" };
         if (range) headers["Range"] = range;
 
-        const fail = (msg: string, status = 502) =>
-          new Response(msg, {
-            status,
+        // A missing/broken upstream stream is a normal condition for a tuner
+        // (station offline). Reply 204 No Content so the audio element simply
+        // gets no data instead of surfacing an app-level 5xx error page.
+        const silent = () =>
+          new Response(null, {
+            status: 204,
             headers: {
-              "content-type": "text/plain",
               "Access-Control-Allow-Origin": "*",
               "Cache-Control": "no-store",
             },
@@ -36,8 +38,10 @@ export const Route = createFileRoute("/api/stream/$")({
             redirect: "follow",
           });
           if (!res.ok || !res.body) {
-            return fail(`Upstream returned ${res.status}`, res.status >= 400 ? 502 : 502);
+            console.warn("stream proxy upstream error", upstream, res.status);
+            return silent();
           }
+
           const outHeaders = new Headers();
           // NOTE: never forward hop-by-hop headers (transfer-encoding, connection)
           const passThrough = [
