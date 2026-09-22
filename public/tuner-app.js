@@ -1421,9 +1421,16 @@
     const top = niceCeil(maxDb + 4);
     const bottom = 0;
 
+    // Plot background: dark teal field like the real spectrum plugin.
+    const bgGrad = ctx.createLinearGradient(0, gy, 0, gy + gh);
+    bgGrad.addColorStop(0, "#071417");
+    bgGrad.addColorStop(1, "#0b1f22");
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(gx, gy, gw, gh);
+
     // Gridlines + left dB labels
-    ctx.strokeStyle = "rgba(255,255,255,0.08)";
-    ctx.fillStyle = "rgba(255,255,255,0.55)";
+    ctx.strokeStyle = "rgba(120, 180, 170, 0.14)";
+    ctx.fillStyle = "rgba(200, 220, 215, 0.6)";
     ctx.font = GRAPH_FONT;
     ctx.textBaseline = "middle";
     ctx.textAlign = "right";
@@ -1441,21 +1448,22 @@
     const fStep = (fMax - fMin) <= 10 ? 1 : 5;
     for (let f = Math.ceil(fMin / fStep) * fStep; f <= fMax; f += fStep) {
       const x = gx + ((f - fMin) / (fMax - fMin)) * gw;
-      ctx.strokeStyle = "rgba(255,255,255,0.12)";
+      ctx.strokeStyle = "rgba(120, 180, 170, 0.25)";
       ctx.beginPath(); ctx.moveTo(x, gy + gh); ctx.lineTo(x, gy + gh + 3); ctx.stroke();
       ctx.fillText(f.toFixed(0), x, gy + gh + 4);
     }
 
-    // Spectrum filled area: cool noise floor, green body, warm peak tips.
+    // Spectrum filled area: teal base -> green body -> yellow tips, orange edge.
     const spectrumFill = ctx.createLinearGradient(0, gy + gh, 0, gy);
-    spectrumFill.addColorStop(0, "rgba(0, 90, 104, 0.88)");
-    spectrumFill.addColorStop(0.38, "rgba(0, 180, 111, 0.94)");
-    spectrumFill.addColorStop(0.70, "rgba(128, 218, 42, 0.98)");
-    spectrumFill.addColorStop(0.88, "rgba(248, 212, 35, 1)");
-    spectrumFill.addColorStop(1, "rgba(241, 139, 63, 1)");
+    spectrumFill.addColorStop(0, "rgba(10, 70, 78, 0.85)");
+    spectrumFill.addColorStop(0.30, "rgba(16, 148, 120, 0.9)");
+    spectrumFill.addColorStop(0.55, "rgba(52, 190, 90, 0.94)");
+    spectrumFill.addColorStop(0.75, "rgba(140, 214, 44, 0.97)");
+    spectrumFill.addColorStop(0.88, "rgba(240, 220, 50, 1)");
+    spectrumFill.addColorStop(1, "rgba(238, 150, 60, 1)");
     ctx.fillStyle = spectrumFill;
-    ctx.strokeStyle = "rgba(255, 205, 67, 0.82)";
-    ctx.lineWidth = 0.75;
+    ctx.strokeStyle = "rgba(232, 163, 61, 0.9)";
+    ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(gx, gy + gh);
     samples.forEach((s) => {
