@@ -1392,25 +1392,33 @@
     const fMin = CFG.tuningMin, fMax = CFG.tuningMax;
     _spectrumGeom = { gx, gw, fMin, fMax };
     // Draw at roughly one sample per screen pixel. Each configured station is
-    // rendered as a narrow, irregular cluster rather than a smooth bell.
+    // rendered as a narrow, irregular cluster that wanders live over time.
     const stepF = Math.max(0.008, (fMax - fMin) / Math.max(320, gw));
     const samples = [];
-    const noiseTick = Math.floor(performance.now() / 180);
+    const t = performance.now() / 1000;
     for (let f = fMin; f <= fMax + 1e-6; f += stepF) {
-      const floorTexture = Math.sin(f * 157.3 + noiseTick * 0.17) * 0.45
-        + Math.sin(f * 619.7 - noiseTick * 0.11) * 0.22;
+      const floorTexture = Math.sin(f * 157.3 + t * 1.7) * 0.45
+        + Math.sin(f * 619.7 - t * 2.3) * 0.22
+        + Math.sin(f * 241.1 + t * 4.1) * 0.12;
       let best = Math.max(0, CFG.noiseFloorDbf + floorTexture);
       CFG.stations.forEach((st) => {
         const off = f - st.freq;
         const bw = Math.max(0.065, audibleBwFor(st));
         if (Math.abs(off) > bw * 1.65) return;
 
-        const strength = Math.max(0, st.signal - CFG.noiseFloorDbf);
+        // Slow per-station gain wander so each spike breathes independently.
+        const wander = 1
+          + 0.07 * Math.sin(t * 1.3 + st.freq * 7.7)
+          + 0.045 * Math.sin(t * 2.9 + st.freq * 13.3)
+          + 0.02 * Math.sin(t * 6.7 + st.freq * 29.1);
+        const strength = Math.max(0, st.signal - CFG.noiseFloorDbf) * wander;
         const envelope = Math.exp(-Math.pow(off / (bw * 0.72), 2) * 1.7);
         const phase = st.freq * 11.731;
-        const teeth = Math.pow(Math.abs(Math.cos(off * Math.PI / 0.027 + phase)), 7);
-        const fine = Math.pow(Math.abs(Math.sin(off * Math.PI / 0.011 - phase)), 13);
-        const carrier = Math.exp(-Math.pow(off / 0.012, 2) * 2.4);
+        // Time-drifting teeth so the cluster shimmers frame to frame.
+        const teeth = Math.pow(Math.abs(Math.cos(off * Math.PI / 0.027 + phase + t * 2.1)), 7);
+        const fine = Math.pow(Math.abs(Math.sin(off * Math.PI / 0.011 - phase - t * 3.7)), 13);
+        const carrier = Math.exp(-Math.pow(off / 0.012, 2) * 2.4)
+          * (0.85 + 0.15 * Math.sin(t * 3.3 + st.freq * 5.1));
         const texture = 0.24 + teeth * 0.58 + fine * 0.18;
         const v = CFG.noiseFloorDbf + strength * envelope * Math.min(1, texture + carrier * 0.72);
         if (v > best) best = v;
@@ -1421,10 +1429,10 @@
     const top = niceCeil(maxDb + 4);
     const bottom = 0;
 
-    // Plot background: dark teal field like the real spectrum plugin.
+    // Plot background: deep navy-black field like the real spectrum plugin.
     const bgGrad = ctx.createLinearGradient(0, gy, 0, gy + gh);
-    bgGrad.addColorStop(0, "#071417");
-    bgGrad.addColorStop(1, "#0b1f22");
+    bgGrad.addColorStop(0, "#070b12");
+    bgGrad.addColorStop(1, "#0a1018");
     ctx.fillStyle = bgGrad;
     ctx.fillRect(gx, gy, gw, gh);
 
@@ -1453,16 +1461,16 @@
       ctx.fillText(f.toFixed(0), x, gy + gh + 4);
     }
 
-    // Spectrum filled area: teal base -> green body -> yellow tips, orange edge.
+    // Spectrum filled area: blue base -> teal -> green body -> yellow tips.
     const spectrumFill = ctx.createLinearGradient(0, gy + gh, 0, gy);
-    spectrumFill.addColorStop(0, "rgba(10, 70, 78, 0.85)");
-    spectrumFill.addColorStop(0.30, "rgba(16, 148, 120, 0.9)");
-    spectrumFill.addColorStop(0.55, "rgba(52, 190, 90, 0.94)");
-    spectrumFill.addColorStop(0.75, "rgba(140, 214, 44, 0.97)");
-    spectrumFill.addColorStop(0.88, "rgba(240, 220, 50, 1)");
-    spectrumFill.addColorStop(1, "rgba(238, 150, 60, 1)");
+    spectrumFill.addColorStop(0, "rgba(12, 44, 96, 0.9)");
+    spectrumFill.addColorStop(0.22, "rgba(10, 110, 130, 0.92)");
+    spectrumFill.addColorStop(0.45, "rgba(20, 180, 95, 0.95)");
+    spectrumFill.addColorStop(0.68, "rgba(120, 212, 46, 0.97)");
+    spectrumFill.addColorStop(0.85, "rgba(245, 224, 52, 1)");
+    spectrumFill.addColorStop(1, "rgba(242, 168, 62, 1)");
     ctx.fillStyle = spectrumFill;
-    ctx.strokeStyle = "rgba(232, 163, 61, 0.9)";
+    ctx.strokeStyle = "rgba(246, 226, 90, 0.85)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(gx, gy + gh);
@@ -2009,7 +2017,7 @@
     bgPSInitAll();
     tuneTo(currentFreq);
     if (!dfValid) { clearRDS(); clearTX(); }
-    setInterval(paint, 250);
+    setInterval(paint, 140);
     setInterval(rdsGroup, GROUP_MS);
     setInterval(psFastFillTick, 125);
     setInterval(rtFastFillTick, 60);
