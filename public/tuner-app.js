@@ -2017,7 +2017,7 @@
     bgPSInitAll();
     tuneTo(currentFreq);
     if (!dfValid) { clearRDS(); clearTX(); }
-    setInterval(paint, 250);
+    setInterval(paint, 140);
     setInterval(rdsGroup, GROUP_MS);
     setInterval(psFastFillTick, 125);
     setInterval(rtFastFillTick, 60);
