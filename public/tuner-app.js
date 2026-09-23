@@ -1391,46 +1391,26 @@
 
     const fMin = CFG.tuningMin, fMax = CFG.tuningMax;
     _spectrumGeom = { gx, gw, fMin, fMax };
-    // Draw at roughly one sample per screen pixel. Each configured station is
-    // rendered as a narrow, irregular cluster rather than a smooth bell.
-    const stepF = Math.max(0.008, (fMax - fMin) / Math.max(320, gw));
+    // Sample dB at every 0.05 MHz across the band
+    const stepF = 0.05;
     const samples = [];
-    const noiseTick = Math.floor(performance.now() / 180);
     for (let f = fMin; f <= fMax + 1e-6; f += stepF) {
-      const floorTexture = Math.sin(f * 157.3 + noiseTick * 0.17) * 0.45
-        + Math.sin(f * 619.7 - noiseTick * 0.11) * 0.22;
-      let best = Math.max(0, CFG.noiseFloorDbf + floorTexture);
+      let best = CFG.noiseFloorDbf;
       CFG.stations.forEach((st) => {
-        const off = f - st.freq;
-        const bw = Math.max(0.065, audibleBwFor(st));
-        if (Math.abs(off) > bw * 1.65) return;
-
-        const strength = Math.max(0, st.signal - CFG.noiseFloorDbf);
-        const envelope = Math.exp(-Math.pow(off / (bw * 0.72), 2) * 1.7);
-        const phase = st.freq * 11.731;
-        const teeth = Math.pow(Math.abs(Math.cos(off * Math.PI / 0.027 + phase)), 7);
-        const fine = Math.pow(Math.abs(Math.sin(off * Math.PI / 0.011 - phase)), 13);
-        const carrier = Math.exp(-Math.pow(off / 0.012, 2) * 2.4);
-        const texture = 0.24 + teeth * 0.58 + fine * 0.18;
-        const v = CFG.noiseFloorDbf + strength * envelope * Math.min(1, texture + carrier * 0.72);
+        const v = baseSignal(st, f - st.freq);
         if (v > best) best = v;
       });
-      samples.push({ f, db: best });
+      // Add small "static" jitter at noise floor
+      const jit = (Math.random() - 0.5) * 1.2;
+      samples.push({ f, db: Math.max(0, best + jit) });
     }
     const maxDb = samples.reduce((m, s) => s.db > m ? s.db : m, CFG.noiseFloorDbf + 10);
     const top = niceCeil(maxDb + 4);
     const bottom = 0;
 
-    // Plot background: dark teal field like the real spectrum plugin.
-    const bgGrad = ctx.createLinearGradient(0, gy, 0, gy + gh);
-    bgGrad.addColorStop(0, "#071417");
-    bgGrad.addColorStop(1, "#0b1f22");
-    ctx.fillStyle = bgGrad;
-    ctx.fillRect(gx, gy, gw, gh);
-
     // Gridlines + left dB labels
-    ctx.strokeStyle = "rgba(120, 180, 170, 0.14)";
-    ctx.fillStyle = "rgba(200, 220, 215, 0.6)";
+    ctx.strokeStyle = "rgba(255,255,255,0.08)";
+    ctx.fillStyle = "rgba(255,255,255,0.55)";
     ctx.font = GRAPH_FONT;
     ctx.textBaseline = "middle";
     ctx.textAlign = "right";
@@ -1448,22 +1428,16 @@
     const fStep = (fMax - fMin) <= 10 ? 1 : 5;
     for (let f = Math.ceil(fMin / fStep) * fStep; f <= fMax; f += fStep) {
       const x = gx + ((f - fMin) / (fMax - fMin)) * gw;
-      ctx.strokeStyle = "rgba(120, 180, 170, 0.25)";
+      ctx.strokeStyle = "rgba(255,255,255,0.12)";
       ctx.beginPath(); ctx.moveTo(x, gy + gh); ctx.lineTo(x, gy + gh + 3); ctx.stroke();
       ctx.fillText(f.toFixed(0), x, gy + gh + 4);
     }
 
-    // Spectrum filled area: teal base -> green body -> yellow tips, orange edge.
-    const spectrumFill = ctx.createLinearGradient(0, gy + gh, 0, gy);
-    spectrumFill.addColorStop(0, "rgba(10, 70, 78, 0.85)");
-    spectrumFill.addColorStop(0.30, "rgba(16, 148, 120, 0.9)");
-    spectrumFill.addColorStop(0.55, "rgba(52, 190, 90, 0.94)");
-    spectrumFill.addColorStop(0.75, "rgba(140, 214, 44, 0.97)");
-    spectrumFill.addColorStop(0.88, "rgba(240, 220, 50, 1)");
-    spectrumFill.addColorStop(1, "rgba(238, 150, 60, 1)");
-    ctx.fillStyle = spectrumFill;
-    ctx.strokeStyle = "rgba(232, 163, 61, 0.9)";
-    ctx.lineWidth = 1;
+    // Spectrum filled area
+    const col = getComputedStyle(document.documentElement).getPropertyValue("--color-main-bright").trim() || "#68f7ee";
+    ctx.fillStyle = col + "33";
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.4;
     ctx.beginPath();
     ctx.moveTo(gx, gy + gh);
     samples.forEach((s) => {
