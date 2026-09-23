@@ -1433,10 +1433,16 @@
       ctx.fillText(f.toFixed(0), x, gy + gh + 4);
     }
 
-    // Spectrum filled area
-    const col = getComputedStyle(document.documentElement).getPropertyValue("--color-main-bright").trim() || "#68f7ee";
-    ctx.fillStyle = col + "33";
-    ctx.strokeStyle = col;
+    // Spectrum filled area: classic receiver heat scale, with quiet signals
+    // in blue and progressively stronger peaks moving through green/yellow/red.
+    const heat = ctx.createLinearGradient(0, gy + gh, 0, gy);
+    heat.addColorStop(0, "#2375dc");
+    heat.addColorStop(0.22, "#16b95d");
+    heat.addColorStop(0.58, "#79d51e");
+    heat.addColorStop(0.78, "#e8d313");
+    heat.addColorStop(1, "#ed2c1d");
+    ctx.fillStyle = heat;
+    ctx.strokeStyle = heat;
     ctx.lineWidth = 1.4;
     ctx.beginPath();
     ctx.moveTo(gx, gy + gh);
