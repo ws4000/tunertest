@@ -762,6 +762,11 @@
     }
     return clamp(base, 0, 0.75);
   }
+  function qualityFromDbf(dbf) {
+    return dbf >= 25
+      ? clamp(0.7 + (dbf - 25) / 15 * 0.3, 0, 1)
+      : clamp((dbf - 10) / 15 * 0.7, 0, 1);
+  }
   function applyAudioModel(currentStation, offset, sig) {
     if (!ac) return;
     const bw = audibleBwFor(currentStation);
@@ -769,9 +774,7 @@
     const onFreq = currentStation && Math.abs(offset) <= RDS_LOCK_BW;
     // Quality [0..1] using the same dBf thresholds as the noise curve:
     // 10 dBf → 0 (fringe), 25 dBf → 0.7 (decent), 40 dBf → 1 (local).
-    const quality = sig >= 25
-      ? clamp(0.7 + (sig - 25) / 15 * 0.3, 0, 1)
-      : clamp((sig - 10) / 15 * 0.7, 0, 1);
+    const quality = qualityFromDbf(sig);
     lastQuality = quality;
     const offR = currentStation ? clamp(Math.abs(offset) / bw, 0, 1) : 1;
     const now = performance.now();
@@ -1474,6 +1477,10 @@
     const base = baseSignal(station, offset);
     const jitter = (Math.random() - 0.5) * (audible ? 1.6 : 3.0);
     const sig = Math.max(0, base + jitter);
+    // RDS decoding follows RF quality even before WebAudio is created. Keeping
+    // this outside applyAudioModel prevents an unplayed tuner from falling
+    // back to the unrealistically slow weak-signal group cadence.
+    lastQuality = qualityFromDbf(sig);
 
     $("#data-frequency").textContent = fmt3(currentFreq);
     const sigInt = Math.floor(sig);
