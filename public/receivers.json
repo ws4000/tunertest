@@ -545,7 +545,8 @@
             "mount": "funbelvenia",
             "logo": "https://i.soupco.net/u/OCQC6X.png",
             "af": [
-              88
+              88,
+              102.6
             ],
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
@@ -710,32 +711,31 @@
           },
           {
             "freq": 97.6,
-            "rt": "RTO Radio 1 -> %MD%",
-            "pi": "6101",
-            "pty": 10,
+            "ps": "__NRJ___",
+            "rt": "NRJ HIT MUSIC ONLY !",
+            "pi": "6220",
+            "pty": 0,
             "tp": true,
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 86,
+            "signal": 82,
             "station": {
-              "name": "RTO Radio 1 [F]",
+              "name": "NRJ Vérvochie",
               "city": "Belgrade",
               "itu": "VV",
-              "erp": 4,
+              "erp": 6.3,
               "pol": "V",
-              "distance": 1,
-              "azimuth": 120
+              "distance": 9,
+              "azimuth": 297
             },
-            "mount": "rtor1",
-            "ps": " RTO R1 ",
-            "af": [
-              90,
-              97.6,
-              102.7
-            ],
+            "logo": "https://i.soupco.net/u/yXm70Y.png",
+            "mount": "https://stream.rcs.revma.com/xh00fwuptg0uv ",
             "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "logo": "https://i.soupco.net/raw/oslnfT.png"
+            "af": [
+              97.6,
+              102.2
+            ]
           },
           {
             "freq": 99.3,
@@ -766,30 +766,33 @@
           },
           {
             "freq": 99.7,
-            "ps": "__NRJ___",
-            "rt": "NRJ HIT MUSIC ONLY !",
-            "pi": "6220",
-            "pty": 0,
+            "rt": "RTO Radio 1 -> %MD%",
+            "pi": "6101",
+            "pty": 10,
             "tp": true,
             "ta": false,
             "ms": "M",
             "stereo": true,
-            "signal": 82,
+            "signal": 86,
             "station": {
-              "name": "NRJ Vérvochie",
+              "name": "RTO Radio 1 [F]",
               "city": "Belgrade",
               "itu": "VV",
-              "erp": 6.3,
+              "erp": 4,
               "pol": "V",
-              "distance": 9,
-              "azimuth": 297
+              "distance": 1,
+              "azimuth": 120
             },
-            "logo": "https://i.soupco.net/u/yXm70Y.png",
-            "mount": "https://stream.rcs.revma.com/xh00fwuptg0uv ",
+            "mount": "rtor1",
+            "ps": " RTO R1 ",
             "af": [
-              99.7
+              90,
+              97.6,
+              99.7,
+              102.7
             ],
-            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "logo": "https://i.soupco.net/raw/oslnfT.png"
           },
           {
             "freq": 100.1,
