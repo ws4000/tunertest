@@ -498,11 +498,15 @@
     if (!CFG) return keep;
     const tuned = stationForFreq(freq).station;
     if (tuned && tuned.mount) keep.add(tuned.mount);
-    if (shouldPreloadAllStations()) {
-      CFG.stations.forEach((st) => { if (st.mount) keep.add(st.mount); });
-      return keep;
+    // Never open every stream at once: browsers cap simultaneous
+    // connections, so a large pool (plus dead streams retrying) starves
+    // the tuned station and everything goes silent. Keep only the tuned
+    // station and a few nearest neighbours.
+    const MAX_POOL = 4;
+    for (const st of neighbors(freq)) {
+      if (keep.size >= MAX_POOL) break;
+      if (st.mount) keep.add(st.mount);
     }
-    neighbors(freq).forEach((st) => { if (st.mount) keep.add(st.mount); });
     return keep;
   }
   function warmDesiredStations(freq) {
@@ -641,12 +645,17 @@
         }, 2300);
       };
       const clearWait = () => { waitingSince = 0; };
+      let failCount = 0;
+      audio.addEventListener("playing", () => { failCount = 0; });
       const hardReconnect = () => {
         if (!playing) return;
         const now = Date.now();
-        // Throttle: at most one hard reconnect every 5s.
-        if (now - reconnectingAt < 5000) return;
+        // Back off for streams that keep failing (e.g. a station that is
+        // down) so they don't hog connections: 5s, 10s, 20s ... up to 60s.
+        const wait = Math.min(60000, 5000 * Math.pow(2, failCount));
+        if (now - reconnectingAt < wait) return;
         reconnectingAt = now;
+        failCount++;
         try {
           if (isHls) {
             attachHls(now);
