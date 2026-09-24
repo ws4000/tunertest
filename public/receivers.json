@@ -710,6 +710,33 @@
             "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
+            "freq": 94.1,
+            "ps": "_RIRE_&_",
+            "rt": "RIRE & CHANSONS",
+            "pi": "6226",
+            "pty": 23,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 85,
+            "station": {
+              "name": "Rire & Chansons",
+              "city": "Belgrade",
+              "itu": "VV",
+              "erp": 4,
+              "pol": "V",
+              "distance": 4,
+              "azimuth": 14
+            },
+            "af": [
+              94.1
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "mount": "https://streaming.nrjaudio.fm/oua8afw2dqao ",
+            "logo": "https://i.soupco.net/u/tGI28T.svg"
+          },
+          {
             "freq": 97.6,
             "ps": "__NRJ___",
             "rt": "NRJ HIT MUSIC ONLY !",
@@ -791,8 +818,8 @@
               99.7,
               102.7
             ],
-            "flag": "https://i.soupco.net/raw/qrIs9T.png",
-            "logo": "https://i.soupco.net/raw/oslnfT.png"
+            "logo": "https://i.soupco.net/raw/oslnfT.png",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
           },
           {
             "freq": 100.1,
@@ -847,6 +874,84 @@
               100.8
             ],
             "mount": "https://n13-eu.rcs.revma.com/wknqhm4yuchvv"
+          },
+          {
+            "freq": 101.3,
+            "ps": "ROCK FM",
+            "rt": "%MD%",
+            "pi": "6227",
+            "pty": 11,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 85,
+            "station": {
+              "name": "Rock FM",
+              "city": "Belgrade",
+              "itu": "VV",
+              "erp": 4,
+              "pol": "V",
+              "azimuth": 14,
+              "distance": 4
+            },
+            "mount": "https://thrashordie.stream.laut.fm/thrashordie",
+            "af": [
+              101.3
+            ],
+            "flag": "https://i.soupco.net/raw/qrIs9T.png",
+            "logo": "https://i.soupco.net/u/oquF3B.png"
+          },
+          {
+            "freq": 101.7,
+            "ps": "PANIC FM",
+            "rt": "(ALLCAPS)%MD%",
+            "pi": "6077",
+            "pty": 0,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 85,
+            "station": {
+              "name": "Panic FM",
+              "city": "Belgrade",
+              "itu": "VV",
+              "erp": 4,
+              "pol": "V",
+              "distance": 4,
+              "azimuth": 14
+            },
+            "logo": "https://i.soupco.net/u/LI7u5S.png",
+            "mount": "https://blutoniumradio.stream.laut.fm/blutoniumradio",
+            "flag": "https://i.soupco.net/raw/qrIs9T.png"
+          },
+          {
+            "freq": 102.4,
+            "ps": "TOPRADIO",
+            "rt": "%MD%",
+            "pi": "6033",
+            "pty": 10,
+            "tp": true,
+            "ta": false,
+            "ms": "M",
+            "stereo": true,
+            "signal": 85,
+            "station": {
+              "name": "Top Radio",
+              "city": "Belgrade",
+              "itu": "VV",
+              "erp": 5,
+              "pol": "V",
+              "distance": 4,
+              "azimuth": 14
+            },
+            "logo": "https://i.soupco.net/u/oYUaJr.pngt",
+            "flag": "https://i.soupco.net/u/jZbYh9.png",
+            "af": [
+              102.4
+            ],
+            "mount": "https://streamer.radiovseti.ru:8443/tr_hi"
           },
           {
             "freq": 106.7,
