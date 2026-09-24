@@ -576,9 +576,10 @@
       try { document.body.appendChild(audio); } catch (e) {}
       const proxyUrl = (m, bust) => {
         const q = bust ? `?t=${bust}` : "";
+        m = String(m || "").trim();
         return /^https?:\/\//i.test(m)
           ? `/api/stream/${encodeURIComponent(m)}${q}`
-          : `/api/stream/${m}${q}`;
+          : `/api/stream/${m.replace(/^\/+/, "")}${q}`;
       };
       const isHls = /\.m3u8(\?|$)/i.test(mount);
       let hls = null;
