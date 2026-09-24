@@ -10,8 +10,8 @@ export const Route = createFileRoute("/api/stream/$")({
         // Allow arbitrary upstream stream URLs by URL-encoding the full URL
         // as the mount path. Anything not starting with http(s):// is treated
         // as a mount on the default Icecast server for back-compat.
-        let decoded = mount;
-        try { decoded = decodeURIComponent(mount); } catch (e) {}
+        let decoded = mount.trim();
+        try { decoded = decodeURIComponent(mount).trim(); } catch (e) {}
         const upstream = /^https?:\/\//i.test(decoded)
           ? decoded
           : `${ICECAST_BASE}/${mount}`;
