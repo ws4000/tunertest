@@ -511,7 +511,10 @@
   }
   function warmDesiredStations(freq) {
     const keep = desiredAudioMounts(freq);
-    keep.forEach((mount) => ensureStation(mount));
+    keep.forEach((mount) => {
+      const n = ensureStation(mount);
+      if (n) n._lastWant = performance.now();
+    });
     return keep;
   }
 
@@ -753,20 +756,32 @@
     pool.set(mount, out);
     return out;
   }
+  // Streams keep playing (silently, gain 0) after you tune away so that
+  // tuning back is instant — like a real receiver where every station is
+  // always on air. Only when the pool grows past POOL_CAP do we drop the
+  // least-recently-heard streams to stay under browser connection limits.
+  const POOL_CAP = 8;
+  function dropStation(m, n) {
+    try { n.audio.pause(); n.audio.removeAttribute("src"); n.audio.load(); } catch(e){}
+    try { n.audio.remove(); } catch (e) {}
+    try {
+      n.source?.disconnect(); n.stVol?.disconnect(); n.delay?.disconnect();
+      n.eqNodes?.forEach((f) => f.disconnect());
+      n.hp?.disconnect(); n.lp?.disconnect(); n.ws?.disconnect();
+      n.splitter?.disconnect(); n.merger?.disconnect();
+      n.monoL?.disconnect(); n.monoR?.disconnect();
+      n.stereoGain?.disconnect(); n.monoGain?.disconnect(); n.gain?.disconnect();
+    } catch(e){}
+    pool.delete(m);
+  }
   function pruneStations(keep) {
-    for (const [m, n] of pool) {
-      if (keep.has(m)) continue;
-      try { n.audio.pause(); n.audio.removeAttribute("src"); n.audio.load(); } catch(e){}
-      try { n.audio.remove(); } catch (e) {}
-      try {
-        n.source?.disconnect(); n.stVol?.disconnect(); n.delay?.disconnect();
-        n.eqNodes?.forEach((f) => f.disconnect());
-        n.hp?.disconnect(); n.lp?.disconnect(); n.ws?.disconnect();
-        n.splitter?.disconnect(); n.merger?.disconnect();
-        n.monoL?.disconnect(); n.monoR?.disconnect();
-        n.stereoGain?.disconnect(); n.monoGain?.disconnect(); n.gain?.disconnect();
-      } catch(e){}
-      pool.delete(m);
+    if (pool.size <= POOL_CAP) return;
+    const victims = [...pool.entries()]
+      .filter(([m]) => !keep.has(m))
+      .sort((a, b) => (a[1]._lastWant || 0) - (b[1]._lastWant || 0));
+    for (const [m, n] of victims) {
+      if (pool.size <= POOL_CAP) break;
+      dropStation(m, n);
     }
   }
   // Static-noise level (0..1) as a function of raw dBf signal:
