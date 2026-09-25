@@ -824,6 +824,11 @@
       const isCurrent = inside && mount === currentStation.mount;
       const t0 = ac.currentTime;
       if (isCurrent) {
+        // While the stream is still connecting/buffering there is no audio
+        // to play. A real tuner never goes dead silent on a strong signal —
+        // the station fades in out of the static — so keep the gain at 0
+        // and let the noise floor cover the gap until data arrives.
+        const streamReady = n.audio.readyState >= 3 && !n.audio.paused;
         // Distortion increases with offset (off-tuning); overmodulation (volume>1)
         // also drives more into the curve. Curve change isn't a param so set
         // immediately — but the audio it shapes already lives after the delay,
@@ -838,8 +843,8 @@
           clamp(30 + offR * 370, 30, 400),
           t0, 0.05);
         n.gain.gain.setTargetAtTime(
-          (1 - offR * 0.6) * (0.4 + quality * 0.6),
-          t0, 0.03);
+          streamReady ? (1 - offR * 0.6) * (0.4 + quality * 0.6) : 0,
+          t0, streamReady ? 0.03 : 0.4);
         // Stereo / mono crossfade — applied to post-delay audio so it tracks
         // tuning changes in real time.
         n.stereoGain.gain.setTargetAtTime(stereoActive ? 1 : 0, t0, 0.02);
@@ -853,7 +858,16 @@
       }
     }
     const stationNoise = noiseAmountFromDbf(sig, stereoActive);
-    const target = playing ? clamp(stationNoise + offR * 0.3, 0, 0.85) : 0;
+    // Cover stream (re)connect gaps with a static burst so tuning onto a
+    // station never sounds like dead air — it fades in out of the noise.
+    let bufferingNoise = 0;
+    if (inside && currentStation) {
+      const cur = pool.get(currentStation.mount);
+      if (cur && playing && (cur.audio.readyState < 3 || cur.audio.paused)) {
+        bufferingNoise = 0.28;
+      }
+    }
+    const target = playing ? clamp(stationNoise + offR * 0.3 + bufferingNoise, 0, 0.85) : 0;
     noiseGain.gain.setTargetAtTime(target, ac.currentTime, 0.05);
   }
 
