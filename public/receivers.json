@@ -521,10 +521,10 @@
         "stations": [
           {
             "freq": 88,
-            "ps": " F U N  ",
+            "ps": "  DFM   ",
             "rt": [
-              "5s:Enjoy The Music !",
-              "5s:%MD%"
+              "5s:DFM - DANCE RADIO",
+              "5s:(ALLCAPS)%MD%"
             ],
             "pi": "6217",
             "pty": 10,
@@ -534,7 +534,7 @@
             "stereo": true,
             "signal": 82,
             "station": {
-              "name": "Fun Radio",
+              "name": "DFM",
               "city": "Belgrade",
               "itu": "VV",
               "erp": 6.3,
@@ -542,8 +542,8 @@
               "distance": 9,
               "azimuth": 297
             },
-            "mount": "funbelvenia",
-            "logo": "https://i.soupco.net/u/OCQC6X.png",
+            "mount": "dfm",
+            "logo": "https://i.soupco.net/u/bJf2S9.png",
             "af": [
               88,
               102.6
