@@ -620,8 +620,22 @@
         hls.attachMedia(audio);
         return true;
       };
+      // External https streams: try playing directly from the station first
+      // (many Icecast servers allow it, and some block our relay's network).
+      // Fall back to the relay if the direct connection fails.
+      const directOk = /^https:\/\//i.test(String(mount).trim());
+      let useDirect = directOk;
+      var streamUrl = (bust) => useDirect ? String(mount).trim() : proxyUrl(mount, bust);
+      if (directOk) {
+        audio.addEventListener("error", () => {
+          if (!useDirect) return;
+          useDirect = false;
+          audio.src = proxyUrl(mount, Date.now());
+          if (playing) { try { const p = audio.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {} }
+        });
+      }
       if (!attachHls()) {
-        audio.src = proxyUrl(mount);
+        audio.src = streamUrl();
         try { audio.load(); } catch (e) {}
       }
       // Buffer-recovery. NEVER call audio.load() — that fully resets the
@@ -662,7 +676,7 @@
           } else {
             // Force the browser to drop the dead socket and open a new one
             // by re-assigning src (cheaper than .load() + .play()).
-            audio.src = proxyUrl(mount, now);
+            audio.src = streamUrl(now);
           }
           waitingSince = now;
           const p = audio.play(); if (p && p.catch) p.catch(() => {});
