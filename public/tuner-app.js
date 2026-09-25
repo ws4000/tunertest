@@ -858,7 +858,16 @@
       }
     }
     const stationNoise = noiseAmountFromDbf(sig, stereoActive);
-    const target = playing ? clamp(stationNoise + offR * 0.3, 0, 0.85) : 0;
+    // Cover stream (re)connect gaps with a static burst so tuning onto a
+    // station never sounds like dead air — it fades in out of the noise.
+    let bufferingNoise = 0;
+    if (inside && currentStation) {
+      const cur = pool.get(currentStation.mount);
+      if (cur && playing && (cur.audio.readyState < 3 || cur.audio.paused)) {
+        bufferingNoise = 0.28;
+      }
+    }
+    const target = playing ? clamp(stationNoise + offR * 0.3 + bufferingNoise, 0, 0.85) : 0;
     noiseGain.gain.setTargetAtTime(target, ac.currentTime, 0.05);
   }
 
